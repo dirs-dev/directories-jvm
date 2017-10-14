@@ -63,18 +63,15 @@ public final class ProjectDirectories {
 
   public static ProjectDirectories fromFullyQualifiedProjectName(String fullyQualifiedProjectName) {
     String name;
-    int startingPosition = -1;
     switch (operatingSystem) {
       case LIN:
-        startingPosition = fullyQualifiedProjectName.lastIndexOf('.') + 1;
-        name = fullyQualifiedProjectName.substring(startingPosition).toLowerCase(Locale.ENGLISH);
+        name = stripQualification(fullyQualifiedProjectName).toLowerCase(Locale.ENGLISH).trim();
         break;
       case MAC:
         name = fullyQualifiedProjectName;
         break;
       case WIN:
-        startingPosition = fullyQualifiedProjectName.lastIndexOf('.') + 1;
-        name = fullyQualifiedProjectName.substring(startingPosition);
+        name = stripQualification(fullyQualifiedProjectName);
         break;
       default:
         throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
@@ -86,7 +83,7 @@ public final class ProjectDirectories {
     String name;
     switch (operatingSystem) {
       case LIN:
-        name = projectName.toLowerCase(Locale.ENGLISH);
+        name = trimAndReplaceSpacesWithHyphensThenLowerCase(projectName);
         break;
       case MAC:
       case WIN:

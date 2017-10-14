@@ -1,9 +1,7 @@
 package io.github.soc.directories;
 
 public enum DirectoriesOption {
- LOCAL,
- ROAMING,
- LEGACY_FALLBACK,
+ LEGACY_DOT_DIRECTORY,
  SYSTEM,
  ACCEPT_READONLY,
  PORTABLE

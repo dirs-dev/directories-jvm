@@ -69,4 +69,33 @@ final class Util {
       return null;
     }
   }
+
+  static String stripQualification(String value) {
+    int startingPosition = value.lastIndexOf('.') + 1;
+    return value.substring(startingPosition);
+  }
+
+  static String trimAndReplaceSpacesWithHyphensThenLowerCase(String value) {
+	  StringBuffer buf = new StringBuffer(value.length());
+	  boolean charsBefore = false;
+    int codePointCount = value.codePointCount(0, value.length());
+    for (int index = 0; index < codePointCount; index += 1) {
+      int codepoint = value.codePointAt(index);
+      if (codepoint == ' ') {
+        if (charsBefore && codePointExistsAndNotSpace(value, codePointCount, index+1)) {
+          buf.append('-');
+          charsBefore = false;
+        }
+      } else {
+        buf.appendCodePoint(Character.toLowerCase(codepoint));
+        charsBefore = true;
+      }
+    }
+    return buf.toString();
+  }
+
+  private static boolean codePointExistsAndNotSpace(String value, int count, int index) {
+    if (index >= count) return false;
+    return value.codePointAt(index) != ' ';
+  }
 }

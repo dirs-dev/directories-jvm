@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: org.junit.jupiter:junit-jupiter-api:5.0.1:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.junit.jupiter/junit-jupiter-api/jars/junit-jupiter-api-5.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.junit.jupiter/junit-jupiter-api/srcs/junit-jupiter-api-5.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
