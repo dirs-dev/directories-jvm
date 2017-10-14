@@ -10,46 +10,53 @@ public final class ProjectDirectories {
     final String projectName,
     final String projectCacheDir,
     final String projectConfigDir,
-    final String projectDataDir) {
-      this.projectName      = projectName;
-      this.projectCacheDir  = projectCacheDir;
-      this.projectConfigDir = projectConfigDir;
-      this.projectDataDir   = projectDataDir;
+    final String projectDataDir,
+    final String projectDataRoamingDir) {
+      this.projectName           = projectName;
+      this.projectCacheDir       = projectCacheDir;
+      this.projectConfigDir      = projectConfigDir;
+      this.projectDataDir        = projectDataDir;
+      this.projectDataRoamingDir = projectDataRoamingDir;
     }
 
   public final String projectName;
   public final String projectCacheDir;
   public final String projectConfigDir;
   public final String projectDataDir;
+  public final String projectDataRoamingDir;
 
   public static ProjectDirectories fromUnprocessedString(String value) {
     String homeDir;
     String projectCacheDir;
     String projectConfigDir;
     String projectDataDir;
+    String projectDataRoamingDir;
     switch (operatingSystem) {
       case LIN:
         homeDir = System.getenv("HOME");
-        projectCacheDir  = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir + "/.cache/")       + value + "/";
-        projectConfigDir = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir + "/.config/")      + value + "/";
-        projectDataDir   = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir + "/.local/share/") + value + "/";
+        projectCacheDir       = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir + "/.cache/")       + value + "/";
+        projectConfigDir      = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir + "/.config/")      + value + "/";
+        projectDataDir        = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir + "/.local/share/") + value + "/";
+        projectDataRoamingDir = projectDataDir;
         break;
       case MAC:
         homeDir = System.getenv("HOME");
-        projectCacheDir  = homeDir + "/Library/Caches/"              + value + "/";
-        projectConfigDir = homeDir + "/Library/Preferences/"         + value + "/";
-        projectDataDir   = homeDir + "/Library/Application Support/" + value + "/";
+        projectCacheDir       = homeDir + "/Library/Caches/"              + value + "/";
+        projectConfigDir      = homeDir + "/Library/Preferences/"         + value + "/";
+        projectDataDir        = homeDir + "/Library/Application Support/" + value + "/";
+        projectDataRoamingDir = projectDataDir;
         break;
       case WIN:
         homeDir = null; // FIXME
-        projectDataDir   = runPowerShellCommand("LocalApplicationData") + "/" + value + "/";
-        projectConfigDir = projectDataDir;
-        projectCacheDir  = projectDataDir + "cache/";
+        projectDataDir        = runPowerShellCommand("LocalApplicationData") + "/" + value + "/";
+        projectDataRoamingDir = runPowerShellCommand("ApplicationData") + "/" + value + "/";
+        projectConfigDir      = projectDataDir;
+        projectCacheDir       = projectDataDir + "cache/";
         break;
       default:
         throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
     }
-    return new ProjectDirectories(value, projectCacheDir, projectConfigDir, projectDataDir);
+    return new ProjectDirectories(value, projectCacheDir, projectConfigDir, projectDataDir, projectDataRoamingDir);
   }
 
   public static ProjectDirectories fromFullyQualifiedProjectName(String fullyQualifiedProjectName) {
