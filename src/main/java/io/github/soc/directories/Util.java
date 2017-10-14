@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Objects;
 
 final class Util {
 	private Util() {
@@ -28,9 +29,17 @@ final class Util {
       throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
   };
 
-	static String defaultIfNullOrEmpty(String value, String fallbackValue) {
-		if (value == null || value.isEmpty()) return fallbackValue;
+  static String defaultIfNullOrEmpty(String value, String fallbackValue, String arg) {
+    Objects.requireNonNull(arg);
+    if (value == null || value.isEmpty()) return fallbackValue + arg;
 		else return value;
+  }
+
+  static String defaultIfNullOrEmptyExtended(String value, String valueArg, String fallbackValue, String fallbackArg) {
+    Objects.requireNonNull(valueArg);
+    Objects.requireNonNull(fallbackArg);
+    if (value == null || value.isEmpty()) return fallbackValue + fallbackArg;
+    else return value;
   }
 
   static String runXDGUserDir(String argument) {

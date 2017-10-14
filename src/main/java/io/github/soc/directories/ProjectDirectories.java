@@ -36,9 +36,9 @@ public final class ProjectDirectories {
     switch (operatingSystem) {
       case LIN:
         homeDir = System.getenv("HOME");
-        projectCacheDir       = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir + "/.cache/")       + value + "/";
-        projectConfigDir      = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir + "/.config/")      + value + "/";
-        projectDataDir        = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir + "/.local/share/") + value + "/";
+        projectCacheDir       = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir + "/.cache/",       value + "/");
+        projectConfigDir      = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir + "/.config/",      value + "/");
+        projectDataDir        = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir + "/.local/share/", value + "/");
         projectDataRoamingDir = projectDataDir;
         break;
       case MAC:

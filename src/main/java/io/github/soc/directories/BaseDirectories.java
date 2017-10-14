@@ -35,21 +35,21 @@ public final class BaseDirectories {
     switch (operatingSystem) {
       case LIN:
         homeDir        = System.getenv("HOME");
-        cacheDir       = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir + "/.cache/");
-        configDir      = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir + "/.config/");
-        dataDir        = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir + "/.local/share/");
+        cacheDir       = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir, "/.cache/");
+        configDir      = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir, "/.config/");
+        dataDir        = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir, "/.local/share/");
         dataRoamingDir = dataDir;
         runtimeDir     = System.getenv("XDG_RUNTIME_DIR");
-        desktopDir     = defaultIfNullOrEmpty(runXDGUserDir("DESKTOP"),      homeDir + "/Desktop/");
-        documentsDir   = defaultIfNullOrEmpty(runXDGUserDir("DOCUMENTS"),    homeDir + "/Documents/");
-        downloadDir    = defaultIfNullOrEmpty(runXDGUserDir("DOWNLOAD"),     homeDir + "/Downloads/");
-        musicDir       = defaultIfNullOrEmpty(runXDGUserDir("MUSIC"),        homeDir + "/Music/");
-        picturesDir    = defaultIfNullOrEmpty(runXDGUserDir("PICTURES"),     homeDir + "/Pictures/");
-        publicDir      = defaultIfNullOrEmpty(runXDGUserDir("PUBLICSHARE"),  homeDir + "/Public/");
-        templatesDir   = defaultIfNullOrEmpty(runXDGUserDir("TEMPLATES"),    homeDir + "/Templates/");
-        videosDir      = defaultIfNullOrEmpty(runXDGUserDir("VIDEOS"),       homeDir + "/Videos/");
-        executablesDir = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir + "/.local/bin/");
-        fontsDir       = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir + "/.local/share/fonts/");
+        desktopDir     = defaultIfNullOrEmpty(runXDGUserDir("DESKTOP"),      homeDir, "/Desktop/");
+        documentsDir   = defaultIfNullOrEmpty(runXDGUserDir("DOCUMENTS"),    homeDir, "/Documents/");
+        downloadDir    = defaultIfNullOrEmpty(runXDGUserDir("DOWNLOAD"),     homeDir, "/Downloads/");
+        musicDir       = defaultIfNullOrEmpty(runXDGUserDir("MUSIC"),        homeDir, "/Music/");
+        picturesDir    = defaultIfNullOrEmpty(runXDGUserDir("PICTURES"),     homeDir, "/Pictures/");
+        publicDir      = defaultIfNullOrEmpty(runXDGUserDir("PUBLICSHARE"),  homeDir, "/Public/");
+        templatesDir   = defaultIfNullOrEmpty(runXDGUserDir("TEMPLATES"),    homeDir, "/Templates/");
+        videosDir      = defaultIfNullOrEmpty(runXDGUserDir("VIDEOS"),       homeDir, "/Videos/");
+        executablesDir = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"), "/../bin/", homeDir, "/.local/bin/");
+        fontsDir       = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"), "/fonts/",  homeDir, "/.local/share/fonts/");
         break;
       case MAC:
         homeDir        = System.getenv("HOME");
@@ -73,8 +73,8 @@ public final class BaseDirectories {
         homeDir        = runPowerShellCommand("UserProfile");
         dataDir        = runPowerShellCommand("LocalApplicationData");
         dataRoamingDir = runPowerShellCommand("ApplicationData");
-        configDir      = dataDir;
-        cacheDir       = dataDir + "/cache";
+        configDir      = dataRoamingDir;
+        cacheDir       = dataDir + "/cache/";
         runtimeDir     = null;
         desktopDir     = runPowerShellCommand("Desktop");
         documentsDir   = runPowerShellCommand("Documents");
