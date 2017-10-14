@@ -63,10 +63,10 @@ public final class BaseDirectories {
   		  downloadDir    = homeDir + "/Downloads/";
   		  musicDir       = homeDir + "/Music/";
   		  picturesDir    = homeDir + "/Pictures/";
-  		  publicDir      = null;
+  		  publicDir      = homeDir + "/Public/";
   		  templatesDir   = null;
   		  videosDir      = homeDir + "/Movies/";
-  		  executablesDir = null;
+  		  executablesDir = homeDir + "/Applications/";
   		  fontsDir       = homeDir + "/Library/Fonts/";
         break;
       case WIN:
