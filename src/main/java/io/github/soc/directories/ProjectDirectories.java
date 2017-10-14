@@ -17,10 +17,10 @@ public final class ProjectDirectories {
       this.projectDataDir   = projectDataDir;
     }
 
-  final public String projectName;
-  final public String projectCacheDir;
-  final public String projectConfigDir;
-  final public String projectDataDir;
+  public final String projectName;
+  public final String projectCacheDir;
+  public final String projectConfigDir;
+  public final String projectDataDir;
 
   public static ProjectDirectories fromUnprocessedString(String value) {
     String homeDir;

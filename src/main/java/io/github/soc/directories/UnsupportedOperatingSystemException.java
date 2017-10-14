@@ -5,6 +5,6 @@ public class UnsupportedOperatingSystemException extends UnsupportedOperationExc
 	private static final long serialVersionUID = -6241121024431394902L;
 
 	public UnsupportedOperatingSystemException(String message) {
-		super(arg0);
+		super(message);
 	}
 }
