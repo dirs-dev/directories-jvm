@@ -4,6 +4,10 @@ import static io.github.soc.directories.Util.*;
 
 public final class BaseDirectories {
 
+  private BaseDirectories() {
+    throw new Error();
+  }
+
 	static final String homeDir;
 
 	// xdg base directories
