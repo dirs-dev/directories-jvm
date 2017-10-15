@@ -27,7 +27,7 @@ final class Util {
       operatingSystem = WIN;
     else
       throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
-  };
+  }
 
   static String defaultIfNullOrEmpty(String value, String fallbackValue, String arg) {
     Objects.requireNonNull(arg);
@@ -85,7 +85,7 @@ final class Util {
   }
 
   static String trimAndReplaceSpacesWithHyphensThenLowerCase(String value) {
-	  StringBuffer buf = new StringBuffer(value.length());
+    StringBuilder buf = new StringBuilder(value.length());
 	  boolean charsBefore = false;
     int codePointCount = value.codePointCount(0, value.length());
     for (int index = 0; index < codePointCount; index += 1) {
@@ -104,7 +104,6 @@ final class Util {
   }
 
   private static boolean codePointExistsAndNotSpace(String value, int count, int index) {
-    if (index >= count) return false;
-    return value.codePointAt(index) != ' ';
+    return index < count && value.codePointAt(index) != ' ';
   }
 }

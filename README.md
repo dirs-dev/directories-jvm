@@ -59,8 +59,8 @@ If you want to compute the location of cache, config or data folders for your ow
 | Static field name | Value on Linux                                    | Value on Windows                              | Value on macOS                       |
 | ----------------- | ------------------------------------------------- | --------------------------------------------- | ------------------------------------ |
 | `homeDir`         | `$HOME`                                           | `{SpecialFolder.UserProfile}`                 | `$HOME`                              |
-| `cacheDir`        | `$XDG_CONFIG_DIR` or `~/.config/`                 | `{SpecialFolder.LocalApplicationData}/cache/` | `$HOME/Library/Preferences/`         |
-| `configDir`       | `$XDG_CACHE_DIR`  or `~/.cache/`                  | `{SpecialFolder.ApplicationData}`             | `$HOME/Library/Caches/`              |
+| `cacheDir`        | `$XDG_CACHE_DIR`  or `~/.cache/`                  | `{SpecialFolder.LocalApplicationData}/cache/` | `$HOME/Library/Caches/`              |
+| `configDir`       | `$XDG_CONFIG_DIR` or `~/.config/`                 | `{SpecialFolder.ApplicationData}`             | `$HOME/Library/Preferences/`         |
 | `dataDir`         | `$XDG_DATA_DIR`   or `~/.local/share/`            | `{SpecialFolder.LocalApplicationData}`        | `$HOME/Library/Application Support/` |
 | `dataRoamingDir`  | `$XDG_DATA_DIR`   or `~/.local/share/`            | `{SpecialFolder.ApplicationData}`             | `$HOME/Library/Application Support/` |
 | `runtimeDir`      | `$XDG_RUNTIME_DIR`                                | `null`                                        | `null`                               |
@@ -69,10 +69,10 @@ If you want to compute the location of cache, config or data folders for your ow
 | `downloadDir`     | `XDG_DOWNLOAD_DIR`                                | `{SpecialFolder.Downloads}`                   | `$HOME/Downloads/`                   |
 | `musicDir`        | `XDG_MUSIC_DIR`                                   | `{SpecialFolder.Music}`                       | `$HOME/Music/`                       |
 | `picturesDir`     | `XDG_PICTURES_DIR`                                | `{SpecialFolder.Pictures}`                    | `$HOME/Pictures/`                    |
-| `publicDir`       | `XDG_PUBLICSHARE_DIR`                             | `{SpecialFolder.Public}`                      | `$HOME/Public/`                               |
+| `publicDir`       | `XDG_PUBLICSHARE_DIR`                             | `{SpecialFolder.Public}`                      | `$HOME/Public/`                      |
 | `templatesDir`    | `XDG_TEMPLATES_DIR`                               | `{SpecialFolder.Templates}`                   | `null`                               |
 | `videosDir`       | `XDG_VIDEOS_DIR`                                  | `{SpecialFolder.Videos}`                      | `$HOME/Movies/`                      |
-| `executablesDir`  | `$XDG_DATA_HOME/../bin/` or `$HOME/.local/bin/`   | `null`                                        | `$HOME/Applications/`                               |
+| `executablesDir`  | `$XDG_DATA_HOME/../bin/` or `$HOME/.local/bin/`   | `null`                                        | `$HOME/Applications/`                |
 | `fontsDir`        | `$XDG_DATA_HOME/fonts/` or `/.local/share/fonts/` | `null`                                        | `$HOME/Library/Fonts/`               |
 
 ### `ProjectDirectories`
