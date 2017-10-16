@@ -17,6 +17,8 @@ The library provides the location of directories by leveraging the mechanisms de
 
 ## Usage
 
+#### Dependency
+
 Add the library as a dependency to your project:
 
 ##### Maven
@@ -37,6 +39,7 @@ compile 'io.github.soc:directories:5'
 "io.github.soc" % "directories" % "5"
 ```
 
+#### Example
 
 Library run by a user with user name "my_user_name" on Linux:
 
