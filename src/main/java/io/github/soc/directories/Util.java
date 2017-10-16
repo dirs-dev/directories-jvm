@@ -7,9 +7,9 @@ import java.util.Locale;
 import java.util.Objects;
 
 final class Util {
-	private Util() {
-		throw new Error();
-	}
+  private Util() {
+    throw new Error();
+  }
 
   static final String operatingSystemName = System.getProperty("os.name");
   static final String operatingSystem;
@@ -32,7 +32,7 @@ final class Util {
   static String defaultIfNullOrEmpty(String value, String fallbackValue, String arg) {
     Objects.requireNonNull(arg);
     if (value == null || value.isEmpty()) return fallbackValue + arg;
-		else return value;
+    else return value;
   }
 
   static String defaultIfNullOrEmptyExtended(String value, String valueArg, String fallbackValue, String fallbackArg) {
@@ -86,7 +86,7 @@ final class Util {
 
   static String trimAndReplaceSpacesWithHyphensThenLowerCase(String value) {
     StringBuilder buf = new StringBuilder(value.length());
-	  boolean charsBefore = false;
+    boolean charsBefore = false;
     int codePointCount = value.codePointCount(0, value.length());
     for (int index = 0; index < codePointCount; index += 1) {
       int codepoint = value.codePointAt(index);

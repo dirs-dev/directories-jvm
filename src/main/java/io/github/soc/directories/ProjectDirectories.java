@@ -13,13 +13,14 @@ public final class ProjectDirectories {
     final String projectConfigDir,
     final String projectDataDir,
     final String projectDataRoamingDir) {
+
     Objects.requireNonNull(projectName);
-      this.projectName           = projectName;
-      this.projectCacheDir       = projectCacheDir;
-      this.projectConfigDir      = projectConfigDir;
-      this.projectDataDir        = projectDataDir;
-      this.projectDataRoamingDir = projectDataRoamingDir;
-    }
+    this.projectName           = projectName;
+    this.projectCacheDir       = projectCacheDir;
+    this.projectConfigDir      = projectConfigDir;
+    this.projectDataDir        = projectDataDir;
+    this.projectDataRoamingDir = projectDataRoamingDir;
+  }
 
   public final String projectName;
   public final String projectCacheDir;
@@ -100,6 +101,7 @@ public final class ProjectDirectories {
   private static final char LIN = 'l';
   private static final char MAC = 'm';
   private static final char WIN = 'w';
+
   static {
     final String os = operatingSystemName.toLowerCase(Locale.ENGLISH);
     if (os.contains("linux"))
