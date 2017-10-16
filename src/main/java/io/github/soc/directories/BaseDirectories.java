@@ -8,28 +8,28 @@ public final class BaseDirectories {
     throw new Error();
   }
 
-	static final String homeDir;
+  static final String homeDir;
 
-	// xdg base directories
-	static final String cacheDir;
-	static final String configDir;
-	static final String dataDir;
+  // xdg base directories
+  static final String cacheDir;
+  static final String configDir;
+  static final String dataDir;
   static final String dataRoamingDir;
   static final String runtimeDir;
 
-	// xdg user directories
-	static final String desktopDir;
-	static final String documentsDir;
-	static final String downloadDir;
-	static final String musicDir;
-	static final String picturesDir;
-	static final String publicDir;
-	static final String templatesDir;
-	static final String videosDir;
+  // xdg user directories
+  static final String desktopDir;
+  static final String documentsDir;
+  static final String downloadDir;
+  static final String musicDir;
+  static final String picturesDir;
+  static final String publicDir;
+  static final String templatesDir;
+  static final String videosDir;
 
-	// derived
-	static final String executablesDir;
-	static final String fontsDir;
+  // derived
+  static final String executablesDir;
+  static final String fontsDir;
 
   static {
     switch (operatingSystem) {
@@ -53,21 +53,21 @@ public final class BaseDirectories {
         break;
       case MAC:
         homeDir        = System.getenv("HOME");
-  		  cacheDir       = homeDir + "/Library/Caches/";
-  		  configDir      = homeDir + "/Library/Preferences/";
-  		  dataDir        = homeDir + "/Library/Application Support/";
+        cacheDir       = homeDir + "/Library/Caches/";
+        configDir      = homeDir + "/Library/Preferences/";
+        dataDir        = homeDir + "/Library/Application Support/";
         dataRoamingDir = dataDir;
-  		  runtimeDir     = null;
-  		  desktopDir     = homeDir + "/Desktop/";
-  		  documentsDir   = homeDir + "/Documents/";
-  		  downloadDir    = homeDir + "/Downloads/";
-  		  musicDir       = homeDir + "/Music/";
-  		  picturesDir    = homeDir + "/Pictures/";
-  		  publicDir      = homeDir + "/Public/";
-  		  templatesDir   = null;
-  		  videosDir      = homeDir + "/Movies/";
-  		  executablesDir = homeDir + "/Applications/";
-  		  fontsDir       = homeDir + "/Library/Fonts/";
+        runtimeDir     = null;
+        desktopDir     = homeDir + "/Desktop/";
+        documentsDir   = homeDir + "/Documents/";
+        downloadDir    = homeDir + "/Downloads/";
+        musicDir       = homeDir + "/Music/";
+        picturesDir    = homeDir + "/Pictures/";
+        publicDir      = homeDir + "/Public/";
+        templatesDir   = null;
+        videosDir      = homeDir + "/Movies/";
+        executablesDir = homeDir + "/Applications/";
+        fontsDir       = homeDir + "/Library/Fonts/";
         break;
       case WIN:
         homeDir        = runPowerShellCommand("UserProfile");
