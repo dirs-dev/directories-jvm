@@ -76,6 +76,8 @@ final class Util {
     } catch (IOException e) {
       e.printStackTrace();
       return null;
+    } finally {
+      process.destroy();
     }
   }
 

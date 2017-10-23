@@ -92,11 +92,11 @@ which are derived from the standardized directories.
 
 The specific value of `_yourprojectname_` depends on the factory method used to create a `ProjectDirectories` instance:
 
-| Factory method                  | Example project name          | Value on Linux | Value on Windows | Value on macOS                |
-| ---------------------------     | ----------------------------- | -------------- | ---------------- | ----------------------------- |
-| `fromUnprocessedString`         | `"FooBar-App"`                | `"FooBar-App"` | `"FooBar-App"`   | `"FooBar-App"`                |
-| `fromProjectName`               | `"FooBar App"`                | `"foobar-app"` | `"FooBar App"`   | `"FooBar App"`                |
-| `fromFullyQualifiedProjectName` | `"org.foobar-corp.FooBarApp"` | `"foobarapp"`  | `"FooBarApp"`    | `"org.foobar-corp.FooBarApp"` |
+| Factory method              | Example project name          | Value on Linux | Value on Windows | Value on macOS                |
+| --------------------------- | ----------------------------- | -------------- | ---------------- | ----------------------------- |
+| `fromUnprocessedString`     | `"FooBar-App"`                | `"FooBar-App"` | `"FooBar-App"`   | `"FooBar-App"`                |
+| `fromProjectName`           | `"FooBar App"`                | `"foobar-app"` | `"FooBar App"`   | `"FooBar App"`                |
+| `fromQualifiedProjectName`  | `"org.foobar-corp.FooBarApp"` | `"foobarapp"`  | `"FooBarApp"`    | `"org.foobar-corp.FooBarApp"` |
 
 ## Versioning
 
