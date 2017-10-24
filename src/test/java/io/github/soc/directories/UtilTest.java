@@ -1,7 +1,8 @@
 package io.github.soc.directories;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import        org.junit.jupiter.api.Test;
+import        org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
 
 final class UtilTest {
   @Test

@@ -7,7 +7,7 @@ lazy val root = (project in file("."))
     version              := "6",
     homepage             := Some(url("https://github.com/soc/directories")),
     licenses             := Seq("Mozilla Public License 2.0" -> url("https://opensource.org/licenses/MPL-2.0")),
-    libraryDependencies  += "org.junit.jupiter" % "junit-jupiter-api" % "5.0.1",
+    libraryDependencies  += "junit" % "junit" % "4.12",
     pomExtra             :=
       <scm>
         <url>git@github.com:soc/directories.git</url>

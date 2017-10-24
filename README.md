@@ -101,3 +101,4 @@ The specific value of `_yourprojectname_` depends on the factory method used to 
 ## Versioning
 
 The version number of this library consists of a whole number, which is incremented with each release.
+(Think semantic versioning without _minor_ and _patch_ versions.)

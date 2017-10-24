@@ -1,8 +1,0 @@
-package io.github.soc.directories;
-
-public enum DirectoriesOption {
- LEGACY_DOT_DIRECTORY,
- SYSTEM,
- ACCEPT_READONLY,
- PORTABLE
-}

@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.Locale;
-import java.util.Objects;
 
 final class Util {
   private Util() {
@@ -12,34 +11,44 @@ final class Util {
   }
 
   static final String operatingSystemName = System.getProperty("os.name");
-  static final String operatingSystem;
-  static final String LIN = "linux";
-  static final String MAC = "mac";
-  static final String WIN = "windows";
+  static final char operatingSystem;
+  static final char LIN = 'l';
+  static final char MAC = 'm';
+  static final char WIN = 'w';
 
   static {
     final String os = operatingSystemName.toLowerCase(Locale.ENGLISH);
-    if (os.contains(LIN))
+    if (os.contains("linux"))
       operatingSystem = LIN;
-    else if (os.contains(MAC))
+    else if (os.contains("mac"))
       operatingSystem = MAC;
-    else if (os.contains(WIN))
+    else if (os.contains("windows"))
       operatingSystem = WIN;
     else
       throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
   }
+  
+  static void requireNonNull(Object value) {
+    if (value == null)
+      throw new NullPointerException();
+  }
 
   static String defaultIfNullOrEmpty(String value, String fallbackValue, String arg) {
-    Objects.requireNonNull(arg);
-    if (value == null || value.isEmpty()) return fallbackValue + arg;
-    else return value;
+    requireNonNull(arg);
+    if (value == null || value.isEmpty())
+      return fallbackValue + arg;
+    else
+      return value;
   }
 
   static String defaultIfNullOrEmptyExtended(String value, String valueArg, String fallbackValue, String fallbackArg) {
-    Objects.requireNonNull(valueArg);
-    Objects.requireNonNull(fallbackArg);
-    if (value == null || value.isEmpty()) return fallbackValue + fallbackArg;
-    else return value;
+    requireNonNull(valueArg);
+    requireNonNull(fallbackValue);
+    requireNonNull(fallbackArg);
+    if (value == null || value.isEmpty())
+      return fallbackValue + fallbackArg;
+    else
+      return value;
   }
 
   static String runXDGUserDir(String argument) {
@@ -51,13 +60,20 @@ final class Util {
       e1.printStackTrace();
       return null;
     }
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+    
+    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+    try {
       return reader.readLine();
     } catch (IOException e) {
       e.printStackTrace();
       return null;
     } finally {
       process.destroy();
+      try {
+        reader.close();
+      } catch (IOException e) {
+      	return null;
+      }
     }
   }
 
@@ -71,13 +87,20 @@ final class Util {
       e1.printStackTrace();
       return null;
     }
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+    
+    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+    try {
       return reader.readLine();
     } catch (IOException e) {
       e.printStackTrace();
       return null;
     } finally {
       process.destroy();
+      try {
+        reader.close();
+      } catch (IOException e) {
+    	return null;
+      }
     }
   }
 
