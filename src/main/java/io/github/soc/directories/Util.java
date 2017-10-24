@@ -51,12 +51,20 @@ final class Util {
       e1.printStackTrace();
       return null;
     }
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+    BufferedReader reader = null;
+    try {
+      reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
       return reader.readLine();
     } catch (IOException e) {
       e.printStackTrace();
       return null;
     } finally {
+      if (reader != null)
+        try {
+          reader.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       process.destroy();
     }
   }
@@ -71,12 +79,20 @@ final class Util {
       e1.printStackTrace();
       return null;
     }
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+    BufferedReader reader = null;
+    try {
+      reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
       return reader.readLine();
     } catch (IOException e) {
       e.printStackTrace();
       return null;
     } finally {
+      if (reader != null)
+        try {
+          reader.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       process.destroy();
     }
   }
