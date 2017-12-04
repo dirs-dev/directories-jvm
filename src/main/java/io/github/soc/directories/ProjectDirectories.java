@@ -36,6 +36,7 @@ public final class ProjectDirectories {
     String projectDataRoamingDir;
     switch (operatingSystem) {
       case LIN:
+      case BSD:
         homeDir               = System.getenv("HOME");
         projectCacheDir       = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir + "/.cache/",       value + "/");
         projectConfigDir      = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir + "/.config/",      value + "/");
@@ -65,6 +66,7 @@ public final class ProjectDirectories {
     String name;
     switch (operatingSystem) {
       case LIN:
+      case BSD:
         name = stripQualification(qualifiedProjectName).toLowerCase(Locale.ENGLISH).trim();
         break;
       case MAC:
@@ -83,6 +85,7 @@ public final class ProjectDirectories {
     String name;
     switch (operatingSystem) {
       case LIN:
+      case BSD:
         name = trimAndReplaceSpacesWithHyphensThenLowerCase(projectName);
         break;
       case MAC:
@@ -100,6 +103,7 @@ public final class ProjectDirectories {
   private static final char LIN = 'l';
   private static final char MAC = 'm';
   private static final char WIN = 'w';
+  private static final char BSD = 'b';
 
   static {
     final String os = operatingSystemName.toLowerCase(Locale.ENGLISH);
@@ -109,6 +113,8 @@ public final class ProjectDirectories {
       operatingSystem = MAC;
     else if (os.contains("win"))
       operatingSystem = WIN;
+    else if (os.contains("bsd"))
+      operatingSystem = BSD;
     else
       throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
   };

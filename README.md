@@ -5,7 +5,7 @@
 - A tiny library (8kB)
 - with minimal public API (3 classes, 6 methods, 21 fields)
 - for convenient access to standardized directories
-- on Linux, Windows (≥ 7) and macOS
+- on Linux, Windows (≥ 7), macOS and BSD
 - running on the JVM
 
 The library provides the location of directories by leveraging the mechanisms defined by
@@ -57,9 +57,9 @@ System.out.println(myProjConfigDir); // "/home/my_user_name/.config/my-project/"
 The intended use-case for `BaseDirectories` is to query the paths of standard folders
 that have been defined according to the conventions of operating system the library is running on.
 
-If you want to compute the location of cache, config or data folders for your own application or project, use `ProjectDirectories` instead. 
+If you want to compute the location of cache, config or data folders for your own application or project, use `ProjectDirectories` instead.
 
-| Static field name | Value on Linux                                    | Value on Windows                              | Value on macOS                       |
+| Static field name | Value on Linux / BSD                              | Value on Windows                              | Value on macOS                       |
 | ----------------- | ------------------------------------------------- | --------------------------------------------- | ------------------------------------ |
 | `homeDir`         | `$HOME`                                           | `{SpecialFolder.UserProfile}`                 | `$HOME`                              |
 | `cacheDir`        | `$XDG_CACHE_DIR`  or `~/.cache/`                  | `{SpecialFolder.LocalApplicationData}/cache/` | `$HOME/Library/Caches/`              |
@@ -81,9 +81,9 @@ If you want to compute the location of cache, config or data folders for your ow
 ### `ProjectDirectories`
 
 The intended use-case for `BaseDirectories` is to compute the location of cache, config or data folders for your own application or project,
-which are derived from the standardized directories. 
+which are derived from the standardized directories.
 
-| Instance field name     | Value on Linux                                                           | Value on Windows                                                | Value on macOS                                         |
+| Instance field name     | Value on Linux / BSD                                                     | Value on Windows                                                | Value on macOS                                         |
 | ----------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------- | ------------------------------------------------------ |
 | `projectCacheDir`       | `$XDG_CONFIG_DIR/_yourprojectname_` or `~/.config/_yourprojectname_/`    | `{SpecialFolder.LocalApplicationData}/cache/_yourprojectname_/` | `$HOME/Library/Caches/_yourprojectname_/`         |
 | `projectConfigDir`      | `$XDG_CACHE_DIR/_yourprojectname_`  or `~/.cache/_yourprojectname_/`     | `{SpecialFolder.ApplicationData}/_yourprojectname_/`            | `$HOME/Library/Preferences/_yourprojectname_/`              |

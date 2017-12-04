@@ -34,6 +34,7 @@ public final class BaseDirectories {
   static {
     switch (operatingSystem) {
       case LIN:
+      case BSD:
         homeDir        = System.getenv("HOME");
         cacheDir       = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir, "/.cache/");
         configDir      = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir, "/.config/");
