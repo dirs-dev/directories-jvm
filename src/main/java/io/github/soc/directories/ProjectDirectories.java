@@ -98,27 +98,6 @@ public final class ProjectDirectories {
     return fromUnprocessedString(name);
   }
 
-  private static final String operatingSystemName = System.getProperty("os.name");
-  private static final char operatingSystem;
-  private static final char LIN = 'l';
-  private static final char MAC = 'm';
-  private static final char WIN = 'w';
-  private static final char BSD = 'b';
-
-  static {
-    final String os = operatingSystemName.toLowerCase(Locale.ENGLISH);
-    if (os.contains("linux"))
-      operatingSystem = LIN;
-    else if (os.contains("mac"))
-      operatingSystem = MAC;
-    else if (os.contains("win"))
-      operatingSystem = WIN;
-    else if (os.contains("bsd"))
-      operatingSystem = BSD;
-    else
-      throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
-  };
-
   @Override
   public String toString() {
     return "ProjectDirectories on operating system '" + operatingSystemName + "':" +
