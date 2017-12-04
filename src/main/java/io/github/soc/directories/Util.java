@@ -15,6 +15,7 @@ final class Util {
   static final char LIN = 'l';
   static final char MAC = 'm';
   static final char WIN = 'w';
+  static final char BSD = 'b';
 
   static {
     final String os = operatingSystemName.toLowerCase(Locale.ENGLISH);
@@ -24,10 +25,12 @@ final class Util {
       operatingSystem = MAC;
     else if (os.contains("windows"))
       operatingSystem = WIN;
+    else if (os.contains("bsd"))
+      operatingSystem = BSD;
     else
       throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
   }
-  
+
   static void requireNonNull(Object value) {
     if (value == null)
       throw new NullPointerException();
