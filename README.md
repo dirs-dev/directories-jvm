@@ -85,7 +85,7 @@ which are derived from the standardized directories.
 
 | Instance field name     | Value on Linux / BSD                                                     | Value on Windows                                                | Value on macOS                                         |
 | ----------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------- | ------------------------------------------------------ |
-| `projectCacheDir`       | `$XDG_CACHE_DIR/_yourprojectname_` or `~/.cache/_yourprojectname_/`      | `{SpecialFolder.LocalApplicationData}/cache/_yourprojectname_/` | `$HOME/Library/Caches/_yourprojectname_/`              |
+| `projectCacheDir`       | `$XDG_CACHE_DIR/_yourprojectname_` or `~/.cache/_yourprojectname_/`      | `{SpecialFolder.LocalApplicationData}/_yourprojectname_/cache/` | `$HOME/Library/Caches/_yourprojectname_/`              |
 | `projectConfigDir`      | `$XDG_CONFIG_DIR/_yourprojectname_`  or `~/.config/_yourprojectname_/`   | `{SpecialFolder.ApplicationData}/_yourprojectname_/`            | `$HOME/Library/Preferences/_yourprojectname_/`         |
 | `projectDataDir`        | `$XDG_DATA_DIR/_yourprojectname_` or `~/.local/share/_yourprojectname_/` | `{SpecialFolder.LocalApplicationData}/_yourprojectname_/`       | `$HOME/Library/Application Support/_yourprojectname_/` |
 | `projectDataRoamingDir` | `$XDG_DATA_DIR/_yourprojectname_` or `~/.local/share/_yourprojectname_/` | `{SpecialFolder.ApplicationData}/_yourprojectname_/`            | `$HOME/Library/Application Support/_yourprojectname_/` |
