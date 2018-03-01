@@ -18,7 +18,7 @@ final class Util {
   static final char BSD = 'b';
 
   static {
-    final String os = operatingSystemName.toLowerCase(Locale.ENGLISH);
+    final String os = operatingSystemName.toLowerCase(Locale.ROOT);
     if (os.contains("linux"))
       operatingSystem = LIN;
     else if (os.contains("mac"))
@@ -36,9 +36,13 @@ final class Util {
       throw new NullPointerException();
   }
 
+  static boolean isNullOrEmpty(String value) {
+    return value == null || value.isEmpty();
+  }
+
   static String defaultIfNullOrEmpty(String value, String fallbackValue, String arg) {
     requireNonNull(arg);
-    if (value == null || value.isEmpty())
+    if (isNullOrEmpty(value))
       return fallbackValue + arg;
     else
       return value;
@@ -48,10 +52,18 @@ final class Util {
     requireNonNull(valueArg);
     requireNonNull(fallbackValue);
     requireNonNull(fallbackArg);
-    if (value == null || value.isEmpty())
+    if (isNullOrEmpty(value))
       return fallbackValue + fallbackArg;
     else
       return value;
+  }
+
+  static String linuxExecutableDir(String homeDir, String dataDir) {
+    String binDir = System.getenv("XDG_BIN_HOME");
+    if (isNullOrEmpty(binDir))
+      return defaultIfNullOrEmptyExtended(dataDir, "/../bin/", homeDir, "/.local/bin/");
+    else
+      return binDir;
   }
 
   static String runXDGUserDir(String argument) {

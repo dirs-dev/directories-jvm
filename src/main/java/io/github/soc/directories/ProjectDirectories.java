@@ -11,55 +11,55 @@ public final class ProjectDirectories {
     final String projectCacheDir,
     final String projectConfigDir,
     final String projectDataDir,
-    final String projectDataRoamingDir) {
+    final String projectDataLocalDir) {
 
     requireNonNull(projectName);
 
-    this.projectName           = projectName;
-    this.projectCacheDir       = projectCacheDir;
-    this.projectConfigDir      = projectConfigDir;
-    this.projectDataDir        = projectDataDir;
-    this.projectDataRoamingDir = projectDataRoamingDir;
+    this.projectName         = projectName;
+    this.projectCacheDir     = projectCacheDir;
+    this.projectConfigDir    = projectConfigDir;
+    this.projectDataDir      = projectDataDir;
+    this.projectDataLocalDir = projectDataLocalDir;
   }
 
   public final String projectName;
   public final String projectCacheDir;
   public final String projectConfigDir;
   public final String projectDataDir;
-  public final String projectDataRoamingDir;
+  public final String projectDataLocalDir;
 
   public static ProjectDirectories fromUnprocessedString(String value) {
     String homeDir;
     String projectCacheDir;
     String projectConfigDir;
     String projectDataDir;
-    String projectDataRoamingDir;
+    String projectDataLocalDir;
     switch (operatingSystem) {
       case LIN:
       case BSD:
-        homeDir               = System.getenv("HOME");
-        projectCacheDir       = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir + "/.cache/",       value + "/");
-        projectConfigDir      = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir + "/.config/",      value + "/");
-        projectDataDir        = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir + "/.local/share/", value + "/");
-        projectDataRoamingDir = projectDataDir;
+        homeDir             = System.getenv("HOME");
+        projectCacheDir     = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir + "/.cache/",       value + "/");
+        projectConfigDir    = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir + "/.config/",      value + "/");
+        projectDataDir      = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir + "/.local/share/", value + "/");
+        projectDataLocalDir = projectDataDir;
         break;
       case MAC:
-        homeDir               = System.getenv("HOME");
-        projectCacheDir       = homeDir + "/Library/Caches/"              + value + "/";
-        projectConfigDir      = homeDir + "/Library/Preferences/"         + value + "/";
-        projectDataDir        = homeDir + "/Library/Application Support/" + value + "/";
-        projectDataRoamingDir = projectDataDir;
+        homeDir             = System.getenv("HOME");
+        projectCacheDir     = homeDir + "/Library/Caches/"              + value + "/";
+        projectConfigDir    = homeDir + "/Library/Preferences/"         + value + "/";
+        projectDataDir      = homeDir + "/Library/Application Support/" + value + "/";
+        projectDataLocalDir = projectDataDir;
         break;
       case WIN:
-        projectDataDir        = runPowerShellCommand("LocalApplicationData") + "/" + value + "/";
-        projectDataRoamingDir = runPowerShellCommand("ApplicationData") + "/" + value + "/";
-        projectConfigDir      = projectDataDir;
-        projectCacheDir       = projectDataDir + "cache/";
+        projectDataDir      = runPowerShellCommand("ApplicationData") + "/" + value + "/";
+        projectDataLocalDir = runPowerShellCommand("LocalApplicationData") + "/" + value + "/";
+        projectConfigDir    = projectDataDir;
+        projectCacheDir     = projectDataDir + "cache/";
         break;
       default:
         throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
     }
-    return new ProjectDirectories(value, projectCacheDir, projectConfigDir, projectDataDir, projectDataRoamingDir);
+    return new ProjectDirectories(value, projectCacheDir, projectConfigDir, projectDataDir, projectDataLocalDir);
   }
 
   public static ProjectDirectories fromQualifiedProjectName(String qualifiedProjectName) {
@@ -101,11 +101,11 @@ public final class ProjectDirectories {
   @Override
   public String toString() {
     return "ProjectDirectories on operating system '" + operatingSystemName + "':" +
-        "  projectName           ='" + projectName + '\'' +
-        "  projectCacheDir       ='" + projectCacheDir + '\'' +
-        "  projectConfigDir      ='" + projectConfigDir + '\'' +
-        "  projectDataDir        ='" + projectDataDir + '\'' +
-        "  projectDataRoamingDir ='" + projectDataRoamingDir + '\'';
+        "  projectName           = '" + projectName + '\'' +
+        "  projectCacheDir       = '" + projectCacheDir + '\'' +
+        "  projectConfigDir      = '" + projectConfigDir + '\'' +
+        "  projectDataDir        = '" + projectDataDir + '\'' +
+        "  projectDataRoamingDir = '" + projectDataLocalDir + '\'';
   }
 
   @Override
@@ -116,22 +116,23 @@ public final class ProjectDirectories {
     ProjectDirectories that = (ProjectDirectories) o;
 
     if (!projectName.equals(that.projectName)) return false;
-    if (projectCacheDir  != null ? !projectCacheDir .equals(that.projectCacheDir)  : that.projectCacheDir != null)
+    if (projectCacheDir   != null ? !projectCacheDir   .equals(that.projectCacheDir)     : that.projectCacheDir != null)
       return false;
-    if (projectConfigDir != null ? !projectConfigDir.equals(that.projectConfigDir) : that.projectConfigDir != null)
+    if (projectConfigDir  != null ? !projectConfigDir  .equals(that.projectConfigDir)    : that.projectConfigDir != null)
       return false;
-    if (projectDataDir   != null ? !projectDataDir  .equals(that.projectDataDir)   : that.projectDataDir != null)
+    if (projectDataDir    != null ? !projectDataDir    .equals(that.projectDataDir)      : that.projectDataDir != null)
       return false;
-    return projectDataRoamingDir != null ? projectDataRoamingDir.equals(that.projectDataRoamingDir) : that.projectDataRoamingDir == null;
+    return
+      projectDataLocalDir != null ? projectDataLocalDir.equals(that.projectDataLocalDir) : that.projectDataLocalDir == null;
   }
 
   @Override
   public int hashCode() {
     int result = projectName.hashCode();
-    result = 31 * result + (projectCacheDir != null ? projectCacheDir.hashCode() : 0);
-    result = 31 * result + (projectConfigDir != null ? projectConfigDir.hashCode() : 0);
-    result = 31 * result + (projectDataDir != null ? projectDataDir.hashCode() : 0);
-    result = 31 * result + (projectDataRoamingDir != null ? projectDataRoamingDir.hashCode() : 0);
+    result = 31 * result + (projectCacheDir     != null ? projectCacheDir    .hashCode() : 0);
+    result = 31 * result + (projectConfigDir    != null ? projectConfigDir   .hashCode() : 0);
+    result = 31 * result + (projectDataDir      != null ? projectDataDir     .hashCode() : 0);
+    result = 31 * result + (projectDataLocalDir != null ? projectDataLocalDir.hashCode() : 0);
     return result;
   }
 }
