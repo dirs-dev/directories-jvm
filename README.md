@@ -62,12 +62,12 @@ If you want to compute the location of cache, config or data folders for your ow
 | Static field name | Value on Linux / BSD                                               | Value on Windows                              | Value on macOS                       |
 | ----------------- | ------------------------------------------------------------------ | --------------------------------------------- | ------------------------------------ |
 | `homeDir`         | `$HOME`                                                            | `{SpecialFolder.UserProfile}`                 | `$HOME`                              |
-| `cacheDir`        | `$XDG_CACHE_DIR`  or `~/.cache/`                                   | `{SpecialFolder.LocalApplicationData}/cache/` | `$HOME/Library/Caches/`              |
-| `configDir`       | `$XDG_CONFIG_DIR` or `~/.config/`                                  | `{SpecialFolder.ApplicationData}`             | `$HOME/Library/Preferences/`         |
-| `dataDir`         | `$XDG_DATA_DIR`   or `~/.local/share/`                             | `{SpecialFolder.ApplicationData}`             | `$HOME/Library/Application Support/` |
-| `dataLocalDir`    | `$XDG_DATA_DIR`   or `~/.local/share/`                             | `{SpecialFolder.LocalApplicationData}`        | `$HOME/Library/Application Support/` |
+| `cacheDir`        | `$XDG_CACHE_HOME`  or `~/.cache/`                                  | `{SpecialFolder.LocalApplicationData}/cache/` | `$HOME/Library/Caches/`              |
+| `configDir`       | `$XDG_CONFIG_HOME` or `~/.config/`                                 | `{SpecialFolder.ApplicationData}`             | `$HOME/Library/Preferences/`         |
+| `dataDir`         | `$XDG_DATA_HOME`   or `~/.local/share/`                            | `{SpecialFolder.ApplicationData}`             | `$HOME/Library/Application Support/` |
+| `dataLocalDir`    | `$XDG_DATA_HOME`   or `~/.local/share/`                            | `{SpecialFolder.LocalApplicationData}`        | `$HOME/Library/Application Support/` |
 | `executableDir`   | `$XDG_BIN_HOME` or `$XDG_DATA_HOME/../bin/` or `$HOME/.local/bin/` | `null`                                        | `null`                               |
-| `runtimeDir`      | `$XDG_RUNTIME_DIR`                                                 | `null`                                        | `null`                               |
+| `runtimeDir`      | `$XDG_RUNTIME_DIR` or `null`                                       | `null`                                        | `null`                               |
 | `audioDir`        | `XDG_MUSIC_DIR`                                                    | `{SpecialFolder.Music}`                       | `$HOME/Music/`                       |
 | `desktopDir`      | `XDG_DESKTOP_DIR`                                                  | `{SpecialFolder.Desktop}`                     | `$HOME/Desktop/`                     |
 | `documentDir`     | `XDG_DOCUMENTS_DIR`                                                | `{SpecialFolder.Documents}`                   | `$HOME/Documents/`                   |
@@ -81,22 +81,34 @@ If you want to compute the location of cache, config or data folders for your ow
 ### `ProjectDirectories`
 
 The intended use-case for `BaseDirectories` is to compute the location of cache, config or data folders for your own application or project,
-which are derived from the standardized directories.
+which are derived from the standard directories.
 
-| Instance field name   | Value on Linux / BSD                                                     | Value on Windows                                                | Value on macOS                                         |
-| --------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------- | ------------------------------------------------------ |
-| `projectCacheDir`     | `$XDG_CACHE_DIR/_yourprojectname_` or `~/.cache/_yourprojectname_/`      | `{SpecialFolder.LocalApplicationData}/_yourprojectname_/cache/` | `$HOME/Library/Caches/_yourprojectname_/`              |
-| `projectConfigDir`    | `$XDG_CONFIG_DIR/_yourprojectname_`  or `~/.config/_yourprojectname_/`   | `{SpecialFolder.ApplicationData}/_yourprojectname_/`            | `$HOME/Library/Preferences/_yourprojectname_/`         |
-| `projectDataDir`      | `$XDG_DATA_DIR/_yourprojectname_` or `~/.local/share/_yourprojectname_/` | `{SpecialFolder.ApplicationData}/_yourprojectname_/`            | `$HOME/Library/Application Support/_yourprojectname_/` |
-| `projectDataLocalDir` | `$XDG_DATA_DIR/_yourprojectname_` or `~/.local/share/_yourprojectname_/` | `{SpecialFolder.LocalApplicationData}/_yourprojectname_/`       | `$HOME/Library/Application Support/_yourprojectname_/` |
+| Instance field name | Value on Linux / BSD                                                | Value on Windows                                             | Value on macOS                                      |
+| ------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------ | --------------------------------------------------- |
+| `cacheDir`          | `$XDG_CACHE_HOME/_project_path_` or `~/.cache/_project_path_/`      | `{SpecialFolder.LocalApplicationData}/_project_path_/cache/` | `$HOME/Library/Caches/_project_path_/`              |
+| `configDir`         | `$XDG_CONFIG_HOME/_project_path_`  or `~/.config/_project_path_/`   | `{SpecialFolder.ApplicationData}/_project_path_/`            | `$HOME/Library/Preferences/_project_path_/`         |
+| `dataDir`           | `$XDG_DATA_HOME/_project_path_` or `~/.local/share/_project_path_/` | `{SpecialFolder.ApplicationData}/_project_path_/`            | `$HOME/Library/Application Support/_project_path_/` |
+| `dataLocalDir`      | `$XDG_DATA_HOME/_project_path_` or `~/.local/share/_project_path_/` | `{SpecialFolder.LocalApplicationData}/_project_path_/`       | `$HOME/Library/Application Support/_project_path_/` |
+| `runtimeDir`        | `$XDG_RUNTIME_DIR/_project_path_`                                   | `null`                                                       | `null`                                              |
 
-The specific value of `_yourprojectname_` depends on the factory method used to create a `ProjectDirectories` instance:
+The specific value of `_project_path_` is computed by the
 
-| Factory method              | Example project name          | Value on Linux | Value on Windows | Value on macOS                |
-| --------------------------- | ----------------------------- | -------------- | ---------------- | ----------------------------- |
-| `fromUnprocessedString`     | `"FooBar-App"`                | `"FooBar-App"` | `"FooBar-App"`   | `"FooBar-App"`                |
-| `fromProjectName`           | `"FooBar App"`                | `"foobar-app"` | `"FooBar App"`   | `"FooBar App"`                |
-| `fromQualifiedProjectName`  | `"org.foobar-corp.FooBarApp"` | `"foobarapp"`  | `"FooBarApp"`    | `"org.foobar-corp.FooBarApp"` |
+    ProjectDirectories.from(String qualifier, String organization, String project)
+
+method and varies across operating systems. As an example, calling
+
+    ProjectDirectories.from("org" /*qualifier*/, "Baz Corp" /*organization*/, "Foo Bar-App" /*project*/)
+
+results in the following values:
+
+
+| Value on Linux | Value on Windows         | Value on macOS               |
+| -------------- | ------------------------ | ---------------------------- |
+| `"foobar-app"` | `"Baz Corp/Foo Bar-App"` | `"org.Baz-Corp.Foo-Bar-App"` |
+
+The `ProjectDirectories.fromPath` method allows the creation of `ProjectDirs` instances directly from a project path.
+This argument is used verbatim and is not adapted to operating system standards.
+The use of `ProjectDirectories.fromPath` is heavily discouraged, as its results will not follow operating system standards on at least two of three platforms.
 
 ## Versioning
 
@@ -121,12 +133,16 @@ The version number of this library consists of a whole number, which is incremen
 | `picturesDir`           | `pictureDir`          |
 | `templatesDir`          | `templateDir`         |
 | `videosDir`             | `videoDir`            |
-| `projectDataDir`        | `projectDataLocalDir` |
-| `projectDataRoamingDir` | `projectDataDir`      |
+
+`ProjectDirectories` factory methods have been overhauled and replaced with a single `from(String qualifier, String organization, String project)` method
 
 - Changes to the selection of local/roaming data directories
-  - `dataDir` and `projectDataDir` selects the roaming data directory on Windows (no change on Linux or macOS)
-  - `dataLocalDir` and `projectDataLocalDir` selects the local data directory on Windows (no change on Linux or macOS)
+  - `dataDir` and selects the roaming data directory on Windows (no change on Linux or macOS)
+  - `dataLocalDir` and selects the local data directory on Windows (no change on Linux or macOS)
+
+- `ProjectDirectories` received a `runtimeDir` field
+
+- `ProjectDirectories` field names dropped the `project` prefix
 
 - Changes to the directory for executables
   - Support for `executableDir` has been dropped on macOS

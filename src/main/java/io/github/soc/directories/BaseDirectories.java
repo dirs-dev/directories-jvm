@@ -39,7 +39,7 @@ public final class BaseDirectories {
         dataDir       = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir, "/.local/share/");
         dataLocalDir  = dataDir;
         executableDir = linuxExecutableDir(homeDir, dataDir);
-        runtimeDir    = System.getenv("XDG_RUNTIME_DIR");
+        runtimeDir    = linuxRuntimeDir(homeDir, null);
         desktopDir    = defaultIfNullOrEmpty(runXDGUserDir("DESKTOP"),      homeDir, "/Desktop/");
         documentDir   = defaultIfNullOrEmpty(runXDGUserDir("DOCUMENTS"),    homeDir, "/Documents/");
         downloadDir   = defaultIfNullOrEmpty(runXDGUserDir("DOWNLOAD"),     homeDir, "/Downloads/");

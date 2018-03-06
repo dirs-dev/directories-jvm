@@ -7,105 +7,120 @@ import static io.github.soc.directories.Util.*;
 public final class ProjectDirectories {
 
   private ProjectDirectories(
-    final String projectName,
-    final String projectCacheDir,
-    final String projectConfigDir,
-    final String projectDataDir,
-    final String projectDataLocalDir) {
+    final String projectPath,
+    final String cacheDir,
+    final String configDir,
+    final String dataDir,
+    final String dataLocalDir,
+    final String runtimeDir) {
 
-    requireNonNull(projectName);
+    requireNonNull(projectPath);
 
-    this.projectName         = projectName;
-    this.projectCacheDir     = projectCacheDir;
-    this.projectConfigDir    = projectConfigDir;
-    this.projectDataDir      = projectDataDir;
-    this.projectDataLocalDir = projectDataLocalDir;
+    this.projectPath  = projectPath;
+    this.cacheDir     = cacheDir;
+    this.configDir    = configDir;
+    this.dataDir      = dataDir;
+    this.dataLocalDir = dataLocalDir;
+    this.runtimeDir   = runtimeDir;
   }
 
-  public final String projectName;
-  public final String projectCacheDir;
-  public final String projectConfigDir;
-  public final String projectDataDir;
-  public final String projectDataLocalDir;
+  public final String projectPath;
+  public final String cacheDir;
+  public final String configDir;
+  public final String dataDir;
+  public final String dataLocalDir;
+  public final String runtimeDir;
 
-  public static ProjectDirectories fromUnprocessedString(String value) {
+  public static ProjectDirectories fromPath(String path) {
+    String path_ = path + '/';
     String homeDir;
-    String projectCacheDir;
-    String projectConfigDir;
-    String projectDataDir;
-    String projectDataLocalDir;
+    String cacheDir;
+    String configDir;
+    String dataDir;
+    String dataLocalDir;
+    String runtimeDir = null;
     switch (operatingSystem) {
       case LIN:
       case BSD:
-        homeDir             = System.getenv("HOME");
-        projectCacheDir     = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir + "/.cache/",       value + "/");
-        projectConfigDir    = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir + "/.config/",      value + "/");
-        projectDataDir      = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir + "/.local/share/", value + "/");
-        projectDataLocalDir = projectDataDir;
+        homeDir      = System.getenv("HOME");
+        cacheDir     = defaultIfNullOrEmptyExtended(System.getenv("XDG_CACHE_HOME"),  '/' + path_, homeDir + "/.cache/",       path_);
+        configDir    = defaultIfNullOrEmptyExtended(System.getenv("XDG_CONFIG_HOME"), '/' + path_, homeDir + "/.config/",      path_);
+        dataDir      = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"),   '/' + path_, homeDir + "/.local/share/", path_);
+        dataLocalDir = dataDir;
+        runtimeDir   = linuxRuntimeDir(homeDir, path_);
         break;
       case MAC:
-        homeDir             = System.getenv("HOME");
-        projectCacheDir     = homeDir + "/Library/Caches/"              + value + "/";
-        projectConfigDir    = homeDir + "/Library/Preferences/"         + value + "/";
-        projectDataDir      = homeDir + "/Library/Application Support/" + value + "/";
-        projectDataLocalDir = projectDataDir;
+        homeDir      = System.getenv("HOME");
+        cacheDir     = homeDir + "/Library/Caches/"              + path_;
+        configDir    = homeDir + "/Library/Preferences/"         + path_;
+        dataDir      = homeDir + "/Library/Application Support/" + path_;
+        dataLocalDir = dataDir;
         break;
       case WIN:
-        projectDataDir      = runPowerShellCommand("ApplicationData") + "/" + value + "/";
-        projectDataLocalDir = runPowerShellCommand("LocalApplicationData") + "/" + value + "/";
-        projectConfigDir    = projectDataDir;
-        projectCacheDir     = projectDataDir + "cache/";
+        dataDir      = runPowerShellCommand("ApplicationData")      + '/' + path_;
+        dataLocalDir = runPowerShellCommand("LocalApplicationData") + '/' + path_;
+        configDir    = dataDir;
+        cacheDir     = dataDir + "cache/";
         break;
       default:
         throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
     }
-    return new ProjectDirectories(value, projectCacheDir, projectConfigDir, projectDataDir, projectDataLocalDir);
+    return new ProjectDirectories(path_, cacheDir, configDir, dataDir, dataLocalDir, runtimeDir);
   }
 
-  public static ProjectDirectories fromQualifiedProjectName(String qualifiedProjectName) {
-    String name;
+  public static ProjectDirectories from(String qualifier, String organization, String project) {
+    String path;
+    StringBuilder buf;
+    boolean orgPresent;
+    boolean projPresent;
     switch (operatingSystem) {
       case LIN:
       case BSD:
-        name = stripQualification(qualifiedProjectName).toLowerCase(Locale.ENGLISH).trim();
+        path = trimLowercaseReplaceWhitespace(project, "");
         break;
       case MAC:
-        name = qualifiedProjectName;
-        break;
+        buf = new StringBuilder(Math.max(stringLength(qualifier) + stringLength(organization) + stringLength(project), 0));
+        boolean qualPresent = !isNullOrEmpty(qualifier);
+                orgPresent  = !isNullOrEmpty(organization);
+                projPresent = !isNullOrEmpty(project);
+        if (qualPresent)
+          buf.append(qualifier.replace(' ', '-'));
+          if (orgPresent || projPresent)
+            buf.append('.');
+        if (orgPresent)
+          buf.append(organization.replace(' ', '-'));
+          if (projPresent)
+            buf.append('.');
+        if (!isNullOrEmpty(project))
+          buf.append(project.replace(' ', '-'));
+        path = buf.toString();
       case WIN:
-        name = stripQualification(qualifiedProjectName);
+        buf = new StringBuilder(Math.max(stringLength(organization) + stringLength(project), 0));
+        orgPresent  = !isNullOrEmpty(organization);
+        projPresent = !isNullOrEmpty(project);
+        if (orgPresent)
+          buf.append(organization);
+          if (projPresent)
+            buf.append('/');
+        if (projPresent)
+          buf.append(project);
+        path = buf.toString();
         break;
       default:
         throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
       }
-    return fromUnprocessedString(name);
-  }
-
-  public static ProjectDirectories fromProjectName(String projectName) {
-    String name;
-    switch (operatingSystem) {
-      case LIN:
-      case BSD:
-        name = trimAndReplaceSpacesWithHyphensThenLowerCase(projectName);
-        break;
-      case MAC:
-      case WIN:
-        name = projectName;
-        break;
-      default:
-        throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
-      }
-    return fromUnprocessedString(name);
+    return fromPath(path);
   }
 
   @Override
   public String toString() {
     return "ProjectDirectories on operating system '" + operatingSystemName + "':" +
-        "  projectName           = '" + projectName + '\'' +
-        "  projectCacheDir       = '" + projectCacheDir + '\'' +
-        "  projectConfigDir      = '" + projectConfigDir + '\'' +
-        "  projectDataDir        = '" + projectDataDir + '\'' +
-        "  projectDataRoamingDir = '" + projectDataLocalDir + '\'';
+        "  projectPath  = '" + projectPath + '\'' +
+        "  cacheDir     = '" + cacheDir + '\'' +
+        "  configDir    = '" + configDir + '\'' +
+        "  dataDir      = '" + dataDir + '\'' +
+        "  dataLocalDir = '" + dataLocalDir + '\'' +
+        "  runtimeDir   = '" + runtimeDir + '\'';
   }
 
   @Override
@@ -115,24 +130,28 @@ public final class ProjectDirectories {
 
     ProjectDirectories that = (ProjectDirectories) o;
 
-    if (!projectName.equals(that.projectName)) return false;
-    if (projectCacheDir   != null ? !projectCacheDir   .equals(that.projectCacheDir)     : that.projectCacheDir != null)
+    if (!projectPath.equals(that.projectPath)) return false;
+    if (cacheDir     != null ? !cacheDir    .equals(that.cacheDir)     : that.cacheDir != null)
       return false;
-    if (projectConfigDir  != null ? !projectConfigDir  .equals(that.projectConfigDir)    : that.projectConfigDir != null)
+    if (configDir    != null ? !configDir   .equals(that.configDir)    : that.configDir != null)
       return false;
-    if (projectDataDir    != null ? !projectDataDir    .equals(that.projectDataDir)      : that.projectDataDir != null)
+    if (dataDir      != null ? !dataDir     .equals(that.dataDir)      : that.dataDir != null)
       return false;
-    return
-      projectDataLocalDir != null ? projectDataLocalDir.equals(that.projectDataLocalDir) : that.projectDataLocalDir == null;
+    if (dataLocalDir != null ? !dataLocalDir.equals(that.dataLocalDir) : that.dataLocalDir != null)
+      return false;
+    if (runtimeDir   != null ? !runtimeDir  .equals(that.runtimeDir)   : that.runtimeDir != null)
+      return false;
+    return true;
   }
 
   @Override
   public int hashCode() {
-    int result = projectName.hashCode();
-    result = 31 * result + (projectCacheDir     != null ? projectCacheDir    .hashCode() : 0);
-    result = 31 * result + (projectConfigDir    != null ? projectConfigDir   .hashCode() : 0);
-    result = 31 * result + (projectDataDir      != null ? projectDataDir     .hashCode() : 0);
-    result = 31 * result + (projectDataLocalDir != null ? projectDataLocalDir.hashCode() : 0);
+    int result = projectPath.hashCode();
+    result = 31 * result + (cacheDir     != null ? cacheDir    .hashCode() : 0);
+    result = 31 * result + (configDir    != null ? configDir   .hashCode() : 0);
+    result = 31 * result + (dataDir      != null ? dataDir     .hashCode() : 0);
+    result = 31 * result + (dataLocalDir != null ? dataLocalDir.hashCode() : 0);
+    result = 31 * result + (runtimeDir   != null ? runtimeDir  .hashCode() : 0);
     return result;
   }
 }

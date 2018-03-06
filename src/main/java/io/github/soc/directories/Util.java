@@ -40,10 +40,10 @@ final class Util {
     return value == null || value.isEmpty();
   }
 
-  static String defaultIfNullOrEmpty(String value, String fallbackValue, String arg) {
-    requireNonNull(arg);
+  static String defaultIfNullOrEmpty(String value, String fallbackValue, String fallbackArg) {
+    requireNonNull(fallbackArg);
     if (isNullOrEmpty(value))
-      return fallbackValue + arg;
+      return fallbackValue + fallbackArg;
     else
       return value;
   }
@@ -58,6 +58,15 @@ final class Util {
       return value;
   }
 
+  static String linuxRuntimeDir(String homeDir, String path) {
+    String runDir = System.getenv("XDG_RUNTIME_DIR");
+    if (isNullOrEmpty(runDir))
+      return null;
+    else if (path == null)
+      return runDir;
+    else
+      return runDir + '/' + path;
+  }
   static String linuxExecutableDir(String homeDir, String dataDir) {
     String binDir = System.getenv("XDG_BIN_HOME");
     if (isNullOrEmpty(binDir))
@@ -124,14 +133,22 @@ final class Util {
     return value.substring(startingPosition);
   }
 
-  static String trimAndReplaceSpacesWithHyphensThenLowerCase(String value) {
+  static int stringLength(String value) {
+    if (value == null)
+      return -1;
+    else
+      return value.length();
+  }
+
+  static String trimLowercaseReplaceWhitespace(String value, String replacement) {
     StringBuilder buf = new StringBuilder(value.length());
     boolean charsBefore = false;
     int codePointCount = value.codePointCount(0, value.length());
+    boolean replace = !replacement.isEmpty();
     for (int index = 0; index < codePointCount; index += 1) {
       int codepoint = value.codePointAt(index);
       if (codepoint == ' ') {
-        if (charsBefore && codePointExistsAndNotSpace(value, codePointCount, index+1)) {
+        if (charsBefore && replace && codePointExistsAndNotSpace(value, codePointCount, index+1)) {
           buf.append('-');
           charsBefore = false;
         }
