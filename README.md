@@ -39,15 +39,21 @@ compile 'io.github.soc:directories:6'
 "io.github.soc" % "directories" % "6"
 ```
 
+The library itself is built against Java 6 to allow for the widest possible usage scenarios.
+It can be used on any Java version >= 6.
+
 #### Example
 
-Library run by a user with user name "my_user_name" on Linux:
+Library run by a user named Alice:
 
 ```java
 import io.github.soc.directories.ProjectDirectories;
-ProjectDirectories myProjDirs      = ProjectDirectories.fromProjectName("My Project");
-String             myProjConfigDir = myProjDirs.projectConfigDir;
-System.out.println(myProjConfigDir); // "/home/my_user_name/.config/my-project/"
+ProjectDirectories projDirs      = ProjectDirectories.from("com", "Foo Corp",  "Bar App");
+String             projConfigDir = projDirs.configDir;
+System.out.println(projConfigDir);
+// Linux:   /home/alice/.config/barapp/
+// Windows: C:\Users\Alice\AppData\Roaming\Foo Corp\Bar App
+// macOS:   /Users/Alice/Library/Preferences/com.Foo-Corp.Bar-App
 ```
 
 ## Features
@@ -117,7 +123,7 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
-### 7-pre
+### 6
 
 - More consistent and intuitive naming scheme (all names are singular now)
 
@@ -147,7 +153,3 @@ The version number of this library consists of a whole number, which is incremen
 - Changes to the directory for executables
   - Support for `executableDir` has been dropped on macOS
   - The value of `executableDir` considers `$XDG_BIN_HOME` now, before falling back to `$XDG_DATA_HOME/../bin` and `$HOME/.local/bin`
-
-### 6
-
-Current stable version.
