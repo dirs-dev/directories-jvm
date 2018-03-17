@@ -2,18 +2,23 @@
 
 ## Introduction
 
-- A tiny library (8kB)
-- with minimal public API (3 classes, 6 methods, 21 fields)
-- for convenient access to standardized directories
+- a tiny library (9kB) with a minimal API
+- that provides the platform-specific, user-accessible locations
+- for retrieving and storing configuration, cache and other data
 - on Linux, Windows (≥ 7), macOS and BSD
-- running on the JVM
 
 The library provides the location of directories by leveraging the mechanisms defined by
 - the [XDG base directory](https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html) and
   the [XDG user directory](https://www.freedesktop.org/wiki/Software/xdg-user-dirs/) specifications on Linux,
-- the [SpecialFolder](https://msdn.microsoft.com/en-us/library/system.environment.specialfolder.aspx) enumeration on Windows, and
+- the [SpecialFolder](https://msdn.microsoft.com/en-us/library/system.environment.specialfolder.aspx) API on Windows, and
 - the [Standard Directories](https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW6)
-  on macOS.
+  guidelines on macOS.
+
+## Platforms
+
+This library is written in Java, and runs on the JVM (≥ 6).
+
+A version of this library implemented in Rust is provided by [directories-rs](https://github.com/soc/directories-rs).
 
 ## Usage
 
