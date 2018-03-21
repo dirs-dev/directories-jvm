@@ -188,12 +188,12 @@ public final class BaseDirectories {
    * </tr>
    * <tr>
    * <td>macOS</td>
-   * <td>{@code null}</td>
+   * <td>-</td>
    * <td>{@code null}</td>
    * </tr>
    * <tr>
    * <td>Windows</td>
-   * <td>{@code null}</td>
+   * <td>-</td>
    * <td>{@code null}</td>
    * </tr>
    * </table>
@@ -217,12 +217,12 @@ public final class BaseDirectories {
    * </tr>
    * <tr>
    * <td>macOS</td>
-   * <td>{@code null}</td>
+   * <td>-</td>
    * <td>{@code null}</td>
    * </tr>
    * <tr>
    * <td>Windows</td>
-   * <td>{@code null}</td>
+   * <td>-</td>
    * <td>{@code null}</td>
    * </tr>
    * </table>
