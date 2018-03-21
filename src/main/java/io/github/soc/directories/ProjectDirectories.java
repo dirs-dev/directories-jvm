@@ -56,7 +56,7 @@ public final class ProjectDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $XDG_CACHE_HOME}/{@code <project_path>} or {@code $HOME}/.cache/{@code <project_path>}</td>
    * <td>/home/alice/.cache/barapp</td>
    * </tr>
@@ -86,7 +86,7 @@ public final class ProjectDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $XDG_CONFIG_HOME}/{@code <project_path>} or {@code $HOME}/.config/{@code <project_path>}</td>
    * <td>/home/alice/.config/barapp</td>
    * </tr>
@@ -116,7 +116,7 @@ public final class ProjectDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $XDG_DATA_HOME}/{@code <project_path>} or {@code $HOME}/.local/share/{@code <project_path>}</td>
    * <td>/home/alice/.local/share/barapp</td>
    * </tr>
@@ -146,7 +146,7 @@ public final class ProjectDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $XDG_DATA_HOME}/{@code <project_path>} or {@code $HOME}/.local/share/{@code <project_path>}</td>
    * <td>/home/alice/.local/share/barapp</td>
    * </tr>
@@ -176,7 +176,7 @@ public final class ProjectDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $XDG_RUNTIME_DIR}</td>
    * <td>/run/user/1001/barapp</td>
    * </tr>

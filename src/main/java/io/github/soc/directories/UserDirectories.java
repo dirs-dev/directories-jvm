@@ -35,7 +35,7 @@ public final class UserDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $HOME}</td>
    * <td>/home/alice</td>
    * </tr>
@@ -64,7 +64,7 @@ public final class UserDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code XDG_MUSIC_DIR}</td>
    * <td>/home/alice/Music</td>
    * </tr>
@@ -93,7 +93,7 @@ public final class UserDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code XDG_DESKTOP_DIR}</td>
    * <td>/home/alice/Desktop</td>
    * </tr>
@@ -122,7 +122,7 @@ public final class UserDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code XDG_DOCUMENTS_DIR}</td>
    * <td>/home/alice/Documents</td>
    * </tr>
@@ -151,7 +151,7 @@ public final class UserDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code XDG_DOWNLOAD_DIR}</td>
    * <td>/home/alice/Downloads</td>
    * </tr>
@@ -180,7 +180,7 @@ public final class UserDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $XDG_DATA_HOME}/fonts or {@code $HOME}/.local/share/fonts</td>
    * <td>/home/alice/.local/share/fonts</td>
    * </tr>
@@ -209,7 +209,7 @@ public final class UserDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code XDG_PICTURES_DIR}</td>
    * <td>/home/alice/Pictures</td>
    * </tr>
@@ -238,7 +238,7 @@ public final class UserDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code XDG_PUBLICSHARE_DIR}</td>
    * <td>/home/alice/Public</td>
    * </tr>
@@ -267,7 +267,7 @@ public final class UserDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code XDG_TEMPLATES_DIR}</td>
    * <td>/home/alice/Templates</td>
    * </tr>
@@ -296,7 +296,7 @@ public final class UserDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code XDG_VIDEOS_DIR}</td>
    * <td>/home/alice/Videos</td>
    * </tr>

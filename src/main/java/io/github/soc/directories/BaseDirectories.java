@@ -37,7 +37,7 @@ public final class BaseDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $HOME}</td>
    * <td>/home/alice</td>
    * </tr>
@@ -66,7 +66,7 @@ public final class BaseDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $XDG_CACHE_HOME} or {@code $HOME/}.cache</td>
    * <td>/home/alice/.cache</td>
    * </tr>
@@ -95,7 +95,7 @@ public final class BaseDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $XDG_CONFIG_HOME} or {@code $HOME}/.config</td>
    * <td>/home/alice/.config</td>
    * </tr>
@@ -124,7 +124,7 @@ public final class BaseDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $XDG_DATA_HOME} or {@code $HOME}/.local/share</td>
    * <td>/home/alice/.local/share</td>
    * </tr>
@@ -153,7 +153,7 @@ public final class BaseDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $XDG_DATA_HOME} or {@code $HOME}/.local/share</td>
    * <td>/home/alice/.local/share</td>
    * </tr>
@@ -182,7 +182,7 @@ public final class BaseDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $XDG_BIN_HOME} or {@code $XDG_DATA_HOME}/../bin or {@code $HOME}/.local/bin</td>
    * <td>/home/alice/.local/bin</td>
    * </tr>
@@ -211,7 +211,7 @@ public final class BaseDirectories {
    * <th align="left">Example</th>
    * </tr>
    * <tr>
-   * <td>Linux</td>
+   * <td>Linux / BSD</td>
    * <td>{@code $XDG_RUNTIME_DIR}</td>
    * <td>/run/user/1001/</td>
    * </tr>
