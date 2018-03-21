@@ -162,8 +162,8 @@ public final class UserDirectories {
    * </tr>
    * <tr>
    * <td>Windows</td>
-   * <td>{@code {FOLDERID_Downloads}}</td>
-   * <td>C:\Users\Alice\Downloads</td>
+   * <td>-</td>
+   * <td>{@code null}</td>
    * </tr>
    * </table>
    */
@@ -191,7 +191,7 @@ public final class UserDirectories {
    * </tr>
    * <tr>
    * <td>Windows</td>
-   * <td>{@code null}</td>
+   * <td>-</td>
    * <td>{@code null}</td>
    * </tr>
    * </table>
@@ -249,8 +249,8 @@ public final class UserDirectories {
    * </tr>
    * <tr>
    * <td>Windows</td>
-   * <td>{@code {FOLDERID_Public}}</td>
-   * <td>C:\Users\Public</td>
+   * <td>-</td>
+   * <td>{@code null}</td>
    * </tr>
    * </table>
    */
@@ -273,7 +273,7 @@ public final class UserDirectories {
    * </tr>
    * <tr>
    * <td>macOS</td>
-   * <td>{@code null}</td>
+   * <td>-</td>
    * <td>{@code null}</td>
    * </tr>
    * <tr>
