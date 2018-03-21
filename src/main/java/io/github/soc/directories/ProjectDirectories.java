@@ -1,7 +1,5 @@
 package io.github.soc.directories;
 
-import java.util.Locale;
-
 import static io.github.soc.directories.Util.*;
 
 /** <code>ProjectDirectories</code> computes the location of cache, config or data directories for a specific application,
@@ -122,9 +120,9 @@ public final class ProjectDirectories {
       case LIN:
       case BSD:
         homeDir      = System.getProperty("user.home");
-        cacheDir     = defaultIfNullOrEmptyExtended(System.getenv("XDG_CACHE_HOME"),  '/' + path, homeDir + "/.cache/",       path);
-        configDir    = defaultIfNullOrEmptyExtended(System.getenv("XDG_CONFIG_HOME"), '/' + path, homeDir + "/.config/",      path);
-        dataDir      = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"),   '/' + path, homeDir + "/.local/share/", path);
+        cacheDir     = defaultIfNullOrEmptyExtended(System.getenv("XDG_CACHE_HOME"),  path, homeDir + "/.cache/",       path);
+        configDir    = defaultIfNullOrEmptyExtended(System.getenv("XDG_CONFIG_HOME"), path, homeDir + "/.config/",      path);
+        dataDir      = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"),   path, homeDir + "/.local/share/", path);
         dataLocalDir = dataDir;
         runtimeDir   = linuxRuntimeDir(homeDir, path);
         break;
@@ -136,12 +134,12 @@ public final class ProjectDirectories {
         dataLocalDir = dataDir;
         break;
       case WIN:
-        String appData      = runPowerShellCommand("ApplicationData") + '/' + path;
-        String appDataLocal = runPowerShellCommand("LocalApplicationData") + '/' + path;
-        dataDir      = appData      + "/data";
-        dataLocalDir = appDataLocal + "/data";
-        configDir    = dataDir      + "/config";
-        cacheDir     = dataDir      + "/cache";
+        String appDataRoaming = runPowerShellCommand("ApplicationData") + '/' + path;
+        String appDataLocal   = runPowerShellCommand("LocalApplicationData") + '/' + path;
+        dataDir      = appDataRoaming + "/data";
+        dataLocalDir = appDataLocal   + "/data";
+        configDir    = appDataRoaming + "/config";
+        cacheDir     = appDataLocal   + "/cache";
         break;
       default:
         throw new UnsupportedOperatingSystemException("Project directories are not supported on " + operatingSystemName);
@@ -215,13 +213,13 @@ public final class ProjectDirectories {
 
   @Override
   public String toString() {
-    return "ProjectDirectories on operating system '" + operatingSystemName + "':" +
-        "  projectPath  = '" + projectPath + '\'' +
-        "  cacheDir     = '" + cacheDir + '\'' +
-        "  configDir    = '" + configDir + '\'' +
-        "  dataDir      = '" + dataDir + '\'' +
-        "  dataLocalDir = '" + dataLocalDir + '\'' +
-        "  runtimeDir   = '" + runtimeDir + '\'';
+    return "ProjectDirectories on operating system '" + operatingSystemName + "':\n" +
+        "  projectPath  = '" + projectPath + "\'\n" +
+        "  cacheDir     = '" + cacheDir + "\'\n" +
+        "  configDir    = '" + configDir + "\'\n" +
+        "  dataDir      = '" + dataDir + "\'\n" +
+        "  dataLocalDir = '" + dataLocalDir + "\'\n" +
+        "  runtimeDir   = '" + runtimeDir + "\'\n";
   }
 
   @Override

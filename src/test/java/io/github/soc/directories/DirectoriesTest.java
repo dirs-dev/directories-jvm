@@ -1,11 +1,10 @@
 package io.github.soc.directories;
 
-import        org.junit.Test;
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
-final class DirectoriesTest {
+public final class DirectoriesTest {
   @Test
-  void testBaseDirectories() {
+  public void testBaseDirectories() {
     System.out.println("BaseDirectories:");
     System.out.println("  homeDir:       " + BaseDirectories.homeDir);
     System.out.println("  cacheDir:      " + BaseDirectories.cacheDir);
@@ -17,7 +16,7 @@ final class DirectoriesTest {
   }
 
   @Test
-  void testUserDirectoriesFrom() {
+  public void testUserDirectories() {
     System.out.println("UserDirectories:");
     System.out.println("  audioDir:    " + UserDirectories.audioDir);
     System.out.println("  desktopDir:  " + UserDirectories.desktopDir);
@@ -31,7 +30,7 @@ final class DirectoriesTest {
   }
 
   @Test
-  void testProjectDirectoriesFrom() {
+  public void testProjectDirectories() {
     ProjectDirectories projDirs = ProjectDirectories.from("org" /*qualifier*/, "Baz Corp" /*organization*/, "Foo Bar-App" /*project*/);
     System.out.println(projDirs);
   }

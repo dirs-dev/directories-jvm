@@ -111,9 +111,9 @@ public final class BaseDirectories {
       case LIN:
       case BSD:
         homeDir       = System.getProperty("user.home");
-        cacheDir      = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir, "/.cache/");
-        configDir     = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir, "/.config/");
-        dataDir       = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir, "/.local/share/");
+        cacheDir      = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir, "/.cache");
+        configDir     = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir, "/.config");
+        dataDir       = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir, "/.local/share");
         dataLocalDir  = dataDir;
         executableDir = linuxExecutableDir(homeDir, dataDir);
         runtimeDir    = linuxRuntimeDir(homeDir, null);

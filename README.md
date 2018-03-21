@@ -31,17 +31,17 @@ Add the library as a dependency to your project:
 <dependency>
   <groupId>io.github.soc</groupId>
   <artifactId>directories</artifactId>
-  <version>7</version>
+  <version>8</version>
 </dependency>
 ```
 ##### Gradle
 ```groovy
-compile 'io.github.soc:directories:7'
+compile 'io.github.soc:directories:8'
 ```
 
 ##### SBT
 ```scala
-"io.github.soc" % "directories" % "7"
+"io.github.soc" % "directories" % "8"
 ```
 
 The library itself is built against Java 6 to allow for the widest possible usage scenarios.
@@ -174,7 +174,15 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
-### 7 – current stable version
+### 8 – current stable version
+
+- Windows:
+  - Fixed incorrect `ProjectDirectories` paths for `cacheDir`, `configDir` and `dataDir`
+- Linux:
+  - Fixed incorrect `ProjectDirectories` paths for `cacheDir`, `configDir`, `dataDir` and `dataLocalDir` if XDG environment variables are set
+  - Fixed incorrect `UserDirectories` paths for `fontDir` if XDG environment variables are set
+
+### 7 – do not use
 
 - Split `BaseDirectories` into `BaseDirectories` (cache, config, ...) and `UserDirectories` (audio,
   video, ...)

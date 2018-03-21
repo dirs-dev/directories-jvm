@@ -145,7 +145,7 @@ public final class UserDirectories {
         desktopDir    = runXDGUserDir("DESKTOP");
         documentDir   = runXDGUserDir("DOCUMENTS");
         downloadDir   = runXDGUserDir("DOWNLOAD");
-        fontDir       = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"), "/fonts/",  homeDir, "/.local/share/fonts/");
+        fontDir       = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"), "/fonts",  homeDir, "/.local/share/fonts");
         pictureDir    = runXDGUserDir("PICTURES");
         publicDir     = runXDGUserDir("PUBLICSHARE");
         templateDir   = runXDGUserDir("TEMPLATES");
@@ -153,15 +153,15 @@ public final class UserDirectories {
         break;
       case MAC:
         homeDir       = System.getProperty("user.home");
-        audioDir      = homeDir + "/Music/";
-        desktopDir    = homeDir + "/Desktop/";
-        documentDir   = homeDir + "/Documents/";
-        downloadDir   = homeDir + "/Downloads/";
-        fontDir       = homeDir + "/Library/Fonts/";
-        pictureDir    = homeDir + "/Pictures/";
-        publicDir     = homeDir + "/Public/";
+        audioDir      = homeDir + "/Music";
+        desktopDir    = homeDir + "/Desktop";
+        documentDir   = homeDir + "/Documents";
+        downloadDir   = homeDir + "/Downloads";
+        fontDir       = homeDir + "/Library/Fonts";
+        pictureDir    = homeDir + "/Pictures";
+        publicDir     = homeDir + "/Public";
         templateDir   = null;
-        videoDir      = homeDir + "/Movies/";
+        videoDir      = homeDir + "/Movies";
         break;
       case WIN:
         homeDir       = runPowerShellCommand("UserProfile");

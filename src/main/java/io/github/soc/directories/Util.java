@@ -43,7 +43,7 @@ final class Util {
   static String defaultIfNullOrEmpty(String value, String fallbackValue, String fallbackArg) {
     requireNonNull(fallbackArg);
     if (isNullOrEmpty(value))
-      return fallbackValue + fallbackArg;
+      return ensureSingleSlash(fallbackValue, fallbackArg);
     else
       return value;
   }
@@ -53,9 +53,25 @@ final class Util {
     requireNonNull(fallbackValue);
     requireNonNull(fallbackArg);
     if (isNullOrEmpty(value))
-      return fallbackValue + fallbackArg;
+      return ensureSingleSlash(fallbackValue, fallbackArg);
     else
-      return value;
+      return ensureSingleSlash(value, valueArg);
+  }
+
+  static String ensureSingleSlash(String arg1, String arg2) {
+    boolean arg1Slash = arg1.endsWith("/");
+    boolean slashArg2 = arg2.startsWith("/");
+    String newArg2 = arg2;
+    if (arg1Slash && slashArg2) {
+      StringBuilder buf = new StringBuilder(arg1.length() + arg2.length() - 1);
+      buf.append(arg1, 0, arg1.length()-1).append(arg2);
+      return buf.toString();
+    } else if (!arg1Slash && !slashArg2) {
+      StringBuilder buf = new StringBuilder(arg1.length() + arg2.length() + 1);
+      buf.append(arg1).append('/').append(arg2);
+      return buf.toString();
+    } else
+      return arg1 + arg2;
   }
 
   static String linuxRuntimeDir(String homeDir, String path) {
