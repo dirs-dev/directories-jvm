@@ -3,6 +3,7 @@ package io.github.soc.directories;
 import org.junit.Test;
 
 public final class DirectoriesTest {
+
   @Test
   public void testBaseDirectories() {
     System.out.println("BaseDirectories:");

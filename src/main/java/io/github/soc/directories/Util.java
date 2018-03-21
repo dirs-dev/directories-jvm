@@ -1,11 +1,12 @@
 package io.github.soc.directories;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Locale;
 
 final class Util {
+
   private Util() {
     throw new Error();
   }
@@ -64,7 +65,7 @@ final class Util {
     String newArg2 = arg2;
     if (arg1Slash && slashArg2) {
       StringBuilder buf = new StringBuilder(arg1.length() + arg2.length() - 1);
-      buf.append(arg1, 0, arg1.length()-1).append(arg2);
+      buf.append(arg1, 0, arg1.length() - 1).append(arg2);
       return buf.toString();
     } else if (!arg1Slash && !slashArg2) {
       StringBuilder buf = new StringBuilder(arg1.length() + arg2.length() + 1);
@@ -83,6 +84,7 @@ final class Util {
     else
       return runDir + '/' + path;
   }
+
   static String linuxExecutableDir(String homeDir, String dataDir) {
     String binDir = System.getenv("XDG_BIN_HOME");
     if (isNullOrEmpty(binDir))
@@ -100,7 +102,7 @@ final class Util {
       e1.printStackTrace();
       return null;
     }
-    
+
     BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
     try {
       return reader.readLine();
@@ -112,7 +114,7 @@ final class Util {
       try {
         reader.close();
       } catch (IOException e) {
-      	return null;
+        return null;
       }
     }
   }
@@ -127,7 +129,7 @@ final class Util {
       e1.printStackTrace();
       return null;
     }
-    
+
     BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
     try {
       return reader.readLine();
@@ -139,7 +141,7 @@ final class Util {
       try {
         reader.close();
       } catch (IOException e) {
-    	return null;
+        return null;
       }
     }
   }
@@ -164,7 +166,7 @@ final class Util {
     for (int index = 0; index < codePointCount; index += 1) {
       int codepoint = value.codePointAt(index);
       if (codepoint == ' ') {
-        if (charsBefore && replace && codePointExistsAndNotSpace(value, codePointCount, index+1)) {
+        if (charsBefore && replace && codePointExistsAndNotSpace(value, codePointCount, index + 1)) {
           buf.append('-');
           charsBefore = false;
         }

@@ -2,138 +2,316 @@ package io.github.soc.directories;
 
 import static io.github.soc.directories.Util.*;
 
-/** <code>UserDirectories</code> provides paths of user-facing standard directories, following the conventions of the operating system the library is running on.
-  * <p>
-  * It is a snapshot of the state of the system at the time this class is initialized.
-  *
-  * <h2>Examples</h2>
-  *
-  * All examples on this page are computed with a user named <em>Alice</em>.
-  * <p>
-  * <code style="white-space: pre">
-  * UserDirectories.audioDir;
-  * // Linux:   /home/alice/Music
-  * // Windows: /Users/Alice/Music
-  * // macOS:   C:\Users\Alice\Music
-  * </code>
-  */
+/**
+ * {@code UserDirectories} provides paths of user-facing standard directories, following the conventions of the operating system the library is running on.
+ * <p>
+ * It is a snapshot of the state of the system at the time this class is initialized.
+ *
+ * <h2>Examples</h2>
+ * <p>
+ * All examples on this page are computed with a user named <em>Alice</em>.
+ * <p>
+ * Example of {@link UserDirectories#audioDir} value in different operating systems:
+ * <ul>
+ * <li><b>Linux / BSD:</b> {@code /home/alice/Music}</li>
+ * <li><b>macOS:</b> {@code /Users/Alice/Music}</li>
+ * <li><b>Windows:</b> {@code C:\Users\Alice\Music}</li>
+ * </ul>
+ */
 public final class UserDirectories {
 
   private UserDirectories() {
     throw new Error();
   }
-  /** Returns the path to the user's home directory.
-    * <p>
-    * <code style="white-space: pre">
-    * |Platform | Value                | Example        |
-    * | ------- | -------------------- | -------------- |
-    * | Linux   | `$HOME`              | /home/alice    |
-    * | macOS   | `$HOME`              | /Users/Alice   |
-    * | Windows | `{FOLDERID_Profile}` | C:\Users\Alice |
-    * </code>
-    */
+
+  /**
+   * Returns the path to the user's home directory.
+   *
+   * <br><br>
+   * <table border="1" cellpadding="1" cellspacing="0">
+   * <tr>
+   * <th align="left">Platform</th>
+   * <th align="left">Value</th>
+   * <th align="left">Example</th>
+   * </tr>
+   * <tr>
+   * <td>Linux / BSD</td>
+   * <td>{@code $HOME}</td>
+   * <td>/home/alice</td>
+   * </tr>
+   * <tr>
+   * <td>macOS</td>
+   * <td>{@code $HOME}</td>
+   * <td>/Users/Alice</td>
+   * </tr>
+   * <tr>
+   * <td>Windows</td>
+   * <td>{@code {FOLDERID_Profile}}</td>
+   * <td>C:\Users\Alice</td>
+   * </tr>
+   * </table>
+   */
   public static final String homeDir;
 
-  // user directories
-
-  /** Returns the path to the user's audio directory.
-    * <p>
-    * <code style="white-space: pre">
-    * |Platform | Value              | Example              |
-    * | ------- | ------------------ | -------------------- |
-    * | Linux   | `XDG_MUSIC_DIR`    | /home/alice/Music    |
-    * | macOS   | `$HOME/Music`      | /Users/Alice/Music   |
-    * | Windows | `{FOLDERID_Music}` | C:\Users\Alice\Music |
-    * </code>
-    */
+  /**
+   * Returns the path to the user's audio directory.
+   *
+   * <br><br>
+   * <table border="1" cellpadding="1" cellspacing="0">
+   * <tr>
+   * <th align="left">Platform</th>
+   * <th align="left">Value</th>
+   * <th align="left">Example</th>
+   * </tr>
+   * <tr>
+   * <td>Linux / BSD</td>
+   * <td>{@code XDG_MUSIC_DIR}</td>
+   * <td>/home/alice/Music</td>
+   * </tr>
+   * <tr>
+   * <td>macOS</td>
+   * <td>{@code $HOME}/Music</td>
+   * <td>/Users/Alice/Music</td>
+   * </tr>
+   * <tr>
+   * <td>Windows</td>
+   * <td>{@code {FOLDERID_Music}}</td>
+   * <td>C:\Users\Alice\Music</td>
+   * </tr>
+   * </table>
+   */
   public static final String audioDir;
-  /** Returns the path to the user's desktop directory.
-    * <p>
-    * <code style="white-space: pre">
-    * |Platform | Value                | Example                |
-    * | ------- | -------------------- | ---------------------- |
-    * | Linux   | `XDG_DESKTOP_DIR`    | /home/alice/Desktop    |
-    * | macOS   | `$HOME/Desktop`      | /Users/Alice/Desktop   |
-    * | Windows | `{FOLDERID_Desktop}` | C:\Users\Alice\Desktop |
-    * </code>
-    */
+
+  /**
+   * Returns the path to the user's desktop directory.
+   *
+   * <br><br>
+   * <table border="1" cellpadding="1" cellspacing="0">
+   * <tr>
+   * <th align="left">Platform</th>
+   * <th align="left">Value</th>
+   * <th align="left">Example</th>
+   * </tr>
+   * <tr>
+   * <td>Linux / BSD</td>
+   * <td>{@code XDG_DESKTOP_DIR}</td>
+   * <td>/home/alice/Desktop</td>
+   * </tr>
+   * <tr>
+   * <td>macOS</td>
+   * <td>{@code $HOME}/Desktop</td>
+   * <td>/Users/Alice/Desktop</td>
+   * </tr>
+   * <tr>
+   * <td>Windows</td>
+   * <td>{@code {FOLDERID_Desktop}}</td>
+   * <td>C:\Users\Alice\Desktop</td>
+   * </tr>
+   * </table>
+   */
   public static final String desktopDir;
-  /** Returns the path to the user's document directory.
-    * <p>
-    * <code style="white-space: pre">
-    * |Platform | Value                  | Example                  |
-    * | ------- | ---------------------- | ------------------------ |
-    * | Linux   | `XDG_DOCUMENTS_DIR`    | /home/alice/Documents    |
-    * | macOS   | `$HOME/Documents`      | /Users/Alice/Documents   |
-    * | Windows | `{FOLDERID_Documents}` | C:\Users\Alice\Documents |
-    * </code>
-    */
+
+  /**
+   * Returns the path to the user's document directory.
+   *
+   * <br><br>
+   * <table border="1" cellpadding="1" cellspacing="0">
+   * <tr>
+   * <th align="left">Platform</th>
+   * <th align="left">Value</th>
+   * <th align="left">Example</th>
+   * </tr>
+   * <tr>
+   * <td>Linux / BSD</td>
+   * <td>{@code XDG_DOCUMENTS_DIR}</td>
+   * <td>/home/alice/Documents</td>
+   * </tr>
+   * <tr>
+   * <td>macOS</td>
+   * <td>{@code $HOME}/Documents</td>
+   * <td>/Users/Alice/Documents</td>
+   * </tr>
+   * <tr>
+   * <td>Windows</td>
+   * <td>{@code {FOLDERID_Documents}}</td>
+   * <td>C:\Users\Alice\Documents</td>
+   * </tr>
+   * </table>
+   */
   public static final String documentDir;
-  /** Returns the path to the user's download directory.
-    * <p>
-    * <code style="white-space: pre">
-    * |Platform | Value                  | Example                  |
-    * | ------- | ---------------------- | ------------------------ |
-    * | Linux   | `XDG_DOWNLOAD_DIR`     | /home/alice/Downloads    |
-    * | macOS   | `$HOME/Downloads`      | /Users/Alice/Downloads   |
-    * | Windows | `{FOLDERID_Downloads}` | C:\Users\Alice\Downloads |
-    * </code>
-    */
+
+  /**
+   * Returns the path to the user's download directory.
+   *
+   * <br><br>
+   * <table border="1" cellpadding="1" cellspacing="0">
+   * <tr>
+   * <th align="left">Platform</th>
+   * <th align="left">Value</th>
+   * <th align="left">Example</th>
+   * </tr>
+   * <tr>
+   * <td>Linux / BSD</td>
+   * <td>{@code XDG_DOWNLOAD_DIR}</td>
+   * <td>/home/alice/Downloads</td>
+   * </tr>
+   * <tr>
+   * <td>macOS</td>
+   * <td>{@code $HOME}/Downloads</td>
+   * <td>/Users/Alice/Downloads</td>
+   * </tr>
+   * <tr>
+   * <td>Windows</td>
+   * <td>{@code {FOLDERID_Downloads}}</td>
+   * <td>C:\Users\Alice\Downloads</td>
+   * </tr>
+   * </table>
+   */
   public static final String downloadDir;
-  /** Returns the path to the user's font directory.
-    * <p>
-    * <code style="white-space: pre">
-    * |Platform | Value                                                | Example                        |
-    * | ------- | ---------------------------------------------------- | ------------------------------ |
-    * | Linux   | `$XDG_DATA_HOME/fonts` or `$HOME/.local/share/fonts` | /home/alice/.local/share/fonts |
-    * | macOS   | `$HOME/Library/Fonts`                                | /Users/Alice/Library/Fonts     |
-    * | Windows | null                                                 | null                           |
-    * </code>
-    */
+
+  /**
+   * Returns the path to the user's font directory.
+   *
+   * <br><br>
+   * <table border="1" cellpadding="1" cellspacing="0">
+   * <tr>
+   * <th align="left">Platform</th>
+   * <th align="left">Value</th>
+   * <th align="left">Example</th>
+   * </tr>
+   * <tr>
+   * <td>Linux / BSD</td>
+   * <td>{@code $XDG_DATA_HOME}/fonts or {@code $HOME}/.local/share/fonts</td>
+   * <td>/home/alice/.local/share/fonts</td>
+   * </tr>
+   * <tr>
+   * <td>macOS</td>
+   * <td>{@code $HOME}/Library/Fonts</td>
+   * <td>/Users/Alice/Library/Fonts</td>
+   * </tr>
+   * <tr>
+   * <td>Windows</td>
+   * <td>{@code null}</td>
+   * <td>{@code null}</td>
+   * </tr>
+   * </table>
+   */
   public static final String fontDir;
-  /** Returns the path to the user's picture directory.
-    * <p>
-    * <code style="white-space: pre">
-    * |Platform | Value                 | Example                 |
-    * | ------- | --------------------- | ----------------------- |
-    * | Linux   | `XDG_PICTURES_DIR`    | /home/alice/Pictures    |
-    * | macOS   | `$HOME/Pictures`      | /Users/Alice/Pictures   |
-    * | Windows | `{FOLDERID_Pictures}` | C:\Users\Alice\Pictures |
-    * </code>
-    */
+
+  /**
+   * Returns the path to the user's picture directory.
+   *
+   * <br><br>
+   * <table border="1" cellpadding="1" cellspacing="0">
+   * <tr>
+   * <th align="left">Platform</th>
+   * <th align="left">Value</th>
+   * <th align="left">Example</th>
+   * </tr>
+   * <tr>
+   * <td>Linux / BSD</td>
+   * <td>{@code XDG_PICTURES_DIR}</td>
+   * <td>/home/alice/Pictures</td>
+   * </tr>
+   * <tr>
+   * <td>macOS</td>
+   * <td>{@code $HOME}/Pictures</td>
+   * <td>/Users/Alice/Pictures</td>
+   * </tr>
+   * <tr>
+   * <td>Windows</td>
+   * <td>{@code {FOLDERID_Pictures}}</td>
+   * <td>C:\Users\Alice\Pictures</td>
+   * </tr>
+   * </table>
+   */
   public static final String pictureDir;
-  /** Returns the path to the user's public directory.
-    * <p>
-    * <code style="white-space: pre">
-    * |Platform | Value                 | Example             |
-    * | ------- | --------------------- | ------------------- |
-    * | Linux   | `XDG_PUBLICSHARE_DIR` | /home/alice/Public  |
-    * | macOS   | `$HOME/Public`        | /Users/Alice/Public |
-    * | Windows | `{FOLDERID_Public}`   | C:\Users\Public     |
-    * </code>
-    */
+
+  /**
+   * Returns the path to the user's public directory.
+   *
+   * <br><br>
+   * <table border="1" cellpadding="1" cellspacing="0">
+   * <tr>
+   * <th align="left">Platform</th>
+   * <th align="left">Value</th>
+   * <th align="left">Example</th>
+   * </tr>
+   * <tr>
+   * <td>Linux / BSD</td>
+   * <td>{@code XDG_PUBLICSHARE_DIR}</td>
+   * <td>/home/alice/Public</td>
+   * </tr>
+   * <tr>
+   * <td>macOS</td>
+   * <td>{@code $HOME}/Public</td>
+   * <td>/Users/Alice/Public</td>
+   * </tr>
+   * <tr>
+   * <td>Windows</td>
+   * <td>{@code {FOLDERID_Public}}</td>
+   * <td>C:\Users\Public</td>
+   * </tr>
+   * </table>
+   */
   public static final String publicDir;
-  /** Returns the path to the user's template directory.
-    * <p>
-    * <code style="white-space: pre">
-    * |Platform | Value                  | Example                                                    |
-    * | ------- | ---------------------- | ---------------------------------------------------------- |
-    * | Linux   | `XDG_TEMPLATES_DIR`    | /home/alice/Templates                                      |
-    * | macOS   | null                   | null                                                       |
-    * | Windows | `{FOLDERID_Templates}` | C:\Users\Alice\AppData\Roaming\Microsoft\Windows\Templates |
-    * </code>
-    */
+
+  /**
+   * Returns the path to the user's template directory.
+   *
+   * <br><br>
+   * <table border="1" cellpadding="1" cellspacing="0">
+   * <tr>
+   * <th align="left">Platform</th>
+   * <th align="left">Value</th>
+   * <th align="left">Example</th>
+   * </tr>
+   * <tr>
+   * <td>Linux / BSD</td>
+   * <td>{@code XDG_TEMPLATES_DIR}</td>
+   * <td>/home/alice/Templates</td>
+   * </tr>
+   * <tr>
+   * <td>macOS</td>
+   * <td>{@code null}</td>
+   * <td>{@code null}</td>
+   * </tr>
+   * <tr>
+   * <td>Windows</td>
+   * <td>{@code {FOLDERID_Templates}}</td>
+   * <td>C:\Users\Alice\AppData\Roaming\Microsoft\Windows\Templates</td>
+   * </tr>
+   * </table>
+   */
   public static final String templateDir;
-  /** Returns the path to the user's video directory.
-    * <p>
-    * <code style="white-space: pre">
-    * |Platform | Value               | Example               |
-    * | ------- | ------------------- | --------------------- |
-    * | Linux   | `XDG_VIDEOS_DIR`    | /home/alice/Videos    |
-    * | macOS   | `$HOME/Movies`      | /Users/Alice/Movies   |
-    * | Windows | `{FOLDERID_Videos}` | C:\Users\Alice\Videos |
-    * </code>
-    */
+
+  /**
+   * Returns the path to the user's video directory.
+   *
+   * <br><br>
+   * <table border="1" cellpadding="1" cellspacing="0">
+   * <tr>
+   * <th align="left">Platform</th>
+   * <th align="left">Value</th>
+   * <th align="left">Example</th>
+   * </tr>
+   * <tr>
+   * <td>Linux / BSD</td>
+   * <td>{@code XDG_VIDEOS_DIR}</td>
+   * <td>/home/alice/Videos</td>
+   * </tr>
+   * <tr>
+   * <td>macOS</td>
+   * <td>{@code $HOME}/Movies</td>
+   * <td>/Users/Alice/Movies</td>
+   * </tr>
+   * <tr>
+   * <td>Windows</td>
+   * <td>{@code {FOLDERID_Videos}}</td>
+   * <td>C:\Users\Alice\Videos</td>
+   * </tr>
+   * </table>
+   */
   public static final String videoDir;
 
   static {
@@ -165,15 +343,15 @@ public final class UserDirectories {
         break;
       case WIN:
         homeDir       = runPowerShellCommand("UserProfile");
-        audioDir      = runPowerShellCommand("Music");
+        audioDir      = runPowerShellCommand("MyMusic");
         fontDir       = null;
-        desktopDir    = runPowerShellCommand("Desktop");
-        documentDir   = runPowerShellCommand("Documents");
-        downloadDir   = runPowerShellCommand("Downloads");
-        pictureDir    = runPowerShellCommand("Pictures");
-        publicDir     = runPowerShellCommand("Public");
+        desktopDir    = runPowerShellCommand("DesktopDirectory");
+        documentDir   = runPowerShellCommand("MyDocuments");
+        downloadDir   = null;
+        pictureDir    = runPowerShellCommand("MyPictures");
+        publicDir     = null;
         templateDir   = runPowerShellCommand("Templates");
-        videoDir      = runPowerShellCommand("Videos");
+        videoDir      = runPowerShellCommand("MyVideos");
         break;
       default:
         throw new UnsupportedOperatingSystemException("User directories are not supported on " + operatingSystemName);

@@ -31,17 +31,17 @@ Add the library as a dependency to your project:
 <dependency>
   <groupId>io.github.soc</groupId>
   <artifactId>directories</artifactId>
-  <version>8</version>
+  <version>9</version>
 </dependency>
 ```
 ##### Gradle
 ```groovy
-compile 'io.github.soc:directories:8'
+compile 'io.github.soc:directories:9'
 ```
 
 ##### SBT
 ```scala
-"io.github.soc" % "directories" % "8"
+"io.github.soc" % "directories" % "9"
 ```
 
 The library itself is built against Java 6 to allow for the widest possible usage scenarios.
@@ -174,7 +174,13 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
-### 8 – current stable version
+### 9 – current stable version 
+
+- Windows:
+  - Fixed the implementation of `audioDir`, `desktopDir`, `documentDir`, `pictureDir` and `videoDir`
+  - Clarified that `downloadDir` and `publicDir` return `null` on Windows, as the `SpecialFolder` enumeration lacks entries for these values
+
+### 8
 
 - Windows:
   - Fixed incorrect `ProjectDirectories` paths for `cacheDir`, `configDir` and `dataDir`
@@ -182,7 +188,7 @@ The version number of this library consists of a whole number, which is incremen
   - Fixed incorrect `ProjectDirectories` paths for `cacheDir`, `configDir`, `dataDir` and `dataLocalDir` if XDG environment variables are set
   - Fixed incorrect `UserDirectories` paths for `fontDir` if XDG environment variables are set
 
-### 7 – do not use
+### 7
 
 - Split `BaseDirectories` into `BaseDirectories` (cache, config, ...) and `UserDirectories` (audio,
   video, ...)
@@ -200,7 +206,7 @@ The version number of this library consists of a whole number, which is incremen
 | `ProjectDirectories#dataDir`      | `{SpecialFolder.ApplicationData}/_project_path_`      | `{SpecialFolder.ApplicationData}/_project_path_/data`      |
 | `ProjectDirectories#dataLocalDir` | `{SpecialFolder.LocalApplicationData}/_project_path_` | `{SpecialFolder.LocalApplicationData}/_project_path_/data` |
 
-### 6 – previous stable version
+### 6
 
 - More consistent and intuitive naming scheme (all names are singular now):
 
