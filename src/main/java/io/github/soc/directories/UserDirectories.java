@@ -42,7 +42,7 @@ public final class UserDirectories {
     * |Platform | Value              | Example              |
     * | ------- | ------------------ | -------------------- |
     * | Linux   | `XDG_MUSIC_DIR`    | /home/alice/Music    |
-    * | macOS   | `$HOME/Music`      | /Users/Alice/Music   |
+    * | macOS   | `$HOME`/Music      | /Users/Alice/Music   |
     * | Windows | `{FOLDERID_Music}` | C:\Users\Alice\Music |
     * </code>
     */
@@ -53,7 +53,7 @@ public final class UserDirectories {
     * |Platform | Value                | Example                |
     * | ------- | -------------------- | ---------------------- |
     * | Linux   | `XDG_DESKTOP_DIR`    | /home/alice/Desktop    |
-    * | macOS   | `$HOME/Desktop`      | /Users/Alice/Desktop   |
+    * | macOS   | `$HOME`/Desktop      | /Users/Alice/Desktop   |
     * | Windows | `{FOLDERID_Desktop}` | C:\Users\Alice\Desktop |
     * </code>
     */
@@ -64,19 +64,22 @@ public final class UserDirectories {
     * |Platform | Value                  | Example                  |
     * | ------- | ---------------------- | ------------------------ |
     * | Linux   | `XDG_DOCUMENTS_DIR`    | /home/alice/Documents    |
-    * | macOS   | `$HOME/Documents`      | /Users/Alice/Documents   |
+    * | macOS   | `$HOME`/Documents      | /Users/Alice/Documents   |
     * | Windows | `{FOLDERID_Documents}` | C:\Users\Alice\Documents |
     * </code>
     */
   public static final String documentDir;
   /** Returns the path to the user's download directory.
     * <p>
+    * Please note that this value is not available on Windows, 
+    * as the <code>SpecialFolder</code> enumeration is missing such an entry.
+    * <p>
     * <code style="white-space: pre">
     * |Platform | Value                  | Example                  |
     * | ------- | ---------------------- | ------------------------ |
     * | Linux   | `XDG_DOWNLOAD_DIR`     | /home/alice/Downloads    |
-    * | macOS   | `$HOME/Downloads`      | /Users/Alice/Downloads   |
-    * | Windows | `{FOLDERID_Downloads}` | C:\Users\Alice\Downloads |
+    * | macOS   | `$HOME`/Downloads      | /Users/Alice/Downloads   |
+    * | Windows | –                      | null                     |
     * </code>
     */
   public static final String downloadDir;
@@ -85,8 +88,8 @@ public final class UserDirectories {
     * <code style="white-space: pre">
     * |Platform | Value                                                | Example                        |
     * | ------- | ---------------------------------------------------- | ------------------------------ |
-    * | Linux   | `$XDG_DATA_HOME/fonts` or `$HOME/.local/share/fonts` | /home/alice/.local/share/fonts |
-    * | macOS   | `$HOME/Library/Fonts`                                | /Users/Alice/Library/Fonts     |
+    * | Linux   | `$XDG_DATA_HOME`/fonts or `$HOME`/.local/share/fonts | /home/alice/.local/share/fonts |
+    * | macOS   | `$HOME`/Library/Fonts                                | /Users/Alice/Library/Fonts     |
     * | Windows | null                                                 | null                           |
     * </code>
     */
@@ -97,19 +100,22 @@ public final class UserDirectories {
     * |Platform | Value                 | Example                 |
     * | ------- | --------------------- | ----------------------- |
     * | Linux   | `XDG_PICTURES_DIR`    | /home/alice/Pictures    |
-    * | macOS   | `$HOME/Pictures`      | /Users/Alice/Pictures   |
+    * | macOS   | `$HOME`/Pictures      | /Users/Alice/Pictures   |
     * | Windows | `{FOLDERID_Pictures}` | C:\Users\Alice\Pictures |
     * </code>
     */
   public static final String pictureDir;
   /** Returns the path to the user's public directory.
     * <p>
+    * Please note that this value is not available on Windows, 
+    * as the <code>SpecialFolder</code> enumeration is missing such an entry.
+    * <p>
     * <code style="white-space: pre">
     * |Platform | Value                 | Example             |
     * | ------- | --------------------- | ------------------- |
     * | Linux   | `XDG_PUBLICSHARE_DIR` | /home/alice/Public  |
-    * | macOS   | `$HOME/Public`        | /Users/Alice/Public |
-    * | Windows | `{FOLDERID_Public}`   | C:\Users\Public     |
+    * | macOS   | `$HOME`/Public        | /Users/Alice/Public |
+    * | Windows | –                     | null                |
     * </code>
     */
   public static final String publicDir;
@@ -130,7 +136,7 @@ public final class UserDirectories {
     * |Platform | Value               | Example               |
     * | ------- | ------------------- | --------------------- |
     * | Linux   | `XDG_VIDEOS_DIR`    | /home/alice/Videos    |
-    * | macOS   | `$HOME/Movies`      | /Users/Alice/Movies   |
+    * | macOS   | `$HOME`/Movies      | /Users/Alice/Movies   |
     * | Windows | `{FOLDERID_Videos}` | C:\Users\Alice\Videos |
     * </code>
     */
@@ -165,15 +171,15 @@ public final class UserDirectories {
         break;
       case WIN:
         homeDir       = runPowerShellCommand("UserProfile");
-        audioDir      = runPowerShellCommand("Music");
+        audioDir      = runPowerShellCommand("MyMusic");
         fontDir       = null;
-        desktopDir    = runPowerShellCommand("Desktop");
-        documentDir   = runPowerShellCommand("Documents");
-        downloadDir   = runPowerShellCommand("Downloads");
-        pictureDir    = runPowerShellCommand("Pictures");
-        publicDir     = runPowerShellCommand("Public");
+        desktopDir    = runPowerShellCommand("DesktopDirectory");
+        documentDir   = runPowerShellCommand("MyDocuments");
+        downloadDir   = null;
+        pictureDir    = runPowerShellCommand("MyPictures");
+        publicDir     = null;
         templateDir   = runPowerShellCommand("Templates");
-        videoDir      = runPowerShellCommand("Videos");
+        videoDir      = runPowerShellCommand("MyVideos");
         break;
       default:
         throw new UnsupportedOperatingSystemException("User directories are not supported on " + operatingSystemName);

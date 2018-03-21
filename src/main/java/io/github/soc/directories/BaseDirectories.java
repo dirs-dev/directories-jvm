@@ -44,9 +44,9 @@ public final class BaseDirectories {
     * <code style="white-space: pre">
     * |Platform | Value                               | Example                      |
     * | ------- | ----------------------------------- | ---------------------------- |
-    * | Linux   | `$XDG_CACHE_HOME` or `$HOME/.cache` | /home/alice/.cache           |
-    * | macOS   | `$HOME/Library/Caches`              | /Users/Alice/Library/Caches  |
-    * | Windows | `{FOLDERID_LocalAppData}\cache`     | C:\Users\Alice\AppData\Local |
+    * | Linux   | `$XDG_CACHE_HOME` or `$HOME`/.cache | /home/alice/.cache           |
+    * | macOS   | `$HOME`/Library/Caches              | /Users/Alice/Library/Caches  |
+    * | Windows | `{FOLDERID_LocalAppData}`\cache     | C:\Users\Alice\AppData\Local |
     * </code>
     */
   public static final String cacheDir;
@@ -55,8 +55,8 @@ public final class BaseDirectories {
     * <code style="white-space: pre">
     * |Platform | Value                                 | Example                          |
     * | ------- | ------------------------------------- | -------------------------------- |
-    * | Linux   | `$XDG_CONFIG_HOME` or `$HOME/.config` | /home/alice/.config              |
-    * | macOS   | `$HOME/Library/Preferences`           | /Users/Alice/Library/Preferences |
+    * | Linux   | `$XDG_CONFIG_HOME` or `$HOME`/.config | /home/alice/.config              |
+    * | macOS   | `$HOME`/Library/Preferences           | /Users/Alice/Library/Preferences |
     * | Windows | `{FOLDERID_RoamingAppData}`           | C:\Users\Alice\AppData\Roaming   |
     * </code>
     */
@@ -66,8 +66,8 @@ public final class BaseDirectories {
     * <code style="white-space: pre">
     * |Platform | Value                                    | Example                                  |
     * | ------- | ---------------------------------------- | ---------------------------------------- |
-    * | Linux   | `$XDG_DATA_HOME` or `$HOME/.local/share` | /home/alice/.local/share                 |
-    * | macOS   | `$HOME/Library/Application Support`      | /Users/Alice/Library/Application Support |
+    * | Linux   | `$XDG_DATA_HOME` or `$HOME`/.local/share | /home/alice/.local/share                 |
+    * | macOS   | `$HOME`/Library/Application Support      | /Users/Alice/Library/Application Support |
     * | Windows | `{FOLDERID_RoamingAppData}`              | C:\Users\Alice\AppData\Roaming           |
     * </code>
     */
@@ -77,8 +77,8 @@ public final class BaseDirectories {
     * <code style="white-space: pre">
     * |Platform | Value                                    | Example                                  |
     * | ------- | ---------------------------------------- | ---------------------------------------- |
-    * | Linux   | `$XDG_DATA_HOME` or `$HOME/.local/share` | /home/alice/.local/share                 |
-    * | macOS   | `$HOME/Library/Application Support`      | /Users/Alice/Library/Application Support |
+    * | Linux   | `$XDG_DATA_HOME` or `$HOME`/.local/share | /home/alice/.local/share                 |
+    * | macOS   | `$HOME`/Library/Application Support      | /Users/Alice/Library/Application Support |
     * | Windows | `{FOLDERID_LocalAppData}`                | C:\Users\Alice\AppData\Local             |
     * </code>
     */
@@ -88,9 +88,9 @@ public final class BaseDirectories {
     * <code style="white-space: pre">
     * |Platform | Value                                                            | Example                |
     * | ------- | ---------------------------------------------------------------- | ---------------------- |
-    * | Linux   | `$XDG_BIN_HOME` or `$XDG_DATA_HOME/../bin` or `$HOME/.local/bin` | /home/alice/.local/bin |
-    * | macOS   | null                                                             | null                   |
-    * | Windows | null                                                             | null                   |
+    * | Linux   | `$XDG_BIN_HOME` or `$XDG_DATA_HOME`/../bin or `$HOME`/.local/bin | /home/alice/.local/bin |
+    * | macOS   | –                                                                | null                   |
+    * | Windows | –                                                                | null                   |
     * </code>
     */
   public static final String executableDir;
@@ -100,8 +100,8 @@ public final class BaseDirectories {
     * |Platform | Value              | Example         |
     * | ------- | ------------------ | --------------- |
     * | Linux   | `$XDG_RUNTIME_DIR` | /run/user/1001/ |
-    * | macOS   | null               | null            |
-    * | Windows | null               | null            |
+    * | macOS   | –                  | null            |
+    * | Windows | –                  | null            |
     * </code>
     */
   public static final String runtimeDir;

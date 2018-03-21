@@ -47,11 +47,11 @@ public final class ProjectDirectories {
   /** Returns the path to the project's cache directory.
     * <p>
     * <code style="white-space: pre">
-    * |Platform | Value                                                            | Example                                             |
-    * | ------- | ---------------------------------------------------------------- | --------------------------------------------------- |
-    * | Linux   | `$XDG_CACHE_HOME_project_path_` or `$HOME/.cache/_project_path_` | /home/alice/.cache/barapp                           |
-    * | macOS   | `$HOME/Library/Caches/_project_path_`                            | /Users/Alice/Library/Caches/com.Foo-Corp.Bar-App    |
-    * | Windows | `{FOLDERID_LocalAppData}\_project_path_\cache`                   | C:\Users\Alice\AppData\Local\Foo Corp\Bar App\cache |
+    * |Platform | Value                                                             | Example                                             |
+    * | ------- | ----------------------------------------------------------------- | --------------------------------------------------- |
+    * | Linux   | `$XDG_CACHE_HOME`/_project_path_ or `$HOME`/.cache/_project_path_ | /home/alice/.cache/barapp                           |
+    * | macOS   | `$HOME`/Library/Caches/_project_path_                             | /Users/Alice/Library/Caches/com.Foo-Corp.Bar-App    |
+    * | Windows | `{FOLDERID_LocalAppData}`\_project_path_\cache                    | C:\Users\Alice\AppData\Local\Foo Corp\Bar App\cache |
     * </code>
     */
   public final String cacheDir;
@@ -60,9 +60,9 @@ public final class ProjectDirectories {
     * <code style="white-space: pre">
     * |Platform | Value                                                               | Example                                                |
     * | ------- | ------------------------------------------------------------------- | ------------------------------------------------------ |
-    * | Linux   | `$XDG_CONFIG_HOME/_project_path_` or `$HOME/.config/_project_path_` | /home/alice/.config/barapp                             |
-    * | macOS   | `$HOME/Library/Preferences/_project_path_`                          | /Users/Alice/Library/Preferences/com.Foo-Corp.Bar-App  |
-    * | Windows | `{FOLDERID_RoamingAppData}\_project_path_\config`                   | C:\Users\Alice\AppData\Roaming\Foo Corp\Bar App\config |
+    * | Linux   | `$XDG_CONFIG_HOME`/_project_path_ or `$HOME`/.config/_project_path_ | /home/alice/.config/barapp                             |
+    * | macOS   | `$HOME`/Library/Preferences/_project_path_                          | /Users/Alice/Library/Preferences/com.Foo-Corp.Bar-App  |
+    * | Windows | `{FOLDERID_RoamingAppData}`\_project_path_\config                   | C:\Users\Alice\AppData\Roaming\Foo Corp\Bar App\config |
     * </code>
     */
   public final String configDir;
@@ -71,9 +71,9 @@ public final class ProjectDirectories {
     * <code style="white-space: pre">
     * |Platform | Value                                                                  | Example                                                       |
     * | ------- | ---------------------------------------------------------------------- | ------------------------------------------------------------- |
-    * | Linux   | `$XDG_DATA_HOME/_project_path_` or `$HOME/.local/share/_project_path_` | /home/alice/.local/share/barapp                               |
-    * | macOS   | `$HOME/Library/Application Support/_project_path_`                     | /Users/Alice/Library/Application Support/com.Foo-Corp.Bar-App |
-    * | Windows | `{FOLDERID_RoamingAppData}\_project_path_\data`                        | C:\Users\Alice\AppData\Roaming\Foo Corp\Bar App\data          |
+    * | Linux   | `$XDG_DATA_HOME`/_project_path_ or `$HOME`/.local/share/_project_path_ | /home/alice/.local/share/barapp                               |
+    * | macOS   | `$HOME`/Library/Application Support/_project_path_                     | /Users/Alice/Library/Application Support/com.Foo-Corp.Bar-App |
+    * | Windows | `{FOLDERID_RoamingAppData}`\_project_path_\data                        | C:\Users\Alice\AppData\Roaming\Foo Corp\Bar App\data          |
     * </code>
     */
   public final String dataDir;
@@ -82,9 +82,9 @@ public final class ProjectDirectories {
     * <code style="white-space: pre">
     * |Platform | Value                                                                  | Example                                                       |
     * | ------- | ---------------------------------------------------------------------- | ------------------------------------------------------------- |
-    * | Linux   | `$XDG_DATA_HOME/_project_path_` or `$HOME/.local/share/_project_path_` | /home/alice/.local/share/barapp                               |
-    * | macOS   | `$HOME/Library/Application Support/_project_path_`                     | /Users/Alice/Library/Application Support/com.Foo-Corp.Bar-App |
-    * | Windows | `{FOLDERID_LocalAppData}\_project_path_\data`                          | C:\Users\Alice\AppData\Local\Foo Corp\Bar App\data            |
+    * | Linux   | `$XDG_DATA_HOME`/_project_path_ or `$HOME`/.local/share/_project_path_ | /home/alice/.local/share/barapp                               |
+    * | macOS   | `$HOME`/Library/Application Support/_project_path_                     | /Users/Alice/Library/Application Support/com.Foo-Corp.Bar-App |
+    * | Windows | `{FOLDERID_LocalAppData}`\_project_path_\data                          | C:\Users\Alice\AppData\Local\Foo Corp\Bar App\data            |
     * </code>
     */
   public final String dataLocalDir;
@@ -94,8 +94,8 @@ public final class ProjectDirectories {
     * |Platform | Value              | Example               |
     * | ------- | ------------------ | --------------------- |
     * | Linux   | `$XDG_RUNTIME_DIR` | /run/user/1001/barapp |
-    * | macOS   | –                  | –                     |
-    * | Windows | –                  | –                     |
+    * | macOS   | –                  | null                  |
+    * | Windows | –                  | null                  |
     * </code>
     */
   public final String runtimeDir;
