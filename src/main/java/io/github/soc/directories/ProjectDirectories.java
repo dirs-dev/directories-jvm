@@ -217,8 +217,9 @@ public final class ProjectDirectories {
         dataLocalDir = dataDir;
         break;
       case WIN:
-        final String appDataRoaming = getWinFolder("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D") + '\\' + path;
-        final String appDataLocal   = getWinFolder("F1B32785-6FBA-4FCF-9D55-7B8E7F157091") + '\\' + path;
+        String[] winDirs = getWinDirs("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D", "F1B32785-6FBA-4FCF-9D55-7B8E7F157091");
+        String appDataRoaming = winDirs[0] + '\\' + path;
+        String appDataLocal   = winDirs[1] + '\\' + path;
         dataDir      = appDataRoaming + "\\data";
         dataLocalDir = appDataLocal   + "\\data";
         configDir    = appDataRoaming + "\\config";

@@ -178,6 +178,11 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
+### 10 – in development
+
+- Full Windows support
+- Improved speed on Windows and Linux
+
 ### 9 – current stable version 
 
 - Windows:

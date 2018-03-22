@@ -297,16 +297,17 @@ public final class UserDirectories {
     switch (operatingSystem) {
       case LIN:
       case BSD:
+        String[] userDirs = getXDGUserDirs("MUSIC", "DESKTOP", "DOCUMENTS", "DOWNLOAD", "PICTURES", "PUBLICSHARE", "TEMPLATES", "VIDEOS");
         homeDir       = System.getProperty("user.home");
-        audioDir      = getXDGUserDir("MUSIC");
-        desktopDir    = getXDGUserDir("DESKTOP");
-        documentDir   = getXDGUserDir("DOCUMENTS");
-        downloadDir   = getXDGUserDir("DOWNLOAD");
+        audioDir      = userDirs[0];
+        desktopDir    = userDirs[1];
+        documentDir   = userDirs[2];
+        downloadDir   = userDirs[3];
         fontDir       = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"), "/fonts",  homeDir, "/.local/share/fonts");
-        pictureDir    = getXDGUserDir("PICTURES");
-        publicDir     = getXDGUserDir("PUBLICSHARE");
-        templateDir   = getXDGUserDir("TEMPLATES");
-        videoDir      = getXDGUserDir("VIDEOS");
+        pictureDir    = userDirs[4];
+        publicDir     = userDirs[5];
+        templateDir   = userDirs[6];
+        videoDir      = userDirs[7];
         break;
       case MAC:
         homeDir       = System.getProperty("user.home");
@@ -321,16 +322,26 @@ public final class UserDirectories {
         videoDir      = homeDir + "/Movies";
         break;
       case WIN:
-        homeDir       = getWinFolder("5E6C858F-0E22-4760-9AFE-EA3317B67173");
-        audioDir      = getWinFolder("4BD8D571-6D19-48D3-BE97-422220080E43");
+        String[] winDirs = getWinDirs(
+            "5E6C858F-0E22-4760-9AFE-EA3317B67173",
+            "4BD8D571-6D19-48D3-BE97-422220080E43",
+            "B4BFCC3A-DB2C-424C-B029-7FE99A87C641",
+            "FDD39AD0-238F-46AF-ADB4-6C85480369C7",
+            "374DE290-123F-4565-9164-39C4925E467B",
+            "33E28130-4E1E-4676-835A-98395C3BC3BB",
+            "DFDF76A2-C82A-4D63-906A-5644AC457385",
+            "A63293E8-664E-48DB-A079-DF759E0509F7",
+            "18989B1D-99B5-455B-841C-AB7C74E4DDFC");
+        homeDir       = winDirs[0];
+        audioDir      = winDirs[1];
         fontDir       = null;
-        desktopDir    = getWinFolder("B4BFCC3A-DB2C-424C-B029-7FE99A87C641");
-        documentDir   = getWinFolder("FDD39AD0-238F-46AF-ADB4-6C85480369C7");
-        downloadDir   = getWinFolder("374DE290-123F-4565-9164-39C4925E467B");
-        pictureDir    = getWinFolder("33E28130-4E1E-4676-835A-98395C3BC3BB");
-        publicDir     = getWinFolder("DFDF76A2-C82A-4D63-906A-5644AC457385");
-        templateDir   = getWinFolder("A63293E8-664E-48DB-A079-DF759E0509F7");
-        videoDir      = getWinFolder("18989B1D-99B5-455B-841C-AB7C74E4DDFC");
+        desktopDir    = winDirs[2];
+        documentDir   = winDirs[3];
+        downloadDir   = winDirs[4];
+        pictureDir    = winDirs[5];
+        publicDir     = winDirs[6];
+        templateDir   = winDirs[7];
+        videoDir      = winDirs[8];
         break;
       default:
         throw new UnsupportedOperatingSystemException("User directories are not supported on " + operatingSystemName);

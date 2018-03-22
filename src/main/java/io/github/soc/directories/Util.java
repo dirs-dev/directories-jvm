@@ -29,7 +29,7 @@ final class Util {
     else if (os.contains("bsd"))
       operatingSystem = BSD;
     else
-      throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
+      throw new UnsupportedOperatingSystemException("directories are not supported on " + operatingSystemName);
   }
 
   static void requireNonNull(Object value) {
@@ -62,7 +62,6 @@ final class Util {
   static String ensureSingleSlash(String arg1, String arg2) {
     boolean arg1Slash = arg1.endsWith("/");
     boolean slashArg2 = arg2.startsWith("/");
-    String newArg2 = arg2;
     if (arg1Slash && slashArg2) {
       StringBuilder buf = new StringBuilder(arg1.length() + arg2.length() - 1);
       buf.append(arg1, 0, arg1.length() - 1).append(arg2);
@@ -93,12 +92,31 @@ final class Util {
       return binDir;
   }
 
-  static String getXDGUserDir(String argument) {
-    return runCommand("xdg-user-dir", argument);
+  static String[] getXDGUserDirs(String... dirs) {
+    int dirsLength = dirs.length;
+    StringBuilder buf = new StringBuilder(dirsLength * 22);
+    String[] commands = new String[3];
+    commands[0] = "/bin/sh";
+    commands[1] = "-c";
+    for (int i = 0; i < dirsLength; i++) {
+      buf.append("xdg-user-dir ");
+      buf.append(dirs[i]);
+      buf.append(';');
+    }
+    commands[2] = buf.toString();
+    return runCommands(dirsLength, commands);
   }
 
-  static String getWinFolder(String guid) {
-    return runCommand(
+  static String[] getWinDirs(String... guids) {
+    int guidsLength = guids.length;
+    StringBuilder buf = new StringBuilder(guidsLength * 68);
+    for (int i = 0; i < guidsLength; i++) {
+      buf.append("[Dir]::GetKnownFolderPath(\\\"");
+      buf.append(guids[i]);
+      buf.append("\\\")\n");
+    }
+
+    return runCommands(guidsLength,
         "powershell.exe",
         "-Command",
         "& {\n" +
@@ -117,24 +135,29 @@ final class Util {
             "   }\n" +
             "}\n" +
             "\\\"@\n" +
-            "[Dir]::GetKnownFolderPath(\\\"" + guid + "\\\")\n" +
+            buf.toString() +
             "}"
     );
   }
 
-  private static String runCommand(String... command) {
-    final ProcessBuilder processBuilder = new ProcessBuilder(command);
+  private static String[] runCommands(int expectedResultLines, String... commands) {
+    final ProcessBuilder processBuilder = new ProcessBuilder(commands);
     Process process;
     try {
       process = processBuilder.start();
-    } catch (IOException e1) {
-      e1.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
       return null;
     }
 
+    String[] results = new String[expectedResultLines];
     BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
     try {
-      return reader.readLine();
+      for (int i = 0; i < expectedResultLines; i++) {
+        String line = reader.readLine();
+        results[i] = line;
+      }
+      return results;
     } catch (IOException e) {
       e.printStackTrace();
       return null;
@@ -143,7 +166,8 @@ final class Util {
       try {
         reader.close();
       } catch (IOException e) {
-        return null;
+        e.printStackTrace();
+        return results;
       }
     }
   }
