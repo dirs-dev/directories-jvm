@@ -217,8 +217,8 @@ public final class ProjectDirectories {
         dataLocalDir = dataDir;
         break;
       case WIN:
-        final String appDataRoaming = runPowerShellCommand("ApplicationData") + '\\' + path;
-        final String appDataLocal   = runPowerShellCommand("LocalApplicationData") + '\\' + path;
+        final String appDataRoaming = getWinFolder("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D") + '\\' + path;
+        final String appDataLocal   = getWinFolder("F1B32785-6FBA-4FCF-9D55-7B8E7F157091") + '\\' + path;
         dataDir      = appDataRoaming + "\\data";
         dataLocalDir = appDataLocal   + "\\data";
         configDir    = appDataRoaming + "\\config";
@@ -261,6 +261,7 @@ public final class ProjectDirectories {
         break;
       case MAC:
         path = Util.macOSApplicationPath(qualifier, organization, application);
+        break;
       case WIN:
         path = Util.windowsApplicationPath(qualifier, organization, application);
         break;
@@ -272,7 +273,7 @@ public final class ProjectDirectories {
 
   @Override
   public String toString() {
-    return "ProjectDirectories on operating system '" + operatingSystemName + "':\n" +
+    return "ProjectDirectories (" + operatingSystemName + "):\n" +
         "  projectPath  = '" + projectPath + "'\n" +
         "  cacheDir     = '" + cacheDir + "'\n" +
         "  configDir    = '" + configDir + "'\n" +
