@@ -119,6 +119,41 @@ final class Util {
     }
   }
 
+  static String macOSApplicationPath(String qualifier, String organization, String application) {
+    StringBuilder buf = new StringBuilder(Math.max(stringLength(qualifier) + stringLength(organization) + stringLength(application), 0));
+    boolean qualPresent = !isNullOrEmpty(qualifier);
+    boolean orgPresent  = !isNullOrEmpty(organization);
+    boolean appPresent  = !isNullOrEmpty(application);
+    if (qualPresent) {
+      buf.append(trimLowercaseReplaceWhitespace(qualifier, "-", false));
+      if (orgPresent || appPresent)
+        buf.append('.');
+    }
+    if (orgPresent) {
+      buf.append(trimLowercaseReplaceWhitespace(organization, "-", false));
+      if (appPresent)
+        buf.append('.');
+    }
+    if (appPresent)
+      buf.append(trimLowercaseReplaceWhitespace(application, "-", false));
+    return buf.toString();
+  }
+
+  static String windowsApplicationPath(String qualifier, String organization, String application) {
+    StringBuilder buf = new StringBuilder(Math.max(stringLength(organization) + stringLength(application), 0));
+    boolean orgPresent = !isNullOrEmpty(organization);
+    boolean appPresent = !isNullOrEmpty(application);
+    if (orgPresent) {
+      buf.append(organization);
+      if (appPresent)
+        buf.append('\\');
+    }
+    if (appPresent)
+      buf.append(application);
+    return buf.toString();
+  }
+
+
   static String runPowerShellCommand(String argument) {
     ProcessBuilder processBuilder = new ProcessBuilder("powershell.exe", "-Command",
         "[Environment]::GetFolderPath([Environment+SpecialFolder]::" + argument + ")");
@@ -158,7 +193,7 @@ final class Util {
       return value.length();
   }
 
-  static String trimLowercaseReplaceWhitespace(String value, String replacement) {
+  static String trimLowercaseReplaceWhitespace(String value, String replacement, boolean lowerCase) {
     StringBuilder buf = new StringBuilder(value.length());
     boolean charsBefore = false;
     int codePointCount = value.codePointCount(0, value.length());
@@ -171,7 +206,7 @@ final class Util {
           charsBefore = false;
         }
       } else {
-        buf.appendCodePoint(Character.toLowerCase(codepoint));
+        buf.appendCodePoint(lowerCase ? Character.toLowerCase(codepoint) : codepoint);
         charsBefore = true;
       }
     }

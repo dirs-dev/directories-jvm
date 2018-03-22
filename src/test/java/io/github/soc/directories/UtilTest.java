@@ -25,7 +25,7 @@ public final class UtilTest {
   @Test
   public void testTrimLowercaseAndReplaceWhitespaces01() {
     final String input    = "Bar App";
-    final String actual   = Util.trimLowercaseReplaceWhitespace(input, "-");
+    final String actual   = Util.trimLowercaseReplaceWhitespace(input, "-", true);
     final String expected = "bar-app";
     assertEquals(input, expected, actual);
   }
@@ -33,7 +33,7 @@ public final class UtilTest {
   @Test
   public void testTrimLowercaseAndReplaceWhitespaces02() {
     final String input    = "BarApp Foo";
-    final String actual   = Util.trimLowercaseReplaceWhitespace(input, "");
+    final String actual   = Util.trimLowercaseReplaceWhitespace(input, "", true);
     final String expected = "barappfoo";
     assertEquals(input, expected, actual);
   }
@@ -41,7 +41,7 @@ public final class UtilTest {
   @Test
   public void testTrimLowercaseAndReplaceWhitespaces03() {
     final String input    = " Bar App ";
-    final String actual   = Util.trimLowercaseReplaceWhitespace(input, "-");
+    final String actual   = Util.trimLowercaseReplaceWhitespace(input, "-", true);
     final String expected = "bar-app";
     assertEquals(input, expected, actual);
   }
@@ -49,8 +49,125 @@ public final class UtilTest {
   @Test
   public void testTrimLowercaseAndReplaceWhitespaces04() {
     final String input    = "  Bar  App  ";
-    final String actual   = Util.trimLowercaseReplaceWhitespace(input, "-");
+    final String actual   = Util.trimLowercaseReplaceWhitespace(input, "-", true);
     final String expected = "bar-app";
     assertEquals(input, expected, actual);
+  }
+
+  @Test
+  public void testMacOSApplicationPath01() {
+    final String inputQual = "";
+    final String inputOrga = "Foo Bar";
+    final String inputProj = "";
+    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    assertEquals(actual, "Foo-Bar");
+  }
+
+  @Test
+  public void testMacOSApplicationPath02() {
+    final String inputQual = "";
+    final String inputOrga = "";
+    final String inputProj = "Baz Qux";
+    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    assertEquals(actual, "Baz-Qux");
+  }
+
+  @Test
+  public void testMacOSApplicationPath03() {
+    final String inputQual = "";
+    final String inputOrga = "Foo Bar";
+    final String inputProj = "Baz Qux";
+    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    assertEquals(actual, "Foo-Bar.Baz-Qux");
+  }
+
+  @Test
+  public void testMacOSApplicationPath04() {
+    final String inputQual = "uk.co";
+    final String inputOrga = "Foo Bar";
+    final String inputProj = "";
+    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    assertEquals(actual, "uk.co.Foo-Bar");
+  }
+
+  @Test
+  public void testMacOSApplicationPath05() {
+    final String inputQual = "uk.co";
+    final String inputOrga = "";
+    final String inputProj = "Baz Qux";
+    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    assertEquals(actual, "uk.co.Baz-Qux");
+  }
+
+  @Test
+  public void testMacOSApplicationPath06() {
+    final String inputQual = "uk.co";
+    final String inputOrga = "Foo Bar";
+    final String inputProj = "Baz Qux";
+    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    assertEquals(actual, "uk.co.Foo-Bar.Baz-Qux");
+  }
+
+  @Test
+  public void testMacOSApplicationPath07() {
+    final String inputQual = " uk.co ";
+    final String inputOrga = " Foo  Bar ";
+    final String inputProj = "  Baz Qux  ";
+    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    assertEquals(actual, "uk.co.Foo-Bar.Baz-Qux");
+  }
+
+  @Test
+  public void testWindowsApplicationPath01() {
+    final String inputQual = "";
+    final String inputOrga = "Foo Bar";
+    final String inputProj = "";
+    final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
+    assertEquals(actual, "Foo Bar");
+  }
+
+  @Test
+  public void testWindowsApplicationPath02() {
+    final String inputQual = "";
+    final String inputOrga = "";
+    final String inputProj = "Baz Qux";
+    final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
+    assertEquals(actual, "Baz Qux");
+  }
+
+  @Test
+  public void testWindowsApplicationPath03() {
+    final String inputQual = "";
+    final String inputOrga = "Foo Bar";
+    final String inputProj = "Baz Qux";
+    final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
+    assertEquals(actual, "Foo Bar\\Baz Qux");
+  }
+
+  @Test
+  public void testWindowsApplicationPath04() {
+    final String inputQual = "uk.co";
+    final String inputOrga = "Foo Bar";
+    final String inputProj = "";
+    final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
+    assertEquals(actual, "Foo Bar");
+  }
+
+  @Test
+  public void testWindowsApplicationPath05() {
+    final String inputQual = "uk.co";
+    final String inputOrga = "";
+    final String inputProj = "Baz Qux";
+    final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
+    assertEquals(actual, "Baz Qux");
+  }
+
+  @Test
+  public void testWindowsApplicationPath06() {
+    final String inputQual = "uk.co";
+    final String inputOrga = "Foo Bar";
+    final String inputProj = "Baz Qux";
+    final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
+    assertEquals(actual, "Foo Bar\\Baz Qux");
   }
 }

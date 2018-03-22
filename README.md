@@ -31,17 +31,17 @@ Add the library as a dependency to your project:
 <dependency>
   <groupId>io.github.soc</groupId>
   <artifactId>directories</artifactId>
-  <version>9</version>
+  <version>10</version>
 </dependency>
 ```
 ##### Gradle
 ```groovy
-compile 'io.github.soc:directories:9'
+compile 'io.github.soc:directories:10'
 ```
 
 ##### SBT
 ```scala
-"io.github.soc" % "directories" % "9"
+"io.github.soc" % "directories" % "10"
 ```
 
 The library itself is built against Java 6 to allow for the widest possible usage scenarios.

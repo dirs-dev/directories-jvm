@@ -217,12 +217,12 @@ public final class ProjectDirectories {
         dataLocalDir = dataDir;
         break;
       case WIN:
-        final String appDataRoaming = runPowerShellCommand("ApplicationData") + '/' + path;
-        final String appDataLocal   = runPowerShellCommand("LocalApplicationData") + '/' + path;
-        dataDir      = appDataRoaming + "/data";
-        dataLocalDir = appDataLocal   + "/data";
-        configDir    = appDataRoaming + "/config";
-        cacheDir     = appDataLocal   + "/cache";
+        final String appDataRoaming = runPowerShellCommand("ApplicationData") + '\\' + path;
+        final String appDataLocal   = runPowerShellCommand("LocalApplicationData") + '\\' + path;
+        dataDir      = appDataRoaming + "\\data";
+        dataLocalDir = appDataLocal   + "\\data";
+        configDir    = appDataRoaming + "\\config";
+        cacheDir     = appDataLocal   + "\\cache";
         break;
       default:
         throw new UnsupportedOperatingSystemException("Project directories are not supported on " + operatingSystemName);
@@ -251,43 +251,18 @@ public final class ProjectDirectories {
     * {@code qualifier}, {@code organization} and {@code application} arguments.
     */
   public static ProjectDirectories from(String qualifier, String organization, String application) {
+    if (Util.isNullOrEmpty(organization) && Util.isNullOrEmpty(application))
+      throw new UnsupportedOperationException("organization and application arguments cannot both be null/empty");
     String path;
-    StringBuilder buf;
-    boolean orgPresent;
-    boolean appPresent;
     switch (operatingSystem) {
       case LIN:
       case BSD:
-        path = trimLowercaseReplaceWhitespace(application, "");
+        path = trimLowercaseReplaceWhitespace(application, "", true);
         break;
       case MAC:
-        buf = new StringBuilder(Math.max(stringLength(qualifier) + stringLength(organization) + stringLength(application), 0));
-        boolean qualPresent = !isNullOrEmpty(qualifier);
-        orgPresent = !isNullOrEmpty(organization);
-        appPresent = !isNullOrEmpty(application);
-        if (qualPresent)
-          buf.append(qualifier.replace(' ', '-'));
-        if (orgPresent || appPresent)
-          buf.append('.');
-        if (orgPresent)
-          buf.append(organization.replace(' ', '-'));
-        if (appPresent)
-          buf.append('.');
-        if (!isNullOrEmpty(application))
-          buf.append(application.replace(' ', '-'));
-        path = buf.toString();
-        break;
+        path = Util.macOSApplicationPath(qualifier, organization, application);
       case WIN:
-        buf = new StringBuilder(Math.max(stringLength(organization) + stringLength(application), 0));
-        orgPresent = !isNullOrEmpty(organization);
-        appPresent = !isNullOrEmpty(application);
-        if (orgPresent)
-          buf.append(organization);
-        if (appPresent)
-          buf.append('/');
-        if (appPresent)
-          buf.append(application);
-        path = buf.toString();
+        path = Util.windowsApplicationPath(qualifier, organization, application);
         break;
       default:
         throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
@@ -330,11 +305,11 @@ public final class ProjectDirectories {
   @Override
   public int hashCode() {
     int result = projectPath.hashCode();
-    result = 31  * result + (cacheDir     != null ? cacheDir    .hashCode() : 0);
-    result = 31  * result + (configDir    != null ? configDir   .hashCode() : 0);
-    result = 31  * result + (dataDir      != null ? dataDir     .hashCode() : 0);
-    result = 31  * result + (dataLocalDir != null ? dataLocalDir.hashCode() : 0);
-    result = 31  * result + (runtimeDir   != null ? runtimeDir  .hashCode() : 0);
+    result = 31 * result + (cacheDir     != null ? cacheDir    .hashCode() : 0);
+    result = 31 * result + (configDir    != null ? configDir   .hashCode() : 0);
+    result = 31 * result + (dataDir      != null ? dataDir     .hashCode() : 0);
+    result = 31 * result + (dataLocalDir != null ? dataLocalDir.hashCode() : 0);
+    result = 31 * result + (runtimeDir   != null ? runtimeDir  .hashCode() : 0);
     return result;
   }
 }
