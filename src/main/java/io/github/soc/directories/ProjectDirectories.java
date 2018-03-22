@@ -63,7 +63,7 @@ public final class ProjectDirectories {
     * </tr>
     * <tr>
     * <td>Windows</td>
-    * <td>{@code {FOLDERID_LocalAppData}}\{@code <project_path>}\cache</td>
+    * <td>{@code {F1B32785-6FBA-4FCF-9D55-7B8E7F157091}}\{@code <project_path>}\cache</td>
     * <td>C:\Users\Alice\AppData\Local\Foo Corp\Bar App\cache</td>
     * </tr>
     * </table>
@@ -91,7 +91,7 @@ public final class ProjectDirectories {
     * </tr>
     * <tr>
     * <td>Windows</td>
-    * <td>{@code {FOLDERID_RoamingAppData}}\{@code <project_path>}\config</td>
+    * <td>{@code {3EB685DB-65F9-4CF6-A03A-E3EF65729F3D}}\{@code <project_path>}\config</td>
     * <td>C:\Users\Alice\AppData\Roaming\Foo Corp\Bar App\config</td>
     * </tr>
     * </table>
@@ -119,7 +119,7 @@ public final class ProjectDirectories {
     * </tr>
     * <tr>
     * <td>Windows</td>
-    * <td>{@code {FOLDERID_RoamingAppData}}\{@code <project_path>}\data</td>
+    * <td>{@code {3EB685DB-65F9-4CF6-A03A-E3EF65729F3D}}\{@code <project_path>}\data</td>
     * <td>C:\Users\Alice\AppData\Roaming\Foo Corp\Bar App\data</td>
     * </tr>
     * </table>
@@ -147,7 +147,7 @@ public final class ProjectDirectories {
     * </tr>
     * <tr>
     * <td>Windows</td>
-    * <td>{@code {FOLDERID_LocalAppData}}\{@code <project_path>}\data</td>
+    * <td>{@code {F1B32785-6FBA-4FCF-9D55-7B8E7F157091}}\{@code <project_path>}\data</td>
     * <td>C:\Users\Alice\AppData\Local\Foo Corp\Bar App\data</td>
     * </tr>
     * </table>
@@ -217,8 +217,8 @@ public final class ProjectDirectories {
         dataLocalDir = dataDir;
         break;
       case WIN:
-        final String appDataRoaming = runPowerShellCommand("ApplicationData") + '\\' + path;
-        final String appDataLocal   = runPowerShellCommand("LocalApplicationData") + '\\' + path;
+        final String appDataRoaming = getWinFolder("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D") + '\\' + path;
+        final String appDataLocal   = getWinFolder("F1B32785-6FBA-4FCF-9D55-7B8E7F157091") + '\\' + path;
         dataDir      = appDataRoaming + "\\data";
         dataLocalDir = appDataLocal   + "\\data";
         configDir    = appDataRoaming + "\\config";
@@ -261,6 +261,7 @@ public final class ProjectDirectories {
         break;
       case MAC:
         path = Util.macOSApplicationPath(qualifier, organization, application);
+        break;
       case WIN:
         path = Util.windowsApplicationPath(qualifier, organization, application);
         break;
