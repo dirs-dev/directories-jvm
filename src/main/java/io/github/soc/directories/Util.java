@@ -93,8 +93,37 @@ final class Util {
       return binDir;
   }
 
-  static String runXDGUserDir(String argument) {
-    ProcessBuilder processBuilder = new ProcessBuilder("xdg-user-dir", argument);
+  static String getXDGUserDir(String argument) {
+    return runCommand("xdg-user-dir", argument);
+  }
+
+  static String getWinFolder(String guid) {
+    return runCommand(
+        "powershell.exe",
+        "-Command",
+        "& {\n" +
+            "Add-Type @\\\"\n" +
+            "using System;\n" +
+            "using System.Runtime.InteropServices;\n" +
+            "public class Dir {\n" +
+            "   [DllImport(\\\"shell32.dll\\\")]\n" +
+            "   private static extern int SHGetKnownFolderPath([MarshalAs(UnmanagedType.LPStruct)] Guid rfid, uint dwFlags, IntPtr hToken, out IntPtr pszPath);\n" +
+            "   public static string GetKnownFolderPath(string rfid) {\n" +
+            "       IntPtr pszPath;\n" +
+            "       if (SHGetKnownFolderPath(new Guid(rfid), 0, IntPtr.Zero, out pszPath) != 0) return \\\"\\\";\n" +
+            "       string path = Marshal.PtrToStringUni(pszPath);\n" +
+            "       Marshal.FreeCoTaskMem(pszPath);\n" +
+            "       return path;\n" +
+            "   }\n" +
+            "}\n" +
+            "\\\"@\n" +
+            "[Dir]::GetKnownFolderPath(\\\"" + guid + "\\\")\n" +
+            "}"
+    );
+  }
+
+  private static String runCommand(String... command) {
+    final ProcessBuilder processBuilder = new ProcessBuilder(command);
     Process process;
     try {
       process = processBuilder.start();
@@ -151,34 +180,6 @@ final class Util {
     if (appPresent)
       buf.append(application);
     return buf.toString();
-  }
-
-
-  static String runPowerShellCommand(String argument) {
-    ProcessBuilder processBuilder = new ProcessBuilder("powershell.exe", "-Command",
-        "[Environment]::GetFolderPath([Environment+SpecialFolder]::" + argument + ")");
-    Process process;
-    try {
-      process = processBuilder.start();
-    } catch (IOException e1) {
-      e1.printStackTrace();
-      return null;
-    }
-
-    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-    try {
-      return reader.readLine();
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
-    } finally {
-      process.destroy();
-      try {
-        reader.close();
-      } catch (IOException e) {
-        return null;
-      }
-    }
   }
 
   static String stripQualification(String value) {

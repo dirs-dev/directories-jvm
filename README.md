@@ -8,10 +8,10 @@
 - on Linux, Windows (≥ 7), macOS and BSD
 
 The library provides the location of directories by leveraging the mechanisms defined by
-- the [XDG base directory](https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html) and
-  the [XDG user directory](https://www.freedesktop.org/wiki/Software/xdg-user-dirs/) specifications on Linux,
-- the [SpecialFolder](https://msdn.microsoft.com/en-us/library/system.environment.specialfolder.aspx) API on Windows, and
-- the [Standard Directories](https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW6)
+- The [XDG base directory](https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html) and
+  the [XDG user directory](https://www.freedesktop.org/wiki/Software/xdg-user-dirs/) specifications on Linux.
+- The [KNOWNFOLDERID](https://msdn.microsoft.com/en-us/library/windows/desktop/dd378457(v=vs.85).aspx) GUIDs on Windows.
+- The [Standard Directories](https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW6)
   guidelines on macOS.
 
 ## Platforms
@@ -53,22 +53,22 @@ Library run by user Alice:
 
 ```java
 import io.github.soc.directories.ProjectDirectories;
-ProjectDirectories myProjDirs =
-  ProjectDirectories.from("com", "Foo Corp",  "Bar App");
-myProjDirs.projectConfigDir;
+
+ProjectDirectories myProjDirs = ProjectDirectories.from("com", "Foo Corp", "Bar App");
+myProjDirs.configDir;
 // Lin: /home/alice/.config/barapp
-// Win: C:\Users\Alice\AppData\Roaming\Foo Corp\Bar App\config
 // Mac: /Users/Alice/Library/Preferences/com.Foo-Corp.Bar-App
+// Win: C:\Users\Alice\AppData\Roaming\Foo Corp\Bar App\config
 
-BaseDirectories.executableDir();
-// Lin: /home/alice/.local/share/bin
-// Win: null
+BaseDirectories.executableDir;
+// Lin: /home/alice/.local/bin
 // Mac: null
+// Win: null
 
-UserDirs.audio_dir();
+UserDirs.audioDir;
 // Lin: /home/alice/Music
-// Win: C:\Users\Alice\Music
 // Mac: /Users/Alice/Music
+// Win: C:\Users\Alice\Music
 ```
 
 ## Design Goals
@@ -103,48 +103,48 @@ that have been defined according to the conventions of the operating system the 
 
 If you want to compute the location of cache, config or data folders for your own application or project, use `ProjectDirectories` instead.
 
-| Static field name | Value on Linux / BSD                                             | Value on Windows                       | Value on macOS                      |
-| ----------------- | ---------------------------------------------------------------- | -------------------------------------- | ----------------------------------- |
-| `homeDir`         | `$HOME`                                                          | `{SpecialFolder.UserProfile}`          | `$HOME`                             |
-| `cacheDir`        | `$XDG_CACHE_HOME`  or `$HOME/.cache`                             | `{SpecialFolder.LocalApplicationData}` | `$HOME/Library/Caches`              |
-| `configDir`       | `$XDG_CONFIG_HOME` or `$HOME/.config`                            | `{SpecialFolder.ApplicationData}`      | `$HOME/Library/Preferences`         |
-| `dataDir`         | `$XDG_DATA_HOME`   or `$HOME/.local/share`                       | `{SpecialFolder.ApplicationData}`      | `$HOME/Library/Application Support` |
-| `dataLocalDir`    | `$XDG_DATA_HOME`   or `$HOME/.local/share`                       | `{SpecialFolder.LocalApplicationData}` | `$HOME/Library/Application Support` |
-| `executableDir`   | `$XDG_BIN_HOME` or `$XDG_DATA_HOME/../bin` or `$HOME/.local/bin` | `null`                                 | `null`                              |
-| `runtimeDir`      | `$XDG_RUNTIME_DIR` or `null`                                     | `null`                                 | `null`                              |
+| Static field name | Value on Linux / BSD                                             | Value on Windows                         | Value on macOS                      |
+| ----------------- | ---------------------------------------------------------------- | ---------------------------------------- | ----------------------------------- |
+| `homeDir`         | `$HOME`                                                          | `{5E6C858F-0E22-4760-9AFE-EA3317B67173}` | `$HOME`                             |
+| `cacheDir`        | `$XDG_CACHE_HOME`  or `$HOME/.cache`                             | `{F1B32785-6FBA-4FCF-9D55-7B8E7F157091}` | `$HOME/Library/Caches`              |
+| `configDir`       | `$XDG_CONFIG_HOME` or `$HOME/.config`                            | `{3EB685DB-65F9-4CF6-A03A-E3EF65729F3D}` | `$HOME/Library/Preferences`         |
+| `dataDir`         | `$XDG_DATA_HOME`   or `$HOME/.local/share`                       | `{3EB685DB-65F9-4CF6-A03A-E3EF65729F3D}` | `$HOME/Library/Application Support` |
+| `dataLocalDir`    | `$XDG_DATA_HOME`   or `$HOME/.local/share`                       | `{F1B32785-6FBA-4FCF-9D55-7B8E7F157091}` | `$HOME/Library/Application Support` |
+| `executableDir`   | `$XDG_BIN_HOME` or `$XDG_DATA_HOME/../bin` or `$HOME/.local/bin` | `null`                                   | `null`                              |
+| `runtimeDir`      | `$XDG_RUNTIME_DIR` or `null`                                     | `null`                                   | `null`                              |
 
 ### `UserDirectories`
 
 The intended use-case for `UserDirectories` is to query the paths of user-facing standard directories
 that have been defined according to the conventions of the operating system the library is running on.
 
-| Static field name | Value on Linux / BSD                            | Value on Windows              | Value on macOS        |
-| ----------------- | ----------------------------------------------- | ----------------------------- | --------------------- |
-| `homeDir`         | `$HOME`                                         | `{SpecialFolder.UserProfile}` | `$HOME`               |
-| `audioDir`        | `XDG_MUSIC_DIR`                                 | `{SpecialFolder.Music}`       | `$HOME/Music`         |
-| `desktopDir`      | `XDG_DESKTOP_DIR`                               | `{SpecialFolder.Desktop}`     | `$HOME/Desktop`       |
-| `documentDir`     | `XDG_DOCUMENTS_DIR`                             | `{SpecialFolder.Documents}`   | `$HOME/Documents`     |
-| `downloadDir`     | `XDG_DOWNLOAD_DIR`                              | `{SpecialFolder.Downloads}`   | `$HOME/Downloads`     |
-| `fontDir`         | `$XDG_DATA_HOME/fonts` or `/.local/share/fonts` | `null`                        | `$HOME/Library/Fonts` |
-| `pictureDir`      | `XDG_PICTURES_DIR`                              | `{SpecialFolder.Pictures}`    | `$HOME/Pictures`      |
-| `publicDir`       | `XDG_PUBLICSHARE_DIR`                           | `{SpecialFolder.Public}`      | `$HOME/Public`        |
-| `templateDir`     | `XDG_TEMPLATES_DIR`                             | `{SpecialFolder.Templates}`   | `null`                |
-| `videoDir`        | `XDG_VIDEOS_DIR`                                | `{SpecialFolder.Videos}`      | `$HOME/Movies`        |
+| Static field name | Value on Linux / BSD                            | Value on Windows                         | Value on macOS        |
+| ----------------- | ----------------------------------------------- | ---------------------------------------- | --------------------- |
+| `homeDir`         | `$HOME`                                         | `{5E6C858F-0E22-4760-9AFE-EA3317B67173}` | `$HOME`               |
+| `audioDir`        | `$XDG_MUSIC_DIR`                                | `{4BD8D571-6D19-48D3-BE97-422220080E43}` | `$HOME/Music`         |
+| `desktopDir`      | `$XDG_DESKTOP_DIR`                              | `{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}` | `$HOME/Desktop`       |
+| `documentDir`     | `$XDG_DOCUMENTS_DIR`                            | `{FDD39AD0-238F-46AF-ADB4-6C85480369C7}` | `$HOME/Documents`     |
+| `downloadDir`     | `$XDG_DOWNLOAD_DIR`                             | `{374DE290-123F-4565-9164-39C4925E467B}` | `$HOME/Downloads`     |
+| `fontDir`         | `$XDG_DATA_HOME/fonts` or `/.local/share/fonts` | `{FD228CB7-AE11-4AE3-864C-16F3910AB8FE}` | `$HOME/Library/Fonts` |
+| `pictureDir`      | `$XDG_PICTURES_DIR`                             | `{33E28130-4E1E-4676-835A-98395C3BC3BB}` | `$HOME/Pictures`      |
+| `publicDir`       | `$XDG_PUBLICSHARE_DIR`                          | `{DFDF76A2-C82A-4D63-906A-5644AC457385}` | `$HOME/Public`        |
+| `templateDir`     | `$XDG_TEMPLATES_DIR`                            | `{A63293E8-664E-48DB-A079-DF759E0509F7}` | `null`                |
+| `videoDir`        | `$XDG_VIDEOS_DIR`                               | `{18989B1D-99B5-455B-841C-AB7C74E4DDFC}` | `$HOME/Movies`        |
 
 ### `ProjectDirectories`
 
 The intended use-case for `BaseDirectories` is to compute the location of cache, config or data folders for your own application or project,
 which are derived from the standard directories.
 
-| Instance field name | Value on Linux / BSD                                                   | Value on Windows                                            | Value on macOS                                     |
-| ------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------- |
-| `cacheDir`          | `$XDG_CACHE_HOME/_project_path_` or `$HOME/.cache/_project_path_`      | `{SpecialFolder.LocalApplicationData}/_project_path_/cache` | `$HOME/Library/Caches/_project_path_`              |
-| `configDir`         | `$XDG_CONFIG_HOME/_project_path_`  or `$HOME/.config/_project_path_`   | `{SpecialFolder.ApplicationData}/_project_path_`            | `$HOME/Library/Preferences/_project_path_`         |
-| `dataDir`           | `$XDG_DATA_HOME/_project_path_` or `$HOME/.local/share/_project_path_` | `{SpecialFolder.ApplicationData}/_project_path_`            | `$HOME/Library/Application Support/_project_path_` |
-| `dataLocalDir`      | `$XDG_DATA_HOME/_project_path_` or `$HOME/.local/share/_project_path_` | `{SpecialFolder.LocalApplicationData}/_project_path_`       | `$HOME/Library/Application Support/_project_path_` |
-| `runtimeDir`        | `$XDG_RUNTIME_DIR/_project_path_`                                      | `null`                                                      | `null`                                             |
+| Instance field name | Value on Linux / BSD                                                   | Value on Windows                                              | Value on macOS                                     |
+| ------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------- | -------------------------------------------------- |
+| `cacheDir`          | `$XDG_CACHE_HOME/<project_path>` or `$HOME/.cache/<project_path>`      | `{F1B32785-6FBA-4FCF-9D55-7B8E7F157091}/<project_path>/cache` | `$HOME/Library/Caches/<project_path>`              |
+| `configDir`         | `$XDG_CONFIG_HOME/<project_path>`  or `$HOME/.config/<project_path>`   | `{3EB685DB-65F9-4CF6-A03A-E3EF65729F3D}/<project_path>`       | `$HOME/Library/Preferences/<project_path>`         |
+| `dataDir`           | `$XDG_DATA_HOME/<project_path>` or `$HOME/.local/share/<project_path>` | `{3EB685DB-65F9-4CF6-A03A-E3EF65729F3D}/<project_path>`       | `$HOME/Library/Application Support/<project_path>` |
+| `dataLocalDir`      | `$XDG_DATA_HOME/<project_path>` or `$HOME/.local/share/<project_path>` | `{F1B32785-6FBA-4FCF-9D55-7B8E7F157091}/<project_path>`       | `$HOME/Library/Application Support/<project_path>` |
+| `runtimeDir`        | `$XDG_RUNTIME_DIR/<project_path>`                                      | `null`                                                        | `null`                                             |
 
-The specific value of `_project_path_` is computed by the
+The specific value of `<project_path>` is computed by the
 
     ProjectDirectories.from(String qualifier,
                             String organization,
@@ -200,11 +200,11 @@ The version number of this library consists of a whole number, which is incremen
   `System.getenv("HOME")`, improving reliability and portability
 - Changes to some values of `BaseDirectories` and `ProjectDirectories`:
 
-| Method                            | Old value                                             | New Value                                                  |
-| --------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------- |
-| `BaseDirectories.cacheDir`        | `{SpecialFolder.LocalApplicationData}/cache`          | `{SpecialFolder.LocalApplicationData}`                     |
-| `ProjectDirectories#dataDir`      | `{SpecialFolder.ApplicationData}/_project_path_`      | `{SpecialFolder.ApplicationData}/_project_path_/data`      |
-| `ProjectDirectories#dataLocalDir` | `{SpecialFolder.LocalApplicationData}/_project_path_` | `{SpecialFolder.LocalApplicationData}/_project_path_/data` |
+| Method                            | Old value                                               | New Value                                                    |
+| --------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------ |
+| `BaseDirectories.cacheDir`        | `{F1B32785-6FBA-4FCF-9D55-7B8E7F157091}/cache`          | `{F1B32785-6FBA-4FCF-9D55-7B8E7F157091}`                     |
+| `ProjectDirectories#dataDir`      | `{3EB685DB-65F9-4CF6-A03A-E3EF65729F3D}/<project_path>` | `{3EB685DB-65F9-4CF6-A03A-E3EF65729F3D}/<project_path>/data` |
+| `ProjectDirectories#dataLocalDir` | `{F1B32785-6FBA-4FCF-9D55-7B8E7F157091}/<project_path>` | `{F1B32785-6FBA-4FCF-9D55-7B8E7F157091}/<project_path>/data` |
 
 ### 6
 
