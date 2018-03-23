@@ -1,22 +1,25 @@
-
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.soc/directories.svg)](https://search.maven.org/#search|gav|1|g%3A%22io.github.soc%22%20AND%20a%3A%22directories%22)
- [![License: MPL-2.0](https://img.shields.io/github/license/soc/directories-jvm.svg)](LICENSE)
+[![API documentation](http://javadoc.io/badge/io.github.soc/directories.svg)](http://javadoc.io/doc/io.github.soc/directories)
+![actively developed](https://img.shields.io/badge/maintenance-actively--developed-brightgreen.svg)
+[![TravisCI status](https://travis-ci.org/soc/directories-jvm.svg?branch=master)](https://travis-ci.org/soc/directories-jvm)
+[![AppVeyor status](https://ci.appveyor.com/api/projects/status/gr4e1u4cugo4m8p3/branch/master?svg=true)](https://ci.appveyor.com/project/soc/directories-jvm/branch/master)
+[![License: MPL-2.0](https://img.shields.io/github/license/soc/directories-jvm.svg)](LICENSE)
 
 # Directories
 
 ## Introduction
 
-- a tiny library (9kB) with a minimal API
+- a tiny library (11kB) with a minimal API
 - that provides the platform-specific, user-accessible locations
 - for retrieving and storing configuration, cache and other data
 - on Linux, Windows (≥ 7), macOS and BSD
 
-The library provides the location of directories by leveraging the mechanisms defined by
-- The [XDG base directory](https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html) and
-  the [XDG user directory](https://www.freedesktop.org/wiki/Software/xdg-user-dirs/) specifications on Linux.
-- The [Known Folder](https://msdn.microsoft.com/en-us/library/windows/desktop/dd378457.aspx) API on Windows.
-- The [Standard Directories](https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW6)
-  guidelines on macOS.
+The library provides the location of these directories by leveraging the mechanisms defined by
+- the [XDG base directory](https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html) and
+  the [XDG user directory](https://www.freedesktop.org/wiki/Software/xdg-user-dirs/) specifications on Linux
+- the [Known Folder](https://msdn.microsoft.com/en-us/library/windows/desktop/dd378457.aspx) API on Windows
+- the [Standard Directories](https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW6)
+  guidelines on macOS
 
 ## Platforms
 
@@ -89,14 +92,14 @@ UserDirs.audioDir;
   directory on one operating system, but a system-level, read-only directory on another, that would
   outweigh the confusion and unexpected failures such an approach would cause.
   - `executableDir` is specified to provide the path to a user-writable directory for binaries.<br/>
-    As such a directory only commonly exists on Linux, it returns `None` on macOS and Windows.
+    As such a directory only commonly exists on Linux, it returns `null` on macOS and Windows.
   - `fontDir` is specified to provide the path to a user-writable directory for fonts.<br/>
-    As such a directory only exists on Linux and macOS, it returns `None` Windows.
+    As such a directory only exists on Linux and macOS, it returns `null` Windows.
   - `runtimeDir` is specified to provide the path to a directory for non-essential runtime data.
     It is required that this directory is created when the user logs in, is only accessible by the
     user itself, is deleted when the user logs out, and supports all filesystem features of the
     operating system.<br/>
-    As such a directory only commonly exists on Linux, it returns `None` on macOS and Windows.
+    As such a directory only commonly exists on Linux, it returns `null` on macOS and Windows.
 
 ## Features
 
@@ -158,7 +161,7 @@ method and varies across operating systems. As an example, calling
 
     ProjectDirectories.from("org"         /*qualifier*/,
                             "Baz Corp"    /*organization*/,
-                            "Foo Bar-App" /*project*/)
+                            "Foo Bar-App" /*application*/)
 
 results in the following values:
 

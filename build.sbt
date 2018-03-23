@@ -15,7 +15,7 @@ lazy val root = (project in file("."))
     libraryDependencies  += "junit"        % "junit"           % "4.12" % Test,
     libraryDependencies  += "com.novocode" % "junit-interface" % "0.11" % Test,
     testOptions in Test  := Seq(Tests.Argument(TestFrameworks.JUnit, "-a")),
-    publishTo            := sonatypePublishTo.value,
+    // publishTo            := sonatypePublishTo.value,
     pomExtra             :=
       <scm>
         <url>git@github.com:soc/directories-jvm.git</url>
