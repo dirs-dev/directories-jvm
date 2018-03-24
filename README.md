@@ -1,15 +1,15 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.soc/directories.svg)](https://search.maven.org/#search|gav|1|g%3A%22io.github.soc%22%20AND%20a%3A%22directories%22)
 [![API documentation](http://javadoc.io/badge/io.github.soc/directories.svg)](http://javadoc.io/doc/io.github.soc/directories)
 ![actively developed](https://img.shields.io/badge/maintenance-actively--developed-brightgreen.svg)
-[![TravisCI status](https://travis-ci.org/soc/directories-jvm.svg?branch=master)](https://travis-ci.org/soc/directories-jvm)
-[![AppVeyor status](https://ci.appveyor.com/api/projects/status/gr4e1u4cugo4m8p3/branch/master?svg=true)](https://ci.appveyor.com/project/soc/directories-jvm/branch/master)
+[![TravisCI status](https://img.shields.io/travis/soc/directories-jvm/master.svg?label=Linux%20build)](https://travis-ci.org/soc/directories-rs)
+[![AppVeyor status](https://img.shields.io/appveyor/ci/soc/directories-jvm/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/soc/directories-rs/branch/master)
 [![License: MPL-2.0](https://img.shields.io/github/license/soc/directories-jvm.svg)](LICENSE)
 
 # Directories
 
 ## Introduction
 
-- a tiny library (11kB) with a minimal API
+- a tiny library (12kB) with a minimal API
 - that provides the platform-specific, user-accessible locations
 - for retrieving and storing configuration, cache and other data
 - on Linux, Windows (≥ 7), macOS and BSD
@@ -38,17 +38,17 @@ Add the library as a dependency to your project:
 <dependency>
   <groupId>io.github.soc</groupId>
   <artifactId>directories</artifactId>
-  <version>10</version>
+  <version>9</version>
 </dependency>
 ```
 ##### Gradle
 ```groovy
-compile 'io.github.soc:directories:10'
+compile 'io.github.soc:directories:9'
 ```
 
 ##### SBT
 ```scala
-"io.github.soc" % "directories" % "10"
+"io.github.soc" % "directories" % "9"
 ```
 
 The library itself is built against Java 6 to allow for the widest possible usage scenarios.
@@ -60,6 +60,8 @@ Library run by user Alice:
 
 ```java
 import io.github.soc.directories.ProjectDirectories;
+import io.github.soc.directories.BaseDirectories;
+import io.github.soc.directories.UserDirectories;
 
 ProjectDirectories myProjDirs = ProjectDirectories.from("com", "Foo Corp", "Bar App");
 myProjDirs.configDir;
@@ -67,12 +69,14 @@ myProjDirs.configDir;
 // Mac: /Users/Alice/Library/Preferences/com.Foo-Corp.Bar-App
 // Win: C:\Users\Alice\AppData\Roaming\Foo Corp\Bar App\config
 
-BaseDirectories.executableDir;
+BaseDirectories baseDirs = BaseDirectories.get();
+baseDirs.executableDir;
 // Lin: /home/alice/.local/bin
 // Mac: null
 // Win: null
 
-UserDirs.audioDir;
+UserDirectories userDirs = UserDirectories.get();
+userDirs.audioDir;
 // Lin: /home/alice/Music
 // Mac: /Users/Alice/Music
 // Win: C:\Users\Alice\Music
@@ -81,9 +85,9 @@ UserDirs.audioDir;
 ## Design Goals
 
 - The _directories_ library is designed to provide an accurate snapshot of the system's state at
-  the point of initialization/invocation of `BaseDirectories`, `UserDirectories` or
-  `ProjectDirectories::from`. Subsequent changes to the state of the system are not reflected in
-  values creates prior to such a change.
+  the point of invocation of `BaseDirectories.get()`, `UserDirectories.get()` or
+  `ProjectDirectories.from()`. Subsequent changes to the state of the system are not reflected in
+  instances created prior to such a change.
 - This library does not create directories or check for their existence. The library only provides
   information on what the path to a certain directory _should_ be. How this information is used is
   a decision that developers need to make based on the requirements of each individual application.
@@ -110,46 +114,46 @@ that have been defined according to the conventions of the operating system the 
 
 If you want to compute the location of cache, config or data folders for your own application or project, use `ProjectDirectories` instead.
 
-| Static field name | Value on Linux / BSD                                             | Value on Windows                  | Value on macOS                      |
-| ----------------- | ---------------------------------------------------------------- | --------------------------------- | ----------------------------------- |
-| `homeDir`         | `$HOME`                                                          | `{FOLDERID_UserProfile}`          | `$HOME`                             |
-| `cacheDir`        | `$XDG_CACHE_HOME`  or `$HOME`/.cache                             | `{FOLDERID_LocalApplicationData}` | `$HOME`/Library/Caches              |
-| `configDir`       | `$XDG_CONFIG_HOME` or `$HOME`/.config                            | `{FOLDERID_ApplicationData}`      | `$HOME`/Library/Preferences         |
-| `dataDir`         | `$XDG_DATA_HOME`   or `$HOME`/.local/share                       | `{FOLDERID_ApplicationData}`      | `$HOME`/Library/Application Support |
-| `dataLocalDir`    | `$XDG_DATA_HOME`   or `$HOME`/.local/share                       | `{FOLDERID_LocalApplicationData}` | `$HOME`/Library/Application Support |
-| `executableDir`   | `$XDG_BIN_HOME` or `$XDG_DATA_HOME`/../bin or `$HOME`/.local/bin | `null`                            | `null`                              |
-| `runtimeDir`      | `$XDG_RUNTIME_DIR` or `null`                                     | `null`                            | `null`                              |
+| Field name      | Value on Linux / BSD                                             | Value on Windows                  | Value on macOS                      |
+| --------------- | ---------------------------------------------------------------- | --------------------------------- | ----------------------------------- |
+| `homeDir`       | `$HOME`                                                          | `{FOLDERID_UserProfile}`          | `$HOME`                             |
+| `cacheDir`      | `$XDG_CACHE_HOME`  or `$HOME`/.cache                             | `{FOLDERID_LocalApplicationData}` | `$HOME`/Library/Caches              |
+| `configDir`     | `$XDG_CONFIG_HOME` or `$HOME`/.config                            | `{FOLDERID_ApplicationData}`      | `$HOME`/Library/Preferences         |
+| `dataDir`       | `$XDG_DATA_HOME`   or `$HOME`/.local/share                       | `{FOLDERID_ApplicationData}`      | `$HOME`/Library/Application Support |
+| `dataLocalDir`  | `$XDG_DATA_HOME`   or `$HOME`/.local/share                       | `{FOLDERID_LocalApplicationData}` | `$HOME`/Library/Application Support |
+| `executableDir` | `$XDG_BIN_HOME` or `$XDG_DATA_HOME`/../bin or `$HOME`/.local/bin | `null`                            | `null`                              |
+| `runtimeDir`    | `$XDG_RUNTIME_DIR` or `null`                                     | `null`                            | `null`                              |
 
 ### `UserDirectories`
 
 The intended use-case for `UserDirectories` is to query the paths of user-facing standard directories
 that have been defined according to the conventions of the operating system the library is running on.
 
-| Static field name | Value on Linux / BSD                                 | Value on Windows         | Value on macOS        |
-| ----------------- | ---------------------------------------------------- | ------------------------ | --------------------- |
-| `homeDir`         | `$HOME`                                              | `{FOLDERID_UserProfile}` | `$HOME`               |
-| `audioDir`        | `XDG_MUSIC_DIR`                                      | `{FOLDERID_Music}`       | `$HOME`/Music         |
-| `desktopDir`      | `XDG_DESKTOP_DIR`                                    | `{FOLDERID_Desktop}`     | `$HOME`/Desktop       |
-| `documentDir`     | `XDG_DOCUMENTS_DIR`                                  | `{FOLDERID_Documents}`   | `$HOME`/Documents     |
-| `downloadDir`     | `XDG_DOWNLOAD_DIR`                                   | `{FOLDERID_Downloads}`   | `$HOME`/Downloads     |
-| `fontDir`         | `$XDG_DATA_HOME`/fonts or `$HOME`/.local/share/fonts | `null`                   | `$HOME`/Library/Fonts |
-| `pictureDir`      | `XDG_PICTURES_DIR`                                   | `{FOLDERID_Pictures}`    | `$HOME`/Pictures      |
-| `publicDir`       | `XDG_PUBLICSHARE_DIR`                                | `{FOLDERID_Public}`      | `$HOME`/Public        |
-| `templateDir`     | `XDG_TEMPLATES_DIR`                                  | `{FOLDERID_Templates}`   | `null`                |
-| `videoDir`        | `XDG_VIDEOS_DIR`                                     | `{FOLDERID_Videos}`      | `$HOME`/Movies        |
+| Field name    | Value on Linux / BSD                                 | Value on Windows         | Value on macOS        |
+| ------------- | ---------------------------------------------------- | ------------------------ | --------------------- |
+| `homeDir`     | `$HOME`                                              | `{FOLDERID_UserProfile}` | `$HOME`               |
+| `audioDir`    | `XDG_MUSIC_DIR`                                      | `{FOLDERID_Music}`       | `$HOME`/Music         |
+| `desktopDir`  | `XDG_DESKTOP_DIR`                                    | `{FOLDERID_Desktop}`     | `$HOME`/Desktop       |
+| `documentDir` | `XDG_DOCUMENTS_DIR`                                  | `{FOLDERID_Documents}`   | `$HOME`/Documents     |
+| `downloadDir` | `XDG_DOWNLOAD_DIR`                                   | `{FOLDERID_Downloads}`   | `$HOME`/Downloads     |
+| `fontDir`     | `$XDG_DATA_HOME`/fonts or `$HOME`/.local/share/fonts | `null`                   | `$HOME`/Library/Fonts |
+| `pictureDir`  | `XDG_PICTURES_DIR`                                   | `{FOLDERID_Pictures}`    | `$HOME`/Pictures      |
+| `publicDir`   | `XDG_PUBLICSHARE_DIR`                                | `{FOLDERID_Public}`      | `$HOME`/Public        |
+| `templateDir` | `XDG_TEMPLATES_DIR`                                  | `{FOLDERID_Templates}`   | `null`                |
+| `videoDir`    | `XDG_VIDEOS_DIR`                                     | `{FOLDERID_Videos}`      | `$HOME`/Movies        |
 
 ### `ProjectDirectories`
 
 The intended use-case for `BaseDirectories` is to compute the location of cache, config or data folders for your own application or project,
 which are derived from the standard directories.
 
-| Instance field name | Value on Linux / BSD                                                       | Value on Windows                                         | Value on macOS                                       |
-| ------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------- |
-| `cacheDir`          | `$XDG_CACHE_HOME`/`<project_path>` or `$HOME`/.cache/`<project_path>`      | `{FOLDERID_LocalApplicationData}`/`<project_path>`/cache | `$HOME`/Library/Caches/`<project_path>`              |
-| `configDir`         | `$XDG_CONFIG_HOME`/`<project_path>`  or `$HOME`/.config/`<project_path>`   | `{FOLDERID_ApplicationData}`/`<project_path>`            | `$HOME`/Library/Preferences/`<project_path>`         |
-| `dataDir`           | `$XDG_DATA_HOME`/`<project_path>` or `$HOME`/.local/share/`<project_path>` | `{FOLDERID_ApplicationData}`/`<project_path>`            | `$HOME`/Library/Application Support/`<project_path>` |
-| `dataLocalDir`      | `$XDG_DATA_HOME`/`<project_path>` or `$HOME`/.local/share/`<project_path>` | `{FOLDERID_LocalApplicationData}`/`<project_path>`       | `$HOME`/Library/Application Support/`<project_path>` |
-| `runtimeDir`        | `$XDG_RUNTIME_DIR`/`<project_path>`                                        | `null`                                                   | `null`                                               |
+| Field name     | Value on Linux / BSD                                                       | Value on Windows                                         | Value on macOS                                       |
+| -------------- | -------------------------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------- |
+| `cacheDir`     | `$XDG_CACHE_HOME`/`<project_path>` or `$HOME`/.cache/`<project_path>`      | `{FOLDERID_LocalApplicationData}`/`<project_path>`/cache | `$HOME`/Library/Caches/`<project_path>`              |
+| `configDir`    | `$XDG_CONFIG_HOME`/`<project_path>`  or `$HOME`/.config/`<project_path>`   | `{FOLDERID_ApplicationData}`/`<project_path>`            | `$HOME`/Library/Preferences/`<project_path>`         |
+| `dataDir`      | `$XDG_DATA_HOME`/`<project_path>` or `$HOME`/.local/share/`<project_path>` | `{FOLDERID_ApplicationData}`/`<project_path>`            | `$HOME`/Library/Application Support/`<project_path>` |
+| `dataLocalDir` | `$XDG_DATA_HOME`/`<project_path>` or `$HOME`/.local/share/`<project_path>` | `{FOLDERID_LocalApplicationData}`/`<project_path>`       | `$HOME`/Library/Application Support/`<project_path>` |
+| `runtimeDir`   | `$XDG_RUNTIME_DIR`/`<project_path>`                                        | `null`                                                   | `null`                                               |
 
 The specific value of `<project_path>` is computed by the
 
@@ -183,8 +187,10 @@ The version number of this library consists of a whole number, which is incremen
 
 ### 10 – in development
 
-- Full Windows support
-- Improved speed on Windows and Linux
+- Full Windows support: `downloadDir` and `publicDir` are now supported.
+- Improved speed on Windows and Linux.
+- Changed static fields in `BaseDirectories` and `UserDirectories` to instance fields.
+  Instances can be created with `BaseDirectories.get()` and `UserDirectories.get()`.
 
 ### 9 – current stable version 
 

@@ -3,8 +3,6 @@ package io.github.soc.directories;
 import static io.github.soc.directories.Util.*;
 
 /** {@code UserDirectories} provides paths of user-facing standard directories, following the conventions of the operating system the library is running on.
-  * <p>
-  * It is a snapshot of the state of the system at the time this class is initialized.
   *
   * <h2>Examples</h2>
   * <p>
@@ -18,10 +16,6 @@ import static io.github.soc.directories.Util.*;
   * </ul>
   */
 public final class UserDirectories {
-
-  private UserDirectories() {
-    throw new Error();
-  }
 
   /** Returns the path to the user's home directory.
     * <br><br>
@@ -48,7 +42,7 @@ public final class UserDirectories {
     * </tr>
     * </table>
     */
-  public static final String homeDir;
+  public final String homeDir;
 
   /** Returns the path to the user's audio directory.
     * <br><br>
@@ -75,7 +69,7 @@ public final class UserDirectories {
     * </tr>
     * </table>
     */
-  public static final String audioDir;
+  public final String audioDir;
 
   /** Returns the path to the user's desktop directory.
     * <br><br>
@@ -102,7 +96,7 @@ public final class UserDirectories {
     * </tr>
     * </table>
     */
-  public static final String desktopDir;
+  public final String desktopDir;
 
   /** Returns the path to the user's document directory.
     * <br><br>
@@ -129,7 +123,7 @@ public final class UserDirectories {
     * </tr>
     * </table>
     */
-  public static final String documentDir;
+  public final String documentDir;
 
   /** Returns the path to the user's download directory.
     * <br><br>
@@ -156,7 +150,7 @@ public final class UserDirectories {
     * </tr>
     * </table>
     */
-  public static final String downloadDir;
+  public final String downloadDir;
 
   /** Returns the path to the user's font directory.
     * <br><br>
@@ -183,7 +177,7 @@ public final class UserDirectories {
     * </tr>
     * </table>
     */
-  public static final String fontDir;
+  public final String fontDir;
 
   /** Returns the path to the user's picture directory.
     * <br><br>
@@ -210,7 +204,7 @@ public final class UserDirectories {
     * </tr>
     * </table>
     */
-  public static final String pictureDir;
+  public final String pictureDir;
 
   /** Returns the path to the user's public directory.
     * <br><br>
@@ -237,7 +231,7 @@ public final class UserDirectories {
     * </tr>
     * </table>
     */
-  public static final String publicDir;
+  public final String publicDir;
 
   /** Returns the path to the user's template directory.
     * <br><br>
@@ -264,7 +258,7 @@ public final class UserDirectories {
     * </tr>
     * </table>
     */
-  public static final String templateDir;
+  public final String templateDir;
 
   /** Returns the path to the user's video directory.
     * <br><br>
@@ -291,9 +285,20 @@ public final class UserDirectories {
     * </tr>
     * </table>
     */
-  public static final String videoDir;
+  public final String videoDir;
 
-  static {
+  /** Creates a new {@code UserDirectories} instance.
+    * <p>
+    * The instance is an immutable snapshot of the state of the system at the time this method is invoked.
+    * Subsequent changes to the state of the system are not reflected in instances created prior to such a change.
+    *
+    * @return A new {@code UserDirectories} instance.
+    */
+  public static UserDirectories get() {
+     return new UserDirectories();
+   }
+
+  private UserDirectories() {
     switch (operatingSystem) {
       case LIN:
       case BSD:
@@ -346,5 +351,67 @@ public final class UserDirectories {
       default:
         throw new UnsupportedOperatingSystemException("User directories are not supported on " + operatingSystemName);
     }
+  }
+
+  @Override
+  public String toString() {
+    return "UserDirectories (" + operatingSystemName + "):\n" +
+        "  homeDir     = '" + homeDir     + "'\n" +
+        "  audioDir    = '" + audioDir    + "'\n" +
+        "  fontDir     = '" + fontDir     + "'\n" +
+        "  desktopDir  = '" + desktopDir  + "'\n" +
+        "  documentDir = '" + documentDir + "'\n" +
+        "  downloadDir = '" + downloadDir + "'\n" +
+        "  pictureDir  = '" + pictureDir  + "'\n" +
+        "  publicDir   = '" + publicDir   + "'\n" +
+        "  templateDir = '" + templateDir + "'\n" +
+        "  videoDir    = '" + videoDir    + "'\n";
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    UserDirectories that = (UserDirectories) o;
+
+    if (homeDir     != null ? !homeDir    .equals(that.homeDir)     : that.homeDir     != null)
+      return false;
+    if (audioDir    != null ? !audioDir   .equals(that.audioDir)    : that.audioDir    != null)
+      return false;
+    if (fontDir     != null ? !fontDir    .equals(that.fontDir)     : that.fontDir     != null)
+      return false;
+    if (desktopDir  != null ? !desktopDir .equals(that.desktopDir)  : that.desktopDir  != null)
+      return false;
+    if (documentDir != null ? !documentDir.equals(that.documentDir) : that.documentDir != null)
+      return false;
+    if (downloadDir != null ? !downloadDir.equals(that.downloadDir) : that.downloadDir != null)
+      return false;
+    if (pictureDir  != null ? !pictureDir .equals(that.pictureDir)  : that.pictureDir  != null)
+      return false;
+    if (publicDir   != null ? !publicDir  .equals(that.publicDir)   : that.publicDir   != null)
+      return false;
+    if (templateDir != null ? !templateDir.equals(that.templateDir) : that.templateDir != null)
+      return false;
+    if (videoDir    != null ? !videoDir   .equals(that.videoDir)    : that.videoDir    != null)
+      return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = 0;
+    result = 31 * result + (homeDir     != null ? homeDir    .hashCode() : 0);
+    result = 31 * result + (audioDir    != null ? audioDir   .hashCode() : 0);
+    result = 31 * result + (fontDir     != null ? fontDir    .hashCode() : 0);
+    result = 31 * result + (desktopDir  != null ? desktopDir .hashCode() : 0);
+    result = 31 * result + (documentDir != null ? documentDir.hashCode() : 0);
+    result = 31 * result + (downloadDir != null ? downloadDir.hashCode() : 0);
+    result = 31 * result + (pictureDir  != null ? pictureDir .hashCode() : 0);
+    result = 31 * result + (publicDir   != null ? publicDir  .hashCode() : 0);
+    result = 31 * result + (templateDir != null ? templateDir.hashCode() : 0);
+    result = 31 * result + (videoDir    != null ? videoDir   .hashCode() : 0);
+    return result;
   }
 }

@@ -4,8 +4,6 @@ import static io.github.soc.directories.Util.*;
 
 /** {@code BaseDirectories} provides paths of user-invisible standard directories, following the conventions of the operating system the library is running on.
   * <p>
-  * It is a snapshot of the state of the system at the time this class is initialized.
-  * <p>
   * To compute the location of cache, config or data directories for individual projects or applications, use {@link ProjectDirectories} instead.
   *
   * <h2>Examples</h2>
@@ -20,10 +18,6 @@ import static io.github.soc.directories.Util.*;
   * </ul>
   */
 public final class BaseDirectories {
-
-  private BaseDirectories() {
-    throw new Error();
-  }
 
   /** Returns the path to the user's home directory.
     * <br><br>
@@ -50,7 +44,7 @@ public final class BaseDirectories {
     * </tr>
     * </table>
     */
-  public static final String homeDir;
+  public final String homeDir;
 
   /** Returns the path to the user's cache directory.
     * <br><br>
@@ -77,7 +71,7 @@ public final class BaseDirectories {
     * </tr>
     * </table>
     */
-  public static final String cacheDir;
+  public final String cacheDir;
 
   /** Returns the path to the user's config directory.
     * <br><br>
@@ -104,7 +98,7 @@ public final class BaseDirectories {
     * </tr>
     * </table>
     */
-  public static final String configDir;
+  public final String configDir;
 
   /** Returns the path to the user's data directory.
     * <br><br>
@@ -131,7 +125,7 @@ public final class BaseDirectories {
     * </tr>
     * </table>
     */
-  public static final String dataDir;
+  public final String dataDir;
 
   /** Returns the path to the user's local data directory.
     * <br><br>
@@ -158,7 +152,7 @@ public final class BaseDirectories {
     * </tr>
     * </table>
     */
-  public static final String dataLocalDir;
+  public final String dataLocalDir;
 
   /** Returns the path to the user's executable directory.
     * <br><br>
@@ -185,7 +179,7 @@ public final class BaseDirectories {
     * </tr>
     * </table>
     */
-  public static final String executableDir;
+  public final String executableDir;
 
   /** Returns the path to the user's runtime directory.
     * <br><br>
@@ -212,9 +206,20 @@ public final class BaseDirectories {
     * </tr>
     * </table>
     */
-  public static final String runtimeDir;
+  public final String runtimeDir;
 
-  static {
+  /** Creates a new {@code BaseDirectories} instance.
+    * <p>
+    * The instance is an immutable snapshot of the state of the system at the time this method is invoked.
+    * Subsequent changes to the state of the system are not reflected in instances created prior to such a change.
+    *
+    * @return A new {@code BaseDirectories} instance.
+    */
+  public static BaseDirectories get() {
+    return new BaseDirectories();
+  }
+
+  private BaseDirectories() {
     switch (operatingSystem) {
       case LIN:
       case BSD:
@@ -248,5 +253,54 @@ public final class BaseDirectories {
       default:
         throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
     }
+  }
+
+  @Override
+  public String toString() {
+    return "BaseDirectories (" + operatingSystemName + "):\n" +
+        "  homeDir       = '" + homeDir       + "'\n" +
+        "  cacheDir      = '" + cacheDir      + "'\n" +
+        "  configDir     = '" + configDir     + "'\n" +
+        "  dataDir       = '" + dataDir       + "'\n" +
+        "  dataLocalDir  = '" + dataLocalDir  + "'\n" +
+        "  executableDir = '" + executableDir + "'\n" +
+        "  runtimeDir    = '" + runtimeDir    + "'\n";
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    BaseDirectories that = (BaseDirectories) o;
+
+    if (homeDir       != null ? !homeDir      .equals(that.homeDir)       : that.homeDir       != null)
+      return false;
+    if (cacheDir      != null ? !cacheDir     .equals(that.cacheDir)      : that.cacheDir      != null)
+      return false;
+    if (configDir     != null ? !configDir    .equals(that.configDir)     : that.configDir     != null)
+      return false;
+    if (dataDir       != null ? !dataDir      .equals(that.dataDir)       : that.dataDir       != null)
+      return false;
+    if (dataLocalDir  != null ? !dataLocalDir .equals(that.dataLocalDir)  : that.dataLocalDir  != null)
+      return false;
+    if (executableDir != null ? !executableDir.equals(that.executableDir) : that.executableDir != null)
+      return false;
+    if (runtimeDir    != null ? !runtimeDir   .equals(that.runtimeDir)    : that.runtimeDir    != null)
+      return false;
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = 0;
+    result = 31 * result + (homeDir       != null ? homeDir      .hashCode() : 0);
+    result = 31 * result + (cacheDir      != null ? cacheDir     .hashCode() : 0);
+    result = 31 * result + (configDir     != null ? configDir    .hashCode() : 0);
+    result = 31 * result + (dataDir       != null ? dataDir      .hashCode() : 0);
+    result = 31 * result + (dataLocalDir  != null ? dataLocalDir .hashCode() : 0);
+    result = 31 * result + (executableDir != null ? executableDir.hashCode() : 0);
+    result = 31 * result + (runtimeDir    != null ? runtimeDir   .hashCode() : 0);
+    return result;
   }
 }

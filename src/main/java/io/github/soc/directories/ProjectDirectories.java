@@ -43,7 +43,8 @@ public final class ProjectDirectories {
     */
   public final String projectPath;
 
-  /** Returns the path to the project's cache directory.
+  /** Returns the path to the project's cache directory,
+    * in which {@code <project_path>} is the value of {@link ProjectDirectories#projectPath}.
     * <br><br>
     * <table border="1" cellpadding="1" cellspacing="0">
     * <tr>
@@ -67,11 +68,11 @@ public final class ProjectDirectories {
     * <td>C:\Users\Alice\AppData\Local\Foo Corp\Bar App\cache</td>
     * </tr>
     * </table>
-    * Where {@code <project_path>} is the value of {@link ProjectDirectories#projectPath}
     */
   public final String cacheDir;
 
-  /** Returns the path to the project's config directory.
+  /** Returns the path to the project's config directory,
+    * in which {@code <project_path>} is the value of {@link ProjectDirectories#projectPath}.
     * <br><br>
     * <table border="1" cellpadding="1" cellspacing="0">
     * <tr>
@@ -95,11 +96,11 @@ public final class ProjectDirectories {
     * <td>C:\Users\Alice\AppData\Roaming\Foo Corp\Bar App\config</td>
     * </tr>
     * </table>
-    * Where {@code <project_path>} is the value of {@link ProjectDirectories#projectPath}
     */
   public final String configDir;
 
-  /** Returns the path to the project's data directory.
+  /** Returns the path to the project's data directory,
+    * in which {@code <project_path>} is the value of {@link ProjectDirectories#projectPath}.
     * <br><br>
     * <table border="1" cellpadding="1" cellspacing="0">
     * <tr>
@@ -123,11 +124,11 @@ public final class ProjectDirectories {
     * <td>C:\Users\Alice\AppData\Roaming\Foo Corp\Bar App\data</td>
     * </tr>
     * </table>
-    * Where {@code <project_path>} is the value of {@link ProjectDirectories#projectPath}
     */
   public final String dataDir;
 
-  /** Returns the path to the project's local data directory.
+  /** Returns the path to the project's local data directory,
+    * in which {@code <project_path>} is the value of {@link ProjectDirectories#projectPath}.
     * <br><br>
     * <table border="1" cellpadding="1" cellspacing="0">
     * <tr>
@@ -151,7 +152,6 @@ public final class ProjectDirectories {
     * <td>C:\Users\Alice\AppData\Local\Foo Corp\Bar App\data</td>
     * </tr>
     * </table>
-    * Where {@code <project_path>} is the value of {@link ProjectDirectories#projectPath}
     */
   public final String dataLocalDir;
 
@@ -190,7 +190,7 @@ public final class ProjectDirectories {
     *
     * @param path A string used verbatim as the path fragment to derive the directory field values.
     *
-    * @return An instance of {@code ProjectDirectories}, whose directory field values are directly derived from the {@code path} argument.
+    * @return A new {@code ProjectDirectories} instance, whose directory field values are directly derived from the {@code path} argument.
     */
   public static ProjectDirectories fromPath(String path) {
     String homeDir;
@@ -291,15 +291,15 @@ public final class ProjectDirectories {
     ProjectDirectories that = (ProjectDirectories) o;
 
     if (!projectPath.equals(that.projectPath)) return false;
-    if (cacheDir     != null ? !cacheDir    .equals(that.cacheDir)     : that.cacheDir != null)
+    if (cacheDir     != null ? !cacheDir    .equals(that.cacheDir)     : that.cacheDir     != null)
       return false;
-    if (configDir    != null ? !configDir   .equals(that.configDir)    : that.configDir != null)
+    if (configDir    != null ? !configDir   .equals(that.configDir)    : that.configDir    != null)
       return false;
-    if (dataDir      != null ? !dataDir     .equals(that.dataDir)      : that.dataDir != null)
+    if (dataDir      != null ? !dataDir     .equals(that.dataDir)      : that.dataDir      != null)
       return false;
     if (dataLocalDir != null ? !dataLocalDir.equals(that.dataLocalDir) : that.dataLocalDir != null)
       return false;
-    if (runtimeDir   != null ? !runtimeDir  .equals(that.runtimeDir)   : that.runtimeDir != null)
+    if (runtimeDir   != null ? !runtimeDir  .equals(that.runtimeDir)   : that.runtimeDir   != null)
       return false;
     return true;
   }
