@@ -1,8 +1,8 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.soc/directories.svg)](https://search.maven.org/#search|gav|1|g%3A%22io.github.soc%22%20AND%20a%3A%22directories%22)
 [![API documentation](http://javadoc.io/badge/io.github.soc/directories.svg)](http://javadoc.io/doc/io.github.soc/directories)
 ![actively developed](https://img.shields.io/badge/maintenance-actively--developed-brightgreen.svg)
-[![TravisCI status](https://img.shields.io/travis/soc/directories-jvm/master.svg?label=Linux%20build)](https://travis-ci.org/soc/directories-rs)
-[![AppVeyor status](https://img.shields.io/appveyor/ci/soc/directories-jvm/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/soc/directories-rs/branch/master)
+[![TravisCI status](https://img.shields.io/travis/soc/directories-jvm/master.svg?label=Linux%20build)](https://travis-ci.org/soc/directories-jvm)
+[![AppVeyor status](https://img.shields.io/appveyor/ci/soc/directories-jvm/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/soc/directories-jvm/branch/master)
 [![License: MPL-2.0](https://img.shields.io/github/license/soc/directories-jvm.svg)](LICENSE)
 
 # Directories
@@ -38,17 +38,17 @@ Add the library as a dependency to your project:
 <dependency>
   <groupId>io.github.soc</groupId>
   <artifactId>directories</artifactId>
-  <version>9</version>
+  <version>10</version>
 </dependency>
 ```
 ##### Gradle
 ```groovy
-compile 'io.github.soc:directories:9'
+compile 'io.github.soc:directories:10'
 ```
 
 ##### SBT
 ```scala
-"io.github.soc" % "directories" % "9"
+"io.github.soc" % "directories" % "10"
 ```
 
 The library itself is built against Java 6 to allow for the widest possible usage scenarios.
@@ -185,14 +185,14 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
-### 10 – in development
+### 10 – current stable version
 
 - Full Windows support: `downloadDir` and `publicDir` are now supported.
 - Improved speed on Windows and Linux.
 - Changed static fields in `BaseDirectories` and `UserDirectories` to instance fields.
   Instances can be created with `BaseDirectories.get()` and `UserDirectories.get()`.
 
-### 9 – current stable version 
+### 9
 
 - Windows:
   - Fixed the implementation of `audioDir`, `desktopDir`, `documentDir`, `pictureDir` and `videoDir`
