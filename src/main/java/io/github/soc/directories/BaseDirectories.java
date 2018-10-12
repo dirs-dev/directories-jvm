@@ -229,7 +229,7 @@ public final class BaseDirectories {
         dataDir       = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir, "/.local/share");
         dataLocalDir  = dataDir;
         executableDir = linuxExecutableDir(homeDir, dataDir);
-        runtimeDir    = linuxRuntimeDir(homeDir, null);
+        runtimeDir    = linuxRuntimeDir(null);
         break;
       case MAC:
         homeDir       = System.getProperty("user.home");

@@ -67,14 +67,12 @@ final class Util {
       buf.append(arg1, 0, arg1.length() - 1).append(arg2);
       return buf.toString();
     } else if (!arg1Slash && !slashArg2) {
-      StringBuilder buf = new StringBuilder(arg1.length() + arg2.length() + 1);
-      buf.append(arg1).append('/').append(arg2);
-      return buf.toString();
+      return arg1 + '/' + arg2;
     } else
       return arg1 + arg2;
   }
 
-  static String linuxRuntimeDir(String homeDir, String path) {
+  static String linuxRuntimeDir(String path) {
     String runDir = System.getenv("XDG_RUNTIME_DIR");
     if (isNullOrEmpty(runDir))
       return null;
@@ -146,8 +144,7 @@ final class Util {
     try {
       process = processBuilder.start();
     } catch (IOException e) {
-      e.printStackTrace();
-      return null;
+      throw new RuntimeException(e);
     }
 
     String[] results = new String[expectedResultLines];
@@ -159,15 +156,13 @@ final class Util {
       }
       return results;
     } catch (IOException e) {
-      e.printStackTrace();
-      return null;
+      throw new RuntimeException(e);
     } finally {
       process.destroy();
       try {
         reader.close();
       } catch (IOException e) {
         e.printStackTrace();
-        return results;
       }
     }
   }

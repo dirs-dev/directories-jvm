@@ -207,7 +207,7 @@ public final class ProjectDirectories {
         configDir    = defaultIfNullOrEmptyExtended(System.getenv("XDG_CONFIG_HOME"), path, homeDir + "/.config/",      path);
         dataDir      = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"),   path, homeDir + "/.local/share/", path);
         dataLocalDir = dataDir;
-        runtimeDir   = linuxRuntimeDir(homeDir, path);
+        runtimeDir   = linuxRuntimeDir(path);
         break;
       case MAC:
         homeDir      = System.getProperty("user.home");

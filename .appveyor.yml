@@ -8,5 +8,4 @@ test_script:
   - sbt test
 cache:
   - C:\Users\appveyor\sbt
-  - C:\Users\appveyor\.m2
   - C:\Users\appveyor\.ivy2

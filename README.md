@@ -43,12 +43,12 @@ Add the library as a dependency to your project:
 ```
 ##### Gradle
 ```groovy
-compile 'io.github.soc:directories:10'
+compile 'io.github.soc:directories:11'
 ```
 
 ##### SBT
 ```scala
-"io.github.soc" % "directories" % "10"
+"io.github.soc" % "directories" % "11"
 ```
 
 The library itself is built against Java 6 to allow for the widest possible usage scenarios.
@@ -185,7 +185,14 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
-### 10 – current stable version
+### 11 – current stable version
+
+- Throw RuntimeExceptions instead of catching IOExceptions and returning null if directory lookup on Windows fails.
+  This should make it easier to diagnose issues.
+- Add Automatic-Module-Name to manifest file, enabling support for Java 9 modules.
+- Some small cleanups.
+
+### 10
 
 - Full Windows support: `downloadDir` and `publicDir` are now supported.
 - Improved speed on Windows and Linux.
@@ -195,27 +202,27 @@ The version number of this library consists of a whole number, which is incremen
 ### 9
 
 - Windows:
-  - Fixed the implementation of `audioDir`, `desktopDir`, `documentDir`, `pictureDir` and `videoDir`
-  - Clarified that `downloadDir` and `publicDir` return `null` on Windows, as the `SpecialFolder` enumeration lacks entries for these values
+  - Fixed the implementation of `audioDir`, `desktopDir`, `documentDir`, `pictureDir` and `videoDir`.
+  - Clarified that `downloadDir` and `publicDir` return `null` on Windows, as the `SpecialFolder` enumeration lacks entries for these values.
 
 ### 8
 
 - Windows:
-  - Fixed incorrect `ProjectDirectories` paths for `cacheDir`, `configDir` and `dataDir`
+  - Fixed incorrect `ProjectDirectories` paths for `cacheDir`, `configDir` and `dataDir`.
 - Linux:
-  - Fixed incorrect `ProjectDirectories` paths for `cacheDir`, `configDir`, `dataDir` and `dataLocalDir` if XDG environment variables are set
-  - Fixed incorrect `UserDirectories` paths for `fontDir` if XDG environment variables are set
+  - Fixed incorrect `ProjectDirectories` paths for `cacheDir`, `configDir`, `dataDir` and `dataLocalDir` if XDG environment variables are set.
+  - Fixed incorrect `UserDirectories` paths for `fontDir` if XDG environment variables are set.
 
 ### 7
 
 - Split `BaseDirectories` into `BaseDirectories` (cache, config, ...) and `UserDirectories` (audio,
-  video, ...)
-- Fields of `BaseDirectories` and `UserDirectories` are now public
-- Add substantial amounts of documentation
+  video, ...).
+- Fields of `BaseDirectories` and `UserDirectories` are now public.
+- Add substantial amounts of documentation.
 - The fields of `UserDirectories` are now `null` if no values can be retrieved from `xdg-user-dirs`,
-  instead of falling back on hard-coded values
+  instead of falling back on hard-coded values.
 - A user's home directory is now retrieved with `System.getProperty("user.home")` instead of
-  `System.getenv("HOME")`, improving reliability and portability
+  `System.getenv("HOME")`, improving reliability and portability.
 - Changes to some values of `BaseDirectories` and `ProjectDirectories`:
 
 | Method                            | Old value                                               | New Value                                                    |
@@ -241,16 +248,16 @@ The version number of this library consists of a whole number, which is incremen
 | `templatesDir`          | `templateDir`         |
 | `videosDir`             | `videoDir`            |
 
-- `ProjectDirectories` factory methods have been overhauled and replaced with a single `from(String qualifier, String organization, String project)` method
+- `ProjectDirectories` factory methods have been overhauled and replaced with a single `from(String qualifier, String organization, String project)` method.
 
-- Changes to the selection of local/roaming data directories
-  - `dataDir` and selects the roaming data directory on Windows (no change on Linux or macOS)
-  - `dataLocalDir` and selects the local data directory on Windows (no change on Linux or macOS)
+- Changes to the selection of local/roaming data directories:
+  - `dataDir` selects the roaming data directory on Windows (no change on Linux or macOS).
+  - `dataLocalDir` selects the local data directory on Windows (no change on Linux or macOS).
 
-- `ProjectDirectories` received a `runtimeDir` field
+- `ProjectDirectories` received a `runtimeDir` field.
 
-- `ProjectDirectories` field names dropped the `project` prefix
+- `ProjectDirectories` field names dropped the `project` prefix.
 
-- Changes to the directory for executables
-  - Support for `executableDir` has been dropped on macOS
-  - The value of `executableDir` considers `$XDG_BIN_HOME` now, before falling back to `$XDG_DATA_HOME/../bin` and `$HOME/.local/bin`
+- Changes to the directory for executables:
+  - Support for `executableDir` has been dropped on macOS.
+  - The value of `executableDir` considers `$XDG_BIN_HOME` now, before falling back to `$XDG_DATA_HOME/../bin` and `$HOME/.local/bin`.
