@@ -38,7 +38,7 @@ Add the library as a dependency to your project:
 <dependency>
   <groupId>io.github.soc</groupId>
   <artifactId>directories</artifactId>
-  <version>10</version>
+  <version>11</version>
 </dependency>
 ```
 ##### Gradle
