@@ -116,7 +116,7 @@ final class Util {
       buf.append("\\\")\n");
     }
 
-    return runCommands(guidsLength, StandardCharsets.UTF_8,
+    return runCommands(guidsLength, Charset.forName("UTF-8"),
         "powershell.exe",
         "-Command",
         "& {\n" +
