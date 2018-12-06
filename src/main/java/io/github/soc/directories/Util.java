@@ -3,6 +3,8 @@ package io.github.soc.directories;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 final class Util {
@@ -102,7 +104,7 @@ final class Util {
       buf.append(';');
     }
     commands[2] = buf.toString();
-    return runCommands(dirsLength, commands);
+    return runCommands(dirsLength, Charset.defaultCharset(), commands);
   }
 
   static String[] getWinDirs(String... guids) {
@@ -114,10 +116,11 @@ final class Util {
       buf.append("\\\")\n");
     }
 
-    return runCommands(guidsLength,
+    return runCommands(guidsLength, Charset.forName("UTF-8"),
         "powershell.exe",
         "-Command",
         "& {\n" +
+            "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8\n" +
             "Add-Type @\\\"\n" +
             "using System;\n" +
             "using System.Runtime.InteropServices;\n" +
@@ -138,7 +141,7 @@ final class Util {
     );
   }
 
-  private static String[] runCommands(int expectedResultLines, String... commands) {
+  private static String[] runCommands(int expectedResultLines, Charset charset, String... commands) {
     final ProcessBuilder processBuilder = new ProcessBuilder(commands);
     Process process;
     try {
@@ -148,7 +151,7 @@ final class Util {
     }
 
     String[] results = new String[expectedResultLines];
-    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), charset));
     try {
       for (int i = 0; i < expectedResultLines; i++) {
         String line = reader.readLine();
