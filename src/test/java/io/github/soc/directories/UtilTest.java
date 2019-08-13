@@ -60,7 +60,7 @@ public final class UtilTest {
     final String inputOrga = "Foo Bar";
     final String inputProj = "";
     final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
-    assertEquals(actual, "Foo-Bar");
+    assertEquals("Foo-Bar", actual);
   }
 
   @Test
@@ -69,7 +69,7 @@ public final class UtilTest {
     final String inputOrga = "";
     final String inputProj = "Baz Qux";
     final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
-    assertEquals(actual, "Baz-Qux");
+    assertEquals("Baz-Qux", actual);
   }
 
   @Test
@@ -78,7 +78,7 @@ public final class UtilTest {
     final String inputOrga = "Foo Bar";
     final String inputProj = "Baz Qux";
     final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
-    assertEquals(actual, "Foo-Bar.Baz-Qux");
+    assertEquals("Foo-Bar.Baz-Qux", actual);
   }
 
   @Test
@@ -87,7 +87,7 @@ public final class UtilTest {
     final String inputOrga = "Foo Bar";
     final String inputProj = "";
     final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
-    assertEquals(actual, "uk.co.Foo-Bar");
+    assertEquals("uk.co.Foo-Bar", actual);
   }
 
   @Test
@@ -96,7 +96,7 @@ public final class UtilTest {
     final String inputOrga = "";
     final String inputProj = "Baz Qux";
     final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
-    assertEquals(actual, "uk.co.Baz-Qux");
+    assertEquals("uk.co.Baz-Qux", actual);
   }
 
   @Test
@@ -105,7 +105,7 @@ public final class UtilTest {
     final String inputOrga = "Foo Bar";
     final String inputProj = "Baz Qux";
     final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
-    assertEquals(actual, "uk.co.Foo-Bar.Baz-Qux");
+    assertEquals("uk.co.Foo-Bar.Baz-Qux", actual);
   }
 
   @Test
@@ -114,7 +114,7 @@ public final class UtilTest {
     final String inputOrga = " Foo  Bar ";
     final String inputProj = "  Baz Qux  ";
     final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
-    assertEquals(actual, "uk.co.Foo-Bar.Baz-Qux");
+    assertEquals("uk.co.Foo-Bar.Baz-Qux", actual);
   }
 
   @Test
@@ -123,7 +123,7 @@ public final class UtilTest {
     final String inputOrga = "Foo Bar";
     final String inputProj = "";
     final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
-    assertEquals(actual, "Foo Bar");
+    assertEquals("Foo Bar", actual);
   }
 
   @Test
@@ -132,7 +132,7 @@ public final class UtilTest {
     final String inputOrga = "";
     final String inputProj = "Baz Qux";
     final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
-    assertEquals(actual, "Baz Qux");
+    assertEquals("Baz Qux", actual);
   }
 
   @Test
@@ -141,7 +141,7 @@ public final class UtilTest {
     final String inputOrga = "Foo Bar";
     final String inputProj = "Baz Qux";
     final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
-    assertEquals(actual, "Foo Bar\\Baz Qux");
+    assertEquals("Foo Bar\\Baz Qux", actual);
   }
 
   @Test
@@ -150,7 +150,7 @@ public final class UtilTest {
     final String inputOrga = "Foo Bar";
     final String inputProj = "";
     final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
-    assertEquals(actual, "Foo Bar");
+    assertEquals("Foo Bar", actual);
   }
 
   @Test
@@ -159,7 +159,7 @@ public final class UtilTest {
     final String inputOrga = "";
     final String inputProj = "Baz Qux";
     final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
-    assertEquals(actual, "Baz Qux");
+    assertEquals("Baz Qux", actual);
   }
 
   @Test
@@ -168,6 +168,6 @@ public final class UtilTest {
     final String inputOrga = "Foo Bar";
     final String inputProj = "Baz Qux";
     final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
-    assertEquals(actual, "Foo Bar\\Baz Qux");
+    assertEquals("Foo Bar\\Baz Qux", actual);
   }
 }

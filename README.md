@@ -144,15 +144,15 @@ that have been defined according to the conventions of the operating system the 
 
 ### `ProjectDirectories`
 
-The intended use-case for `BaseDirectories` is to compute the location of cache, config or data folders for your own application or project,
+The intended use-case for `ProjectDirectories` is to compute the location of cache, config or data folders for your own application or project,
 which are derived from the standard directories.
 
 | Field name     | Value on Linux / BSD                                                       | Value on Windows                                         | Value on macOS                                       |
 | -------------- | -------------------------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------- |
 | `cacheDir`     | `$XDG_CACHE_HOME`/`<project_path>` or `$HOME`/.cache/`<project_path>`      | `{FOLDERID_LocalApplicationData}`/`<project_path>`/cache | `$HOME`/Library/Caches/`<project_path>`              |
-| `configDir`    | `$XDG_CONFIG_HOME`/`<project_path>`  or `$HOME`/.config/`<project_path>`   | `{FOLDERID_ApplicationData}`/`<project_path>`            | `$HOME`/Library/Preferences/`<project_path>`         |
-| `dataDir`      | `$XDG_DATA_HOME`/`<project_path>` or `$HOME`/.local/share/`<project_path>` | `{FOLDERID_ApplicationData}`/`<project_path>`            | `$HOME`/Library/Application Support/`<project_path>` |
-| `dataLocalDir` | `$XDG_DATA_HOME`/`<project_path>` or `$HOME`/.local/share/`<project_path>` | `{FOLDERID_LocalApplicationData}`/`<project_path>`       | `$HOME`/Library/Application Support/`<project_path>` |
+| `configDir`    | `$XDG_CONFIG_HOME`/`<project_path>`  or `$HOME`/.config/`<project_path>`   | `{FOLDERID_ApplicationData}`/`<project_path>`/config     | `$HOME`/Library/Preferences/`<project_path>`         |
+| `dataDir`      | `$XDG_DATA_HOME`/`<project_path>` or `$HOME`/.local/share/`<project_path>` | `{FOLDERID_ApplicationData}`/`<project_path>`/data       | `$HOME`/Library/Application Support/`<project_path>` |
+| `dataLocalDir` | `$XDG_DATA_HOME`/`<project_path>` or `$HOME`/.local/share/`<project_path>` | `{FOLDERID_LocalApplicationData}`/`<project_path>`/data  | `$HOME`/Library/Application Support/`<project_path>` |
 | `runtimeDir`   | `$XDG_RUNTIME_DIR`/`<project_path>`                                        | `null`                                                   | `null`                                               |
 
 The specific value of `<project_path>` is computed by the
