@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 final class Util {
@@ -70,8 +69,9 @@ final class Util {
       return buf.toString();
     } else if (!arg1Slash && !slashArg2) {
       return arg1 + '/' + arg2;
-    } else
+    } else {
       return arg1 + arg2;
+    }
   }
 
   static String linuxRuntimeDir(String path) {
