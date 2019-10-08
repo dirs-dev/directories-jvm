@@ -18,6 +18,7 @@ final class Util {
   static final char MAC = 'm';
   static final char WIN = 'w';
   static final char BSD = 'b';
+  static final char SOLARIS = 's';
 
   static {
     final String os = operatingSystemName.toLowerCase(Locale.ROOT);
@@ -29,6 +30,8 @@ final class Util {
       operatingSystem = WIN;
     else if (os.contains("bsd"))
       operatingSystem = BSD;
+    else if (os.contains("sunos"))
+      operatingSystem = SOLARIS;
     else
       throw new UnsupportedOperatingSystemException("directories are not supported on " + operatingSystemName);
   }
