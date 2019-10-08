@@ -223,6 +223,7 @@ public final class BaseDirectories {
     switch (operatingSystem) {
       case LIN:
       case BSD:
+      case SOLARIS:
         homeDir       = System.getProperty("user.home");
         cacheDir      = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir, "/.cache");
         configDir     = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir, "/.config");
