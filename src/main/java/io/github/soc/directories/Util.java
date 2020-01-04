@@ -112,10 +112,13 @@ final class Util {
 
   static String[] getWinDirs(String... guids) {
 
-    String[] escapedResult = getWinDirs(true, guids);
+    // See https://www.oracle.com/technetwork/java/javase/8u231-relnotes-5592812.html#JDK-8221858
+    // If a security manager is set, ProcessBuilder should safely escape things.
+    final boolean doubleEscapeQuotes = System.getSecurityManager() == null;
+    final String[] initialResult = getWinDirs(doubleEscapeQuotes, guids);
 
-    boolean hasNonNull = escapedResult.length == 0;
-    for (String s : escapedResult) {
+    boolean hasNonNull = initialResult.length == 0;
+    for (String s : initialResult) {
       if (s != null) {
         hasNonNull = true;
         break;
@@ -123,18 +126,18 @@ final class Util {
     }
 
     if (hasNonNull)
-      return escapedResult;
+      return initialResult;
 
-    return getWinDirs(false, guids);
+    return getWinDirs(!doubleEscapeQuotes, guids);
   }
 
-  static String[] getWinDirs(boolean escapeQuotes, String... guids) {
+  static String[] getWinDirs(boolean doubleEscapeQuotes, String... guids) {
 
     // Deal with legacy or safe handling of quotes by the JDK.
     // Safe handling may be enabled for JDKs >= 1.8.0_231, under some conditions.
     // See https://www.oracle.com/technetwork/java/javase/8u231-relnotes-5592812.html#JDK-8221858
     // or https://github.com/AdoptOpenJDK/openjdk-jdk8u/commit/048eb42afa11ac217dcdb690d5b266fcb910771f
-    final String q = escapeQuotes ? "\\\"" : "\"";
+    final String q = doubleEscapeQuotes ? "\\\"" : "\"";
 
     int guidsLength = guids.length;
     StringBuilder buf = new StringBuilder(guidsLength * 68);
