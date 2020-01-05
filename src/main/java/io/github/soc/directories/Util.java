@@ -111,12 +111,37 @@ final class Util {
   }
 
   static String[] getWinDirs(String... guids) {
+
+    // See https://www.oracle.com/technetwork/java/javase/8u231-relnotes-5592812.html#JDK-8221858
+    // Vague attempt at replicating the logic followed by ProcessBuilder, just so that the first
+    // attempt succeeds and only one command needs to be run.
+    final String prop = System.getProperty("jdk.lang.Process.allowAmbiguousCommands");
+    final boolean doubleEscapeQuotes = prop == null ? System.getSecurityManager() == null : !"false".equalsIgnoreCase(prop);
+    final String[] initialResult = getWinDirs(doubleEscapeQuotes, guids);
+
+    for (String s : initialResult) {
+      if (s != null)
+        return initialResult;
+    }
+
+    // First attempt failed, let's try to escape differently.
+    return getWinDirs(!doubleEscapeQuotes, guids);
+  }
+
+  static String[] getWinDirs(boolean doubleEscapeQuotes, String... guids) {
+
+    // Deal with legacy or safe handling of quotes by the JDK.
+    // Safe handling may be enabled for JDKs >= 1.8.0_231, under some conditions.
+    // See https://www.oracle.com/technetwork/java/javase/8u231-relnotes-5592812.html#JDK-8221858
+    // or https://github.com/AdoptOpenJDK/openjdk-jdk8u/commit/048eb42afa11ac217dcdb690d5b266fcb910771f
+    final String q = doubleEscapeQuotes ? "\\\"" : "\"";
+
     int guidsLength = guids.length;
     StringBuilder buf = new StringBuilder(guidsLength * 68);
     for (int i = 0; i < guidsLength; i++) {
-      buf.append("[Dir]::GetKnownFolderPath(\\\"");
+      buf.append("[Dir]::GetKnownFolderPath(" + q);
       buf.append(guids[i]);
-      buf.append("\\\")\n");
+      buf.append(q + ")\n");
     }
 
     return runCommands(guidsLength, Charset.forName("UTF-8"),
@@ -124,21 +149,21 @@ final class Util {
         "-Command",
         "& {\n" +
             "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8\n" +
-            "Add-Type @\\\"\n" +
+            "Add-Type @" + q + "\n" +
             "using System;\n" +
             "using System.Runtime.InteropServices;\n" +
             "public class Dir {\n" +
-            "   [DllImport(\\\"shell32.dll\\\")]\n" +
+            "   [DllImport(" + q + "shell32.dll" + q + ")]\n" +
             "   private static extern int SHGetKnownFolderPath([MarshalAs(UnmanagedType.LPStruct)] Guid rfid, uint dwFlags, IntPtr hToken, out IntPtr pszPath);\n" +
             "   public static string GetKnownFolderPath(string rfid) {\n" +
             "       IntPtr pszPath;\n" +
-            "       if (SHGetKnownFolderPath(new Guid(rfid), 0, IntPtr.Zero, out pszPath) != 0) return \\\"\\\";\n" +
+            "       if (SHGetKnownFolderPath(new Guid(rfid), 0, IntPtr.Zero, out pszPath) != 0) return " + q + q + ";\n" +
             "       string path = Marshal.PtrToStringUni(pszPath);\n" +
             "       Marshal.FreeCoTaskMem(pszPath);\n" +
             "       return path;\n" +
             "   }\n" +
             "}\n" +
-            "\\\"@\n" +
+            q + "@\n" +
             buf.toString() +
             "}"
     );
