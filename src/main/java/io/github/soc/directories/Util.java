@@ -113,21 +113,18 @@ final class Util {
   static String[] getWinDirs(String... guids) {
 
     // See https://www.oracle.com/technetwork/java/javase/8u231-relnotes-5592812.html#JDK-8221858
-    // If a security manager is set, ProcessBuilder should safely escape things.
-    final boolean doubleEscapeQuotes = System.getSecurityManager() == null;
+    // Vague attempt at replicating the logic followed by ProcessBuilder, just so that the first
+    // attempt succeeds and only one command needs to be run.
+    final String prop = System.getProperty("jdk.lang.Process.allowAmbiguousCommands");
+    final boolean doubleEscapeQuotes = prop == null ? System.getSecurityManager() == null : !"false".equalsIgnoreCase(prop);
     final String[] initialResult = getWinDirs(doubleEscapeQuotes, guids);
 
-    boolean hasNonNull = initialResult.length == 0;
     for (String s : initialResult) {
-      if (s != null) {
-        hasNonNull = true;
-        break;
-      }
+      if (s != null)
+        return initialResult;
     }
 
-    if (hasNonNull)
-      return initialResult;
-
+    // First attempt failed, let's try to escape differently.
     return getWinDirs(!doubleEscapeQuotes, guids);
   }
 
