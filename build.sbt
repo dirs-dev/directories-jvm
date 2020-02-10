@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
     // Running the tests requires removing the setting.
     // It can also be changed to point to a different Java version.
     // javaHome             := Some(file("/home/soc/apps/zulu6.19.0.1-jdk6.0.103-linux_x64/")),
-    libraryDependencies  += "junit"        % "junit"           % "4.12" % Test,
+    libraryDependencies  += "junit"        % "junit"           % "4.13" % Test,
     libraryDependencies  += "com.novocode" % "junit-interface" % "0.11" % Test,
     testOptions in Test  := Seq(Tests.Argument(TestFrameworks.JUnit, "-a")),
     // publishTo            := sonatypePublishTo.value,
