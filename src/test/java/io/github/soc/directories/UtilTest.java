@@ -3,6 +3,7 @@ package io.github.soc.directories;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public final class UtilTest {
 
@@ -170,4 +171,12 @@ public final class UtilTest {
     final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
     assertEquals("Foo Bar\\Baz Qux", actual);
   }
+
+  @Test
+  public void testPowershellBase64StringIsNotPadded() {
+    if (Util.operatingSystem == 'w') {
+      assertFalse(Util.SCRIPT_START_BASE64.endsWith("="));
+    }
+  }
+
 }
