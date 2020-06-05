@@ -1,6 +1,6 @@
-package io.github.soc.directories;
+package dev.dirs;
 
-import static io.github.soc.directories.Util.*;
+import static dev.dirs.Util.*;
 
 /** {@code UserDirectories} provides paths of user-facing standard directories, following the conventions of the operating system the library is running on.
   *

@@ -1,11 +1,14 @@
-[![Maven Central](https://img.shields.io/maven-central/v/dev.dirs/directories.svg)](https://search.maven.org/#search|gav|1|g%3A%22dev.dirs%22%20AND%20a%3A%22directories%22)
-[![API documentation](http://javadoc.io/badge/dev.dirs/directories.svg)](http://javadoc.io/doc/dev.dirs/directories)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.soc/directories.svg)](https://search.maven.org/#search|gav|1|g%3A%22io.github.soc%22%20AND%20a%3A%22directories%22)
+[![API documentation](http://javadoc.io/badge/io.github.soc/directories.svg)](http://javadoc.io/doc/io.github.soc/directories)
 ![actively developed](https://img.shields.io/badge/maintenance-actively--developed-brightgreen.svg)
 [![TravisCI status](https://img.shields.io/travis/dirs-dev/directories-jvm/master.svg?label=Linux%20build)](https://travis-ci.org/dirs-dev/directories-jvm)
 [![AppVeyor status](https://img.shields.io/appveyor/ci/soc/directories-jvm/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/soc/directories-jvm/branch/master)
 [![License: MPL-2.0](https://img.shields.io/github/license/dirs-dev/directories-jvm.svg)](LICENSE)
 
-# Directories
+# Directories (legacy `soc.github.io` artefact)
+
+_Please refer to [README](README.md) for the documentation and artefact coordinates of the `dev.dirs` artefact, which is the new main branch of development._
+
 
 ## Introduction
 
@@ -36,19 +39,19 @@ Add the library as a dependency to your project:
 ##### Maven
 ```xml
 <dependency>
-  <groupId>dev.dirs</groupId>
+  <groupId>io.github.soc</groupId>
   <artifactId>directories</artifactId>
-  <version>20</version>
+  <version>12</version>
 </dependency>
 ```
 ##### Gradle
 ```groovy
-compile 'dev.dirs:directories:20'
+compile 'io.github.soc:directories:12'
 ```
 
 ##### SBT
 ```scala
-"dev.dirs" % "directories" % "20"
+"io.github.soc" % "directories" % "12"
 ```
 
 The library itself is built against Java 6 to allow for the widest possible usage scenarios.
@@ -59,9 +62,9 @@ It can be used on any Java version >= 6.
 Library run by user Alice:
 
 ```java
-import dev.dirs.ProjectDirectories;
-import dev.dirs.BaseDirectories;
-import dev.dirs.UserDirectories;
+import io.github.soc.directories.ProjectDirectories;
+import io.github.soc.directories.BaseDirectories;
+import io.github.soc.directories.UserDirectories;
 
 ProjectDirectories myProjDirs = ProjectDirectories.from("com", "Foo Corp", "Bar App");
 myProjDirs.configDir;
@@ -114,15 +117,14 @@ that have been defined according to the conventions of the operating system the 
 
 If you want to compute the location of cache, config or data folders for your own application or project, use `ProjectDirectories` instead.
 
-| Field name      | Value on Linux / BSD / Solaris                                   | Value on Windows                  | Value on macOS                      |
+| Field name      | Value on Linux / BSD                                             | Value on Windows                  | Value on macOS                      |
 | --------------- | ---------------------------------------------------------------- | --------------------------------- | ----------------------------------- |
 | `homeDir`       | `$HOME`                                                          | `{FOLDERID_UserProfile}`          | `$HOME`                             |
 | `cacheDir`      | `$XDG_CACHE_HOME`  or `$HOME`/.cache                             | `{FOLDERID_LocalApplicationData}` | `$HOME`/Library/Caches              |
-| `configDir`     | `$XDG_CONFIG_HOME` or `$HOME`/.config                            | `{FOLDERID_ApplicationData}`      | `$HOME`/Library/Application Support |
+| `configDir`     | `$XDG_CONFIG_HOME` or `$HOME`/.config                            | `{FOLDERID_ApplicationData}`      | `$HOME`/Library/Preferences         |
 | `dataDir`       | `$XDG_DATA_HOME`   or `$HOME`/.local/share                       | `{FOLDERID_ApplicationData}`      | `$HOME`/Library/Application Support |
 | `dataLocalDir`  | `$XDG_DATA_HOME`   or `$HOME`/.local/share                       | `{FOLDERID_LocalApplicationData}` | `$HOME`/Library/Application Support |
 | `executableDir` | `$XDG_BIN_HOME` or `$XDG_DATA_HOME`/../bin or `$HOME`/.local/bin | `null`                            | `null`                              |
-| `preferencesDir`| `$XDG_CONFIG_HOME` or `$HOME`/.config                            | `{FOLDERID_ApplicationData}`      | `$HOME`/Library/Preferences         |
 | `runtimeDir`    | `$XDG_RUNTIME_DIR` or `null`                                     | `null`                            | `null`                              |
 
 ### `UserDirectories`
@@ -148,14 +150,13 @@ that have been defined according to the conventions of the operating system the 
 The intended use-case for `ProjectDirectories` is to compute the location of cache, config or data folders for your own application or project,
 which are derived from the standard directories.
 
-| Field name      | Value on Linux / BSD                                                       | Value on Windows                                         | Value on macOS                                       |
-| --------------- | -------------------------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------- |
-| `cacheDir`      | `$XDG_CACHE_HOME`/`<project_path>` or `$HOME`/.cache/`<project_path>`      | `{FOLDERID_LocalApplicationData}`/`<project_path>`/cache | `$HOME`/Library/Caches/`<project_path>`              |
-| `configDir`     | `$XDG_CONFIG_HOME`/`<project_path>`  or `$HOME`/.config/`<project_path>`   | `{FOLDERID_ApplicationData}`/`<project_path>`/config     | `$HOME`/Library/Application Support/`<project_path>` |
-| `dataDir`       | `$XDG_DATA_HOME`/`<project_path>` or `$HOME`/.local/share/`<project_path>` | `{FOLDERID_ApplicationData}`/`<project_path>`/data       | `$HOME`/Library/Application Support/`<project_path>` |
-| `dataLocalDir`  | `$XDG_DATA_HOME`/`<project_path>` or `$HOME`/.local/share/`<project_path>` | `{FOLDERID_LocalApplicationData}`/`<project_path>`/data  | `$HOME`/Library/Application Support/`<project_path>` |
-| `preferencesDir`| `$XDG_CONFIG_HOME`/`<project_path>`  or `$HOME`/.config/`<project_path>`   | `{FOLDERID_ApplicationData}`/`<project_path>`/config     | `$HOME`/Library/Preferences/`<project_path>`         |
-| `runtimeDir`    | `$XDG_RUNTIME_DIR`/`<project_path>`                                        | `null`                                                   | `null`                                               |
+| Field name     | Value on Linux / BSD                                                       | Value on Windows                                         | Value on macOS                                       |
+| -------------- | -------------------------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------- |
+| `cacheDir`     | `$XDG_CACHE_HOME`/`<project_path>` or `$HOME`/.cache/`<project_path>`      | `{FOLDERID_LocalApplicationData}`/`<project_path>`/cache | `$HOME`/Library/Caches/`<project_path>`              |
+| `configDir`    | `$XDG_CONFIG_HOME`/`<project_path>`  or `$HOME`/.config/`<project_path>`   | `{FOLDERID_ApplicationData}`/`<project_path>`/config     | `$HOME`/Library/Preferences/`<project_path>`         |
+| `dataDir`      | `$XDG_DATA_HOME`/`<project_path>` or `$HOME`/.local/share/`<project_path>` | `{FOLDERID_ApplicationData}`/`<project_path>`/data       | `$HOME`/Library/Application Support/`<project_path>` |
+| `dataLocalDir` | `$XDG_DATA_HOME`/`<project_path>` or `$HOME`/.local/share/`<project_path>` | `{FOLDERID_LocalApplicationData}`/`<project_path>`/data  | `$HOME`/Library/Application Support/`<project_path>` |
+| `runtimeDir`   | `$XDG_RUNTIME_DIR`/`<project_path>`                                        | `null`                                                   | `null`                                               |
 
 The specific value of `<project_path>` is computed by the
 
@@ -187,25 +188,7 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
-### 20 – current stable `dev.dirs:directories` release
-
-- **BREAKING CHANGE** The behavior of `configDir` on macOS has been adjusted:
-  - The existing `BaseDirectories#configDir` has been changed to return the `Application Support` directory,
-    as suggested by Apple documentation.
-  - The newly added `BaseDirectories#preferencesDir` returns the `Preferences` directory now,
-    which – according to Apple documentation – shall only be used to store .plist files.
-  - The behavior of `configDir` on non-macOS platforms has not been changed.
-  – `preferencesDir` behaves identical to `configDir` on non-macOS platforms.
-  - The behavior of `ProjectDirectories` has been adjusted accordingly.
-  - If you have used `BaseDirectories#configDir` or `ProjectDirectories#configDir` to store files,
-    it may be necessary to write code that migrates the files to the new location.
-    (Alternative: change usages of `configDir` to `preferencesDir` to keep the old behavior.)
-
-### 19-13 – Reserved for bug fixes on `soc.github.io:directories`
-
-### 12 – current stable legacy `soc.github.io:directories` release
-
-_Please refer to [README-io.github.soc.md](README-io.github.soc.md) for the documentation and artefact coordinates._
+### 12 – current stable `soc.github.io:directories` release
 
 - Adjust library to deal with breaking changes in Java caused by CVE-2019-2958 (see JDK-8221858). Thanks @alexarchambault!
 - Support Solaris. Thanks @tomasjura!
@@ -289,4 +272,3 @@ _Please refer to [README-io.github.soc.md](README-io.github.soc.md) for the docu
   - The value of `executableDir` considers `$XDG_BIN_HOME` now, before falling back to `$XDG_DATA_HOME/../bin` and `$HOME/.local/bin`.
 
 ### 5-1 – Unpublished beta releases
- 

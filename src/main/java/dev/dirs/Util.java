@@ -1,4 +1,4 @@
-package io.github.soc.directories;
+package dev.dirs;
 
 import java.io.BufferedReader;
 import java.io.IOException;

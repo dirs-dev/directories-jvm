@@ -1,4 +1,4 @@
-package io.github.soc.directories;
+package dev.dirs;
 
 import org.junit.Test;
 
