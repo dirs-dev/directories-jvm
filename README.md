@@ -1,9 +1,9 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.soc/directories.svg)](https://search.maven.org/#search|gav|1|g%3A%22io.github.soc%22%20AND%20a%3A%22directories%22)
 [![API documentation](http://javadoc.io/badge/io.github.soc/directories.svg)](http://javadoc.io/doc/io.github.soc/directories)
 ![actively developed](https://img.shields.io/badge/maintenance-actively--developed-brightgreen.svg)
-[![TravisCI status](https://img.shields.io/travis/soc/directories-jvm/master.svg?label=Linux%20build)](https://travis-ci.org/soc/directories-jvm)
+[![TravisCI status](https://img.shields.io/travis/dirs-dev/directories-jvm/master.svg?label=Linux%20build)](https://travis-ci.org/dirs-dev/directories-jvm)
 [![AppVeyor status](https://img.shields.io/appveyor/ci/soc/directories-jvm/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/soc/directories-jvm/branch/master)
-[![License: MPL-2.0](https://img.shields.io/github/license/soc/directories-jvm.svg)](LICENSE)
+[![License: MPL-2.0](https://img.shields.io/github/license/dirs-dev/directories-jvm.svg)](LICENSE)
 
 # Directories
 
@@ -38,17 +38,17 @@ Add the library as a dependency to your project:
 <dependency>
   <groupId>io.github.soc</groupId>
   <artifactId>directories</artifactId>
-  <version>11</version>
+  <version>12</version>
 </dependency>
 ```
 ##### Gradle
 ```groovy
-compile 'io.github.soc:directories:11'
+compile 'io.github.soc:directories:12'
 ```
 
 ##### SBT
 ```scala
-"io.github.soc" % "directories" % "11"
+"io.github.soc" % "directories" % "12"
 ```
 
 The library itself is built against Java 6 to allow for the widest possible usage scenarios.
@@ -185,7 +185,13 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
-### 11 – current stable version
+### 12 – current stable version
+
+- Adjust library to deal with breaking changes in Java caused by CVE-2019-2958 (see JDK-8221858). Thanks @alexarchambault!
+- Support Solaris. Thanks @tomasjura!
+- Add reflect-config.json file for GraalVM native-image. Thanks @alexarchambault!
+
+### 11
 
 - Throw RuntimeExceptions instead of catching IOExceptions and returning null if directory lookup on Windows fails.
   This should make it easier to diagnose issues.

@@ -4,7 +4,7 @@ lazy val root = (project in file("."))
     organization         := "io.github.soc",
     managedScalaInstance := false,
     crossPaths           := false,
-    version              := "11",
+    version              := "12",
     homepage             := Some(url("https://github.com/soc/directories-jvm")),
     licenses             := Seq("Mozilla Public License 2.0" -> url("https://opensource.org/licenses/MPL-2.0")),
     fork                 := true,
@@ -15,13 +15,20 @@ lazy val root = (project in file("."))
     libraryDependencies  += "junit"        % "junit"           % "4.13" % Test,
     libraryDependencies  += "com.novocode" % "junit-interface" % "0.11" % Test,
     testOptions in Test  := Seq(Tests.Argument(TestFrameworks.JUnit, "-a")),
-    // publishTo            := sonatypePublishTo.value,
+    /*
+    publishTo            := {
+      val nexus = "https://oss.sonatype.org/"
+      if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
+      else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+    },
+    */
     packageOptions in (Compile, packageBin) += {
       import java.util.jar.{Attributes, Manifest}
       val manifest = new Manifest
       manifest.getMainAttributes.put(new Attributes.Name("Automatic-Module-Name"), "io.github.soc.directories")
       Package.JarManifest(manifest)
     },
+    pomIncludeRepository := { _ => false },
     pomExtra             :=
       <scm>
         <url>git@github.com:soc/directories-jvm.git</url>
