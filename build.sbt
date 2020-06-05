@@ -1,11 +1,11 @@
 lazy val root = (project in file("."))
   .settings(
     name                 := "directories",
-    organization         := "io.github.soc",
+    organization         := "dev.dirs",
     managedScalaInstance := false,
     crossPaths           := false,
-    version              := "12",
-    homepage             := Some(url("https://github.com/soc/directories-jvm")),
+    version              := "20",
+    homepage             := Some(url("https://github.com/dirs-dev/directories-jvm")),
     licenses             := Seq("Mozilla Public License 2.0" -> url("https://opensource.org/licenses/MPL-2.0")),
     fork                 := true,
     // The javaHome setting can be removed if building against the latest installed version of Java is acceptable.
@@ -25,14 +25,14 @@ lazy val root = (project in file("."))
     packageOptions in (Compile, packageBin) += {
       import java.util.jar.{Attributes, Manifest}
       val manifest = new Manifest
-      manifest.getMainAttributes.put(new Attributes.Name("Automatic-Module-Name"), "io.github.soc.directories")
+      manifest.getMainAttributes.put(new Attributes.Name("Automatic-Module-Name"), "dev.dirs")
       Package.JarManifest(manifest)
     },
     pomIncludeRepository := { _ => false },
     pomExtra             :=
       <scm>
-        <url>git@github.com:soc/directories-jvm.git</url>
-        <connection>scm:git:git@github.com:soc/directories-jvm.git</connection>
+        <url>git@github.com:dirs-dev/directories-jvm.git</url>
+        <connection>scm:git:git@github.com:dirs-dev/directories-jvm.git</connection>
       </scm>
       <developers>
         <developer>

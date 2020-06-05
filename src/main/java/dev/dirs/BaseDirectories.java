@@ -1,6 +1,6 @@
-package io.github.soc.directories;
+package dev.dirs;
 
-import static io.github.soc.directories.Util.*;
+import static dev.dirs.Util.*;
 
 /** {@code BaseDirectories} provides paths of user-invisible standard directories, following the conventions of the operating system the library is running on.
   * <p>
@@ -73,7 +73,7 @@ public final class BaseDirectories {
     */
   public final String cacheDir;
 
-  /** Returns the path to the user's config directory.
+  /** Returns the path to the user's configuration directory.
     * <br><br>
     * <table border="1" cellpadding="1" cellspacing="0">
     * <tr>
@@ -88,8 +88,8 @@ public final class BaseDirectories {
     * </tr>
     * <tr>
     * <td>macOS</td>
-    * <td>{@code $HOME}/Library/Preferences</td>
-    * <td>/Users/Alice/Library/Preferences</td>
+    * <td>{@code $HOME}/Library/Application Support</td>
+    * <td>/Users/Alice/Library/Application Support</td>
     * </tr>
     * <tr>
     * <td>Windows</td>
@@ -181,6 +181,33 @@ public final class BaseDirectories {
     */
   public final String executableDir;
 
+  /** Returns the path to the user's preference directory.
+   * <br><br>
+   * <table border="1" cellpadding="1" cellspacing="0">
+   * <tr>
+   * <th align="left">Platform</th>
+   * <th align="left">Value</th>
+   * <th align="left">Example</th>
+   * </tr>
+   * <tr>
+   * <td>Linux/BSD</td>
+   * <td>{@code $XDG_CONFIG_HOME} or {@code $HOME}/.config</td>
+   * <td>/home/alice/.config</td>
+   * </tr>
+   * <tr>
+   * <td>macOS</td>
+   * <td>{@code $HOME}/Library/Preferences</td>
+   * <td>/Users/Alice/Library/Preferences</td>
+   * </tr>
+   * <tr>
+   * <td>Windows</td>
+   * <td>{@code {FOLDERID_RoamingAppData}}</td>
+   * <td>C:\Users\Alice\AppData\Roaming</td>
+   * </tr>
+   * </table>
+   */
+  public final String preferenceDir;
+
   /** Returns the path to the user's runtime directory.
     * <br><br>
     * <table border="1" cellpadding="1" cellspacing="0">
@@ -230,15 +257,17 @@ public final class BaseDirectories {
         dataDir       = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir, "/.local/share");
         dataLocalDir  = dataDir;
         executableDir = linuxExecutableDir(homeDir, dataDir);
+        preferenceDir = configDir;
         runtimeDir    = linuxRuntimeDir(null);
         break;
       case MAC:
         homeDir       = System.getProperty("user.home");
         cacheDir      = homeDir + "/Library/Caches/";
-        configDir     = homeDir + "/Library/Preferences/";
-        dataDir       = homeDir + "/Library/Application Support/";
-        dataLocalDir  = dataDir;
+        configDir     = homeDir + "/Library/Application Support/";
+        dataDir       = configDir;
+        dataLocalDir  = configDir;
         executableDir = null;
+        preferenceDir = homeDir + "/Library/Preferences/";
         runtimeDir    = null;
         break;
       case WIN:
@@ -249,6 +278,7 @@ public final class BaseDirectories {
         configDir     = dataDir;
         cacheDir      = dataLocalDir;
         executableDir = null;
+        preferenceDir = configDir;
         runtimeDir    = null;
         break;
       default:
@@ -259,13 +289,14 @@ public final class BaseDirectories {
   @Override
   public String toString() {
     return "BaseDirectories (" + operatingSystemName + "):\n" +
-        "  homeDir       = '" + homeDir       + "'\n" +
-        "  cacheDir      = '" + cacheDir      + "'\n" +
-        "  configDir     = '" + configDir     + "'\n" +
-        "  dataDir       = '" + dataDir       + "'\n" +
-        "  dataLocalDir  = '" + dataLocalDir  + "'\n" +
-        "  executableDir = '" + executableDir + "'\n" +
-        "  runtimeDir    = '" + runtimeDir    + "'\n";
+        "  homeDir       = '" + homeDir        + "'\n" +
+        "  cacheDir      = '" + cacheDir       + "'\n" +
+        "  configDir     = '" + configDir      + "'\n" +
+        "  dataDir       = '" + dataDir        + "'\n" +
+        "  dataLocalDir  = '" + dataLocalDir   + "'\n" +
+        "  executableDir = '" + executableDir  + "'\n" +
+        "  preferenceDir = '" + preferenceDir + "'\n" +
+        "  runtimeDir    = '" + runtimeDir     + "'\n";
   }
 
   @Override
@@ -287,7 +318,9 @@ public final class BaseDirectories {
       return false;
     if (executableDir != null ? !executableDir.equals(that.executableDir) : that.executableDir != null)
       return false;
-    if (runtimeDir    != null ? !runtimeDir   .equals(that.runtimeDir)    : that.runtimeDir    != null)
+    if (preferenceDir != null ? !preferenceDir.equals(that.preferenceDir) : that.preferenceDir != null)
+      return false;
+    if (runtimeDir     != null ? !runtimeDir    .equals(that.runtimeDir)     : that.runtimeDir     != null)
       return false;
     return true;
   }
@@ -301,6 +334,7 @@ public final class BaseDirectories {
     result = 31 * result + (dataDir       != null ? dataDir      .hashCode() : 0);
     result = 31 * result + (dataLocalDir  != null ? dataLocalDir .hashCode() : 0);
     result = 31 * result + (executableDir != null ? executableDir.hashCode() : 0);
+    result = 31 * result + (preferenceDir != null ? preferenceDir.hashCode() : 0);
     result = 31 * result + (runtimeDir    != null ? runtimeDir   .hashCode() : 0);
     return result;
   }

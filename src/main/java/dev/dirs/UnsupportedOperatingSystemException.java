@@ -1,4 +1,4 @@
-package io.github.soc.directories;
+package dev.dirs;
 
 public class UnsupportedOperatingSystemException extends UnsupportedOperationException {
 
@@ -7,4 +7,5 @@ public class UnsupportedOperatingSystemException extends UnsupportedOperationExc
   public UnsupportedOperatingSystemException(String message) {
     super(message);
   }
+
 }
