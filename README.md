@@ -1,11 +1,15 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.soc/directories.svg)](https://search.maven.org/#search|gav|1|g%3A%22io.github.soc%22%20AND%20a%3A%22directories%22)
 [![API documentation](http://javadoc.io/badge/io.github.soc/directories.svg)](http://javadoc.io/doc/io.github.soc/directories)
-![actively developed](https://img.shields.io/badge/maintenance-actively--developed-brightgreen.svg)
-[![TravisCI status](https://img.shields.io/travis/dirs-dev/directories-jvm/master.svg?label=Linux%20build)](https://travis-ci.org/dirs-dev/directories-jvm)
-[![AppVeyor status](https://img.shields.io/appveyor/ci/soc/directories-jvm/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/soc/directories-jvm/branch/master)
+![actively developed](https://img.shields.io/badge/status-stable/maintained_(legacy_mode)-yellowgreen.svg)
+[![TravisCI status](https://img.shields.io/travis/dirs-dev/directories-jvm/legacy.svg?label=Linux%20build)](https://travis-ci.org/dirs-dev/directories-jvm)
+[![AppVeyor status](https://img.shields.io/appveyor/ci/soc/directories-jvm/legacy.svg?label=Windows%20build)](https://ci.appveyor.com/project/soc/directories-jvm/branch/legacy)
 [![License: MPL-2.0](https://img.shields.io/github/license/dirs-dev/directories-jvm.svg)](LICENSE)
 
-# Directories
+# Directories (legacy `soc.github.io` artifact)
+
+_This is the legacy branch. If you are looking for the main branch of development (`dev.dirs`),
+[click here](https://github.com/dirs-dev/directories-jvm/tree/master)._
+
 
 ## Introduction
 
@@ -25,7 +29,7 @@ The library provides the location of these directories by leveraging the mechani
 
 This library is written in Java, and runs on the JVM (≥ 6).
 
-A version of this library implemented in Rust is provided by [directories-rs](https://github.com/soc/directories-rs).
+A version of this library implemented in Rust is provided by [directories-rs](https://github.com/dirs-dev/directories-rs).
 
 ## Usage
 
@@ -185,7 +189,7 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
-### 12 – current stable version
+### 12 – current stable `soc.github.io:directories` release
 
 - Adjust library to deal with breaking changes in Java caused by CVE-2019-2958 (see JDK-8221858). Thanks @alexarchambault!
 - Support Solaris. Thanks @tomasjura!
@@ -267,3 +271,5 @@ The version number of this library consists of a whole number, which is incremen
 - Changes to the directory for executables:
   - Support for `executableDir` has been dropped on macOS.
   - The value of `executableDir` considers `$XDG_BIN_HOME` now, before falling back to `$XDG_DATA_HOME/../bin` and `$HOME/.local/bin`.
+
+### 5-1 – Unpublished beta releases
