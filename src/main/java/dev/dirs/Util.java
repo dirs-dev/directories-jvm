@@ -22,6 +22,8 @@ final class Util {
   static final char BSD = 'b';
   static final char SOLARIS = 's';
 
+  static final String UTF8_BOM = "\ufeff";
+
   static {
     final String os = operatingSystemName.toLowerCase(Locale.ROOT);
     if (os.contains("linux"))
@@ -194,6 +196,8 @@ final class Util {
     try {
       for (int i = 0; i < expectedResultLines; i++) {
         String line = reader.readLine();
+        if (i == 0 && operatingSystem == 'w' && line != null && line.startsWith(UTF8_BOM))
+          line = line.substring(UTF8_BOM.length());
         results[i] = line;
       }
       return results;
