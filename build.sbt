@@ -53,3 +53,12 @@ lazy val core = project
     testOptions in Test  := Seq(Tests.Argument(TestFrameworks.JUnit, "-a")),
     automaticModuleName("dev.dirs")
   )
+
+lazy val cli = project
+  .dependsOn(core)
+  .settings(
+    sharedSettings,
+    name                 := "directories-cli",
+    libraryDependencies  += "info.picocli" % "picocli" % "4.4.0",
+    automaticModuleName("dev.dirs.cli")
+  )
