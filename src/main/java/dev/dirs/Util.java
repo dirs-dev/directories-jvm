@@ -151,6 +151,7 @@ final class Util {
 
     return runCommands(guidsLength, Charset.forName("UTF-8"),
         "powershell.exe",
+        "-NoProfile",
         "-EncodedCommand",
         encodedCommand
     );
