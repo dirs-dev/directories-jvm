@@ -3,6 +3,7 @@ package dev.dirs;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.File;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.Locale;
@@ -134,7 +135,11 @@ final class Util {
       buf.append(';');
     }
     commands[2] = buf.toString();
-    return runCommands(dirsLength, Charset.defaultCharset(), commands);
+    try {
+      return runCommands(dirsLength, Charset.defaultCharset(), commands);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   static String[] getWinDirs(String... guids) {
@@ -148,13 +153,15 @@ final class Util {
     }
 
     String encodedCommand = SCRIPT_START_BASE64 + toUTF16LEBase64(buf.toString() + "}");
-
-    return runCommands(guidsLength, Charset.forName("UTF-8"),
-        "powershell.exe",
-        "-NoProfile",
-        "-EncodedCommand",
-        encodedCommand
-    );
+    String path = System.getenv("Path");
+    String[] dirs = path == null ? new String[0] : path.split(File.pathSeparator);
+    Charset utf8 = Charset.forName("UTF-8");
+    if (dirs.length == 0) return windowsFallback(guidsLength, utf8, encodedCommand);
+    try {
+      return runWinCommands(guidsLength, utf8, dirs, encodedCommand);
+    } catch (IOException e) {
+      return windowsFallback(guidsLength, utf8, encodedCommand);
+    }
   }
 
   private static String toUTF16LEBase64(String script) {
@@ -183,27 +190,20 @@ final class Util {
     }
   }
 
-  private static String[] runCommands(int expectedResultLines, Charset charset, String... commands) {
-    final ProcessBuilder processBuilder = new ProcessBuilder(commands);
-    Process process;
-    try {
-      process = processBuilder.start();
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+  private static String[] runCommands(int expectedResultLines, Charset charset, String... commands) throws IOException {
+    final Process process = new ProcessBuilder(commands).start();
 
     String[] results = new String[expectedResultLines];
     BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), charset));
     try {
       for (int i = 0; i < expectedResultLines; i++) {
         String line = reader.readLine();
+        if (line == null) throw new IOException("no output from process");
         if (i == 0 && operatingSystem == 'w' && line != null && line.startsWith(UTF8_BOM))
           line = line.substring(UTF8_BOM.length());
         results[i] = line;
       }
       return results;
-    } catch (IOException e) {
-      throw new RuntimeException(e);
     } finally {
       process.destroy();
       try {
@@ -211,6 +211,51 @@ final class Util {
       } catch (IOException e) {
         e.printStackTrace();
       }
+    }
+  }
+
+  private static String[] runWinCommands(int guidsLength, Charset charset, String[] dirs, String encodedCommand) throws IOException {
+    // legacy powershell.exe seems to run faster than pwsh.exe so prefer it if available
+    String[] commands = new String[] { "powershell.exe", "pwsh.exe" };
+    IOException firstException = null;
+    for (String dir : dirs) {
+      File dirFile = new File(dir);
+      for (String command : commands) {
+        File commandFile = new File(dir, command);
+        if (commandFile.exists()) {
+          try {
+            return runCommands(guidsLength, Charset.forName("UTF-8"),
+                commandFile.toString(),
+                "-NoProfile",
+                "-EncodedCommand",
+                encodedCommand
+            );
+          } catch (IOException e) {
+            firstException = firstException == null ? e : firstException;
+          }
+        }
+      }
+    }
+    if (firstException != null) throw firstException;
+    else throw new IOException("no directories");
+  }
+
+  private static String[] windowsFallback(int guidsLength, Charset charset, String encodedCommand) {
+    File powerShellBase = new File("C:\\Program Files\\Powershell");
+    String[] powerShellDirs = powerShellBase.list();
+    if (powerShellDirs == null) powerShellDirs = new String[0];
+    String[] allPowerShellDirs = new String[powerShellDirs.length + 1];
+
+    // legacy powershell.exe seems to run faster than pwsh.exe so prefer it if available
+    String systemRoot = System.getenv("SystemRoot");
+    if (systemRoot == null) systemRoot = "C:\\Windows";
+    allPowerShellDirs[0] = systemRoot + "\\System32\\WindowsPowerShell\\v1.0\\";
+
+    for (int i = 0; i < powerShellDirs.length; ++i) allPowerShellDirs[i + 1] = new File(powerShellBase, powerShellDirs[i]).toString();
+    try {
+      return runWinCommands(guidsLength, Charset.forName("UTF-8"), allPowerShellDirs, encodedCommand);
+    } catch (final IOException ex) {
+      throw new RuntimeException("Couldn't find pwsh.exe or powershell.exe on path or in default system locations", ex);
     }
   }
 
