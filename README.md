@@ -187,7 +187,16 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
-### 20 – current stable `dev.dirs:directories` release
+### 21 – current stable `dev.dirs:directories` release
+
+- Handle missing powershell.exe on the windows PATH. Fixes #21. Thanks @eatkins!
+  - Fallback to pwsh.exe if powershell.exe is unavailable
+  - Add default locations of each of those executables to the forked process PATH in case neither
+    executable is available on the jvm process PATH.
+- Pass `-NoProfile` to powershell.exe Fixes #36. Thanks @alexarchambault!
+- Ignore UTF-8 BOM on Windows Fixes #37. Thanks @alexarchambault!
+
+### 20
 
 - **BREAKING CHANGE** The behavior of `configDir` on macOS has been adjusted:
   - `BaseDirectories#configDir` and `ProjectDirectories#configDir` have been changed to use the `Application Support` directory,
@@ -288,4 +297,3 @@ _Please refer to [the legacy branch](https://github.com/dirs-dev/directories-jvm
   - The value of `executableDir` considers `$XDG_BIN_HOME` now, before falling back to `$XDG_DATA_HOME/../bin` and `$HOME/.local/bin`.
 
 ### 5-1 – Unpublished beta releases
- 
