@@ -143,7 +143,6 @@ final class Util {
   }
 
   static String[] getWinDirs(String... guids) {
-
     int guidsLength = guids.length;
     StringBuilder buf = new StringBuilder(guidsLength * 68);
     for (int i = 0; i < guidsLength; i++) {
@@ -152,15 +151,16 @@ final class Util {
       buf.append("\")\n");
     }
 
-    String encodedCommand = SCRIPT_START_BASE64 + toUTF16LEBase64(buf.toString() + "}");
+    String encodedCommand = SCRIPT_START_BASE64 + toUTF16LEBase64(buf + "}");
     String path = System.getenv("Path");
     String[] dirs = path == null ? new String[0] : path.split(File.pathSeparator);
-    Charset utf8 = Charset.forName("UTF-8");
-    if (dirs.length == 0) return windowsFallback(guidsLength, utf8, encodedCommand);
+    if (dirs.length == 0) {
+      return windowsFallback(guidsLength, encodedCommand);
+    }
     try {
-      return runWinCommands(guidsLength, utf8, dirs, encodedCommand);
+      return runWinCommands(guidsLength, dirs, encodedCommand);
     } catch (IOException e) {
-      return windowsFallback(guidsLength, utf8, encodedCommand);
+      return windowsFallback(guidsLength, encodedCommand);
     }
   }
 
@@ -214,12 +214,11 @@ final class Util {
     }
   }
 
-  private static String[] runWinCommands(int guidsLength, Charset charset, String[] dirs, String encodedCommand) throws IOException {
+  private static String[] runWinCommands(int guidsLength, String[] dirs, String encodedCommand) throws IOException {
     // legacy powershell.exe seems to run faster than pwsh.exe so prefer it if available
-    String[] commands = new String[] { "powershell.exe", "pwsh.exe" };
+    String[] commands = { "powershell.exe", "pwsh.exe" };
     IOException firstException = null;
     for (String dir : dirs) {
-      File dirFile = new File(dir);
       for (String command : commands) {
         File commandFile = new File(dir, command);
         if (commandFile.exists()) {
@@ -236,24 +235,32 @@ final class Util {
         }
       }
     }
-    if (firstException != null) throw firstException;
+    if (firstException != null) {
+      throw firstException;
+    }
     else throw new IOException("no directories");
   }
 
-  private static String[] windowsFallback(int guidsLength, Charset charset, String encodedCommand) {
+  private static String[] windowsFallback(int guidsLength, String encodedCommand) {
     File powerShellBase = new File("C:\\Program Files\\Powershell");
     String[] powerShellDirs = powerShellBase.list();
-    if (powerShellDirs == null) powerShellDirs = new String[0];
+    if (powerShellDirs == null) {
+      powerShellDirs = new String[0];
+    }
     String[] allPowerShellDirs = new String[powerShellDirs.length + 1];
 
     // legacy powershell.exe seems to run faster than pwsh.exe so prefer it if available
     String systemRoot = System.getenv("SystemRoot");
-    if (systemRoot == null) systemRoot = "C:\\Windows";
+    if (systemRoot == null) {
+      systemRoot = "C:\\Windows";
+    }
     allPowerShellDirs[0] = systemRoot + "\\System32\\WindowsPowerShell\\v1.0\\";
 
-    for (int i = 0; i < powerShellDirs.length; ++i) allPowerShellDirs[i + 1] = new File(powerShellBase, powerShellDirs[i]).toString();
+    for (int i = 0; i < powerShellDirs.length; ++i) {
+      allPowerShellDirs[i + 1] = new File(powerShellBase, powerShellDirs[i]).toString();
+    }
     try {
-      return runWinCommands(guidsLength, Charset.forName("UTF-8"), allPowerShellDirs, encodedCommand);
+      return runWinCommands(guidsLength, allPowerShellDirs, encodedCommand);
     } catch (final IOException ex) {
       throw new RuntimeException("Couldn't find pwsh.exe or powershell.exe on path or in default system locations", ex);
     }
