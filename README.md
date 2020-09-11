@@ -1,8 +1,8 @@
 [![Maven Central](https://img.shields.io/maven-central/v/dev.dirs/directories.svg)](https://search.maven.org/#search|gav|1|g%3A%22dev.dirs%22%20AND%20a%3A%22directories%22)
 [![API documentation](http://javadoc.io/badge/dev.dirs/directories.svg)](http://javadoc.io/doc/dev.dirs/directories)
 ![actively developed](https://img.shields.io/badge/maintenance-actively_developed-brightgreen.svg)
-[![TravisCI status](https://img.shields.io/travis/dirs-dev/directories-jvm/master.svg?label=Linux%20build)](https://travis-ci.org/dirs-dev/directories-jvm)
-[![AppVeyor status](https://img.shields.io/appveyor/ci/soc/directories-jvm/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/soc/directories-jvm/branch/main)
+[![TravisCI status](https://img.shields.io/travis/dirs-dev/directories-jvm/main.svg?label=Linux%20build)](https://travis-ci.org/dirs-dev/directories-jvm)
+[![AppVeyor status](https://img.shields.io/appveyor/ci/soc/directories-jvm/main.svg?label=Windows%20build)](https://ci.appveyor.com/project/soc/directories-jvm/branch/main)
 [![License: MPL-2.0](https://img.shields.io/github/license/dirs-dev/directories-jvm.svg)](LICENSE)
 
 # Directories
