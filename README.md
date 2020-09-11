@@ -2,7 +2,7 @@
 [![API documentation](http://javadoc.io/badge/dev.dirs/directories.svg)](http://javadoc.io/doc/dev.dirs/directories)
 ![actively developed](https://img.shields.io/badge/maintenance-actively_developed-brightgreen.svg)
 [![TravisCI status](https://img.shields.io/travis/dirs-dev/directories-jvm/master.svg?label=Linux%20build)](https://travis-ci.org/dirs-dev/directories-jvm)
-[![AppVeyor status](https://img.shields.io/appveyor/ci/soc/directories-jvm/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/soc/directories-jvm/branch/master)
+[![AppVeyor status](https://img.shields.io/appveyor/ci/soc/directories-jvm/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/soc/directories-jvm/branch/main)
 [![License: MPL-2.0](https://img.shields.io/github/license/dirs-dev/directories-jvm.svg)](LICENSE)
 
 # Directories
