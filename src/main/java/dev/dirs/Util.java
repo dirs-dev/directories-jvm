@@ -142,7 +142,16 @@ final class Util {
     }
   }
 
-  static String[] getWinDirs(String... guids) {
+  static String[] getWinDirsFromEnv() {
+    String userprofile = System.getenv("USERPROFILE");
+    String appdata = System.getenv("APPDATA");
+    String localappdata = System.getenv("LOCALAPPDATA");
+    if(userprofile != null && appdata != null && localappdata != null)
+      return new String[]{userprofile, appdata, localappdata};
+    else return null;
+  }
+
+  static String[] getWinDirsFallback(String... guids) {
     int guidsLength = guids.length;
     StringBuilder buf = new StringBuilder(guidsLength * 68);
     for (int i = 0; i < guidsLength; i++) {
