@@ -328,7 +328,7 @@ public final class UserDirectories {
         videoDir      = homeDir + "/Movies";
         break;
       case WIN:
-        String[] winDirs = getWinDirsFallback(
+        String[] winDirs = getWinDirs(
             "5E6C858F-0E22-4760-9AFE-EA3317B67173",
             "4BD8D571-6D19-48D3-BE97-422220080E43",
             "B4BFCC3A-DB2C-424C-B029-7FE99A87C641",

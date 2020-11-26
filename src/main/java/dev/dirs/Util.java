@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 final class Util {
 
@@ -142,13 +144,50 @@ final class Util {
     }
   }
 
-  static String[] getWinDirsFromEnv() {
-    String userprofile = System.getenv("USERPROFILE");
-    String appdata = System.getenv("APPDATA");
-    String localappdata = System.getenv("LOCALAPPDATA");
-    if(userprofile != null && appdata != null && localappdata != null)
-      return new String[]{userprofile, appdata, localappdata};
-    else return null;
+  static Map<String, String> guidToEnv = new HashMap<>();
+  static {
+    //See https://docs.microsoft.com/en-us/windows/win32/shell/knownfolderid for documentation
+    guidToEnv.put("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D", System.getenv("APPDATA"));
+    guidToEnv.put("5E6C858F-0E22-4760-9AFE-EA3317B67173", System.getenv("USERPROFILE"));
+    guidToEnv.put("F1B32785-6FBA-4FCF-9D55-7B8E7F157091", System.getenv("LOCALAPPDATA"));
+    guidToEnv.put("DFDF76A2-C82A-4D63-906A-5644AC457385", System.getenv("PUBLIC"));
+
+    //appdata path
+    String appDataPath = guidToEnv.get("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D");
+    if(appDataPath != null){
+      guidToEnv.put("A63293E8-664E-48DB-A079-DF759E0509F7",appDataPath + "\\Microsoft\\Windows\\Templates");
+    }
+
+
+    //userprofile
+    String userProfilePath = guidToEnv.get("5E6C858F-0E22-4760-9AFE-EA3317B67173");
+    if(userProfilePath != null) {
+      guidToEnv.put("B4BFCC3A-DB2C-424C-B029-7FE99A87C641", userProfilePath + "\\Desktop");
+      guidToEnv.put("FDD39AD0-238F-46AF-ADB4-6C85480369C7", userProfilePath + "\\Documents");
+      guidToEnv.put("374DE290-123F-4565-9164-39C4925E467B", userProfilePath + "\\Downloads");
+      guidToEnv.put("4BD8D571-6D19-48D3-BE97-422220080E43", userProfilePath + "\\Music");
+      guidToEnv.put("33E28130-4E1E-4676-835A-98395C3BC3BB", userProfilePath + "\\Pictures");
+      guidToEnv.put("18989B1D-99B5-455B-841C-AB7C74E4DDFC", userProfilePath + "\\Videos");
+    }
+  }
+
+  static String[] getWinDirs(String... guids) {
+    String[] fromEnv = getWinDirsFromEnv(guids);
+    return fromEnv != null
+            ? fromEnv
+            : getWinDirsFallback(guids);
+  }
+
+  static String[] getWinDirsFromEnv(String... guids) {
+    String[] paths = new String[guids.length];
+    for (int i = 0; i < guids.length; i++) {
+      final String path = guidToEnv.get(guids[i]);
+      if(path == null) return null;
+      else {
+        paths[i] = path;
+      }
+    }
+    return paths;
   }
 
   static String[] getWinDirsFallback(String... guids) {
