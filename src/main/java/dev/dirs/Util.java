@@ -158,7 +158,6 @@ final class Util {
       guidToEnv.put("A63293E8-664E-48DB-A079-DF759E0509F7",appDataPath + "\\Microsoft\\Windows\\Templates");
     }
 
-
     //userprofile
     String userProfilePath = guidToEnv.get("5E6C858F-0E22-4760-9AFE-EA3317B67173");
     if(userProfilePath != null) {
