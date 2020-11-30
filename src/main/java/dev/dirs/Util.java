@@ -198,7 +198,6 @@ final class Util {
     try {
       for (int i = 0; i < expectedResultLines; i++) {
         String line = reader.readLine();
-        if (line == null) throw new IOException("no output from process");
         if (i == 0 && operatingSystem == 'w' && line != null && line.startsWith(UTF8_BOM))
           line = line.substring(UTF8_BOM.length());
         results[i] = line;
