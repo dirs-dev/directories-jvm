@@ -187,7 +187,12 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
-### 22 – current stable `dev.dirs:directories` release
+### 23 – current stable `dev.dirs:directories` release
+
+- Try downgrading the Powershell version to avoid Powershell's Constrained Language Mode.
+  Hopefully fixes #43. Thanks @fthomas!
+
+### 22
 
 - Restore previous (pre-21) behavior of returning `null` if a directory path can't be retrieved on Windows,
   instead of throwing an exception. Workaround for #43. Thanks @fthomas!
