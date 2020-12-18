@@ -224,6 +224,8 @@ final class Util {
           try {
             return runCommands(guidsLength, Charset.forName("UTF-8"),
                 commandFile.toString(),
+                "-version",
+                "2",
                 "-NoProfile",
                 "-EncodedCommand",
                 encodedCommand
