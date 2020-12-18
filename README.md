@@ -187,7 +187,12 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
-### 21 – current stable `dev.dirs:directories` release
+### 22 – current stable `dev.dirs:directories` release
+
+- Restore previous (pre-21) behavior of returning `null` if a directory path can't be retrieved on Windows,
+  instead of throwing an exception. Workaround for #43. Thanks @fthomas!
+
+### 21
 
 - Handle missing powershell.exe on the windows PATH. Fixes #21. Thanks @eatkins!
   - Fallback to pwsh.exe if powershell.exe is unavailable
