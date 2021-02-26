@@ -222,14 +222,29 @@ final class Util {
         File commandFile = new File(dir, command);
         if (commandFile.exists()) {
           try {
-            return runCommands(guidsLength, Charset.forName("UTF-8"),
-                commandFile.toString(),
-                "-version",
-                "2",
-                "-NoProfile",
-                "-EncodedCommand",
-                encodedCommand
+            String[] stdout;
+            // try to run using powershell V2 to bypass constrained language mode
+            // note that this has been deprecated in new version of Windows
+            // https://devblogs.microsoft.com/powershell/windows-powershell-2-0-deprecation/
+            // for some set up, running this requires installation of extra dependency on Windows host
+            stdout = runCommands(guidsLength, Charset.forName("UTF-8"),
+                    commandFile.toString(),
+                    "-version",
+                    "2",
+                    "-NoProfile",
+                    "-EncodedCommand",
+                    encodedCommand
             );
+            if (stdout[0] != null) return stdout;
+
+            // fall-forward to higher version of powershell
+            stdout = runCommands(guidsLength, Charset.forName("UTF-8"),
+                    commandFile.toString(),
+                    "-NoProfile",
+                    "-EncodedCommand",
+                    encodedCommand
+            );
+            return stdout;
           } catch (IOException e) {
             firstException = firstException == null ? e : firstException;
           }

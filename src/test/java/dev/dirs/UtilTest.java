@@ -2,8 +2,11 @@ package dev.dirs;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import java.util.Arrays;
+import java.util.Objects;
+
+import static dev.dirs.Util.getWinDirs;
+import static org.junit.Assert.*;
 
 public final class UtilTest {
 
@@ -179,4 +182,11 @@ public final class UtilTest {
     }
   }
 
+  @Test
+  public void testPowershell() {
+    if (Util.operatingSystem == 'w') {
+      String[] winDirs = getWinDirs("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D", "F1B32785-6FBA-4FCF-9D55-7B8E7F157091");
+      assertTrue(Arrays.stream(winDirs).allMatch(Objects::nonNull));
+    }
+  }
 }
