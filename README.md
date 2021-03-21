@@ -183,11 +183,15 @@ The use of `ProjectDirectories.fromPath` is strongly discouraged, as its results
 ## Versioning
 
 The version number of this library consists of a whole number, which is incremented with each release.
-(Think semantic versioning without _minor_ and _patch_ versions.)
 
 ## Changelog
 
-### 23 – current stable `dev.dirs:directories` release
+### 24 – current stable `dev.dirs:directories` release
+
+- Try both "normal" and "downgraded" version of Powershell.
+  Hopefully fixes #47. Thanks @phongngtuan!
+
+### 23
 
 - Try downgrading the Powershell version to avoid Powershell's Constrained Language Mode.
   Hopefully fixes #43. Thanks @fthomas!
