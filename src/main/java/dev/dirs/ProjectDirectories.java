@@ -223,6 +223,10 @@ public final class ProjectDirectories {
     * @return A new {@code ProjectDirectories} instance, whose directory field values are directly derived from the {@code path} argument.
     */
   public static ProjectDirectories fromPath(String path) {
+    return fromPath(path, GetWinDirs.powerShellBased);
+  }
+
+  public static ProjectDirectories fromPath(String path, GetWinDirs getWinDirs) {
     String homeDir;
     String cacheDir;
     String configDir;
@@ -252,7 +256,7 @@ public final class ProjectDirectories {
         preferenceDir = homeDir + "/Library/Preferences/"         + path;
         break;
       case WIN:
-        String[] winDirs = getWinDirs("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D", "F1B32785-6FBA-4FCF-9D55-7B8E7F157091");
+        String[] winDirs = getWinDirs.getWinDirs("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D", "F1B32785-6FBA-4FCF-9D55-7B8E7F157091");
         String appDataRoaming = winDirs[0] + '\\' + path;
         String appDataLocal   = winDirs[1] + '\\' + path;
         dataDir       = appDataRoaming + "\\data";
@@ -288,6 +292,10 @@ public final class ProjectDirectories {
     * {@code qualifier}, {@code organization} and {@code application} arguments.
     */
   public static ProjectDirectories from(String qualifier, String organization, String application) {
+    return from(qualifier, organization, application, GetWinDirs.powerShellBased);
+  }
+
+  public static ProjectDirectories from(String qualifier, String organization, String application, GetWinDirs getWinDirs) {
     if (isNullOrEmpty(organization) && isNullOrEmpty(application))
       throw new UnsupportedOperationException("organization and application arguments cannot both be null/empty");
     String path;
@@ -306,7 +314,7 @@ public final class ProjectDirectories {
       default:
         throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
     }
-    return fromPath(path);
+    return fromPath(path, getWinDirs);
   }
 
   @Override
