@@ -327,6 +327,18 @@ public final class UserDirectories {
         templateDir   = null;
         videoDir      = homeDir + "/Movies";
         break;
+      case IBMI:
+        homeDir       = System.getProperty("user.home");
+        audioDir      = homeDir + "/Music";
+        desktopDir    = homeDir + "/Desktop";
+        documentDir   = homeDir + "/Documents";
+        downloadDir   = homeDir + "/Downloads";
+        fontDir       = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"), "/fonts",  homeDir, "/.local/share/fonts");
+        pictureDir    = homeDir + "/Pictures";
+        publicDir     = homeDir + "/Public";
+        templateDir   = null;
+        videoDir      = homeDir + "/Movies";
+        break;
       case WIN:
         String[] winDirs = getWinDirs(
             "5E6C858F-0E22-4760-9AFE-EA3317B67173",
