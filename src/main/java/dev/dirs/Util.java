@@ -22,6 +22,7 @@ final class Util {
   static final char WIN = 'w';
   static final char BSD = 'b';
   static final char SOLARIS = 's';
+  static final char IBMI = 'i';
 
   static final String UTF8_BOM = "\ufeff";
 
@@ -37,6 +38,8 @@ final class Util {
       operatingSystem = BSD;
     else if (os.contains("sunos"))
       operatingSystem = SOLARIS;
+    else if (os.contains("os/400") || os.contains("os400"))
+      operatingSystem = IBMI;
     else
       throw new UnsupportedOperatingSystemException("directories are not supported on " + operatingSystemName);
   }
