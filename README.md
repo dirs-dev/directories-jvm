@@ -38,17 +38,17 @@ Add the library as a dependency to your project:
 <dependency>
   <groupId>dev.dirs</groupId>
   <artifactId>directories</artifactId>
-  <version>20</version>
+  <version>25</version>
 </dependency>
 ```
 ##### Gradle
 ```groovy
-compile 'dev.dirs:directories:20'
+compile 'dev.dirs:directories:25'
 ```
 
 ##### SBT
 ```scala
-"dev.dirs" % "directories" % "20"
+"dev.dirs" % "directories" % "25"
 ```
 
 The library itself is built against Java 6 to allow for the widest possible usage scenarios.
@@ -186,7 +186,11 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
-### 24 – current stable `dev.dirs:directories` release
+### 25
+- Release with newer JavaDoc version.
+- Update SBT version to 1.5.0.
+
+### 24
 
 - Try both "normal" and "downgraded" version of Powershell.
   Hopefully fixes #47. Thanks @phongngtuan!
