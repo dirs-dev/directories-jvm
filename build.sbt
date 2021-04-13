@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
     // javaHome             := Some(file("/home/soc/apps/zulu6.19.0.1-jdk6.0.103-linux_x64/")),
     libraryDependencies  += "junit"        % "junit"           % "4.13" % Test,
     libraryDependencies  += "com.novocode" % "junit-interface" % "0.11" % Test,
-    testOptions in Test  := Seq(Tests.Argument(TestFrameworks.JUnit, "-a")),
+    Test / testOptions   := Seq(Tests.Argument(TestFrameworks.JUnit, "-a")),
     /*
     publishTo            := {
       val nexus = "https://oss.sonatype.org/"
@@ -22,7 +22,7 @@ lazy val root = (project in file("."))
       else Some("releases" at nexus + "service/local/staging/deploy/maven2")
     },
     */
-    packageOptions in (Compile, packageBin) += {
+    Compile / packageBin / packageOptions += {
       import java.util.jar.{Attributes, Manifest}
       val manifest = new Manifest
       manifest.getMainAttributes.put(new Attributes.Name("Automatic-Module-Name"), "dev.dirs")
