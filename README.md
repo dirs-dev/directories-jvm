@@ -38,17 +38,17 @@ Add the library as a dependency to your project:
 <dependency>
   <groupId>dev.dirs</groupId>
   <artifactId>directories</artifactId>
-  <version>25</version>
+  <version>26</version>
 </dependency>
 ```
 ##### Gradle
 ```groovy
-compile 'dev.dirs:directories:25'
+compile 'dev.dirs:directories:26'
 ```
 
 ##### SBT
 ```scala
-"dev.dirs" % "directories" % "25"
+"dev.dirs" % "directories" % "26"
 ```
 
 The library itself is built against Java 6 to allow for the widest possible usage scenarios.
@@ -185,6 +185,10 @@ The use of `ProjectDirectories.fromPath` is strongly discouraged, as its results
 The version number of this library consists of a whole number, which is incremented with each release.
 
 ## Changelog
+
+### 26 – current stable `dev.dirs:directories` release
+
+- Adds support for IBM Series i (OS/400). Thanks @ThePrez!
 
 ### 25
 - Release with newer JavaDoc version.
