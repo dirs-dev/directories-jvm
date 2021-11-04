@@ -235,6 +235,7 @@ public final class ProjectDirectories {
       case BSD:
       case SOLARIS:
       case IBMI:
+      case AIX:
         homeDir       = System.getProperty("user.home");
         cacheDir      = defaultIfNullOrEmptyExtended(System.getenv("XDG_CACHE_HOME"),  path, homeDir + "/.cache/",       path);
         configDir     = defaultIfNullOrEmptyExtended(System.getenv("XDG_CONFIG_HOME"), path, homeDir + "/.config/",      path);
@@ -295,6 +296,7 @@ public final class ProjectDirectories {
       case LIN:
       case BSD:
       case SOLARIS:
+      case AIX:
         path = trimLowercaseReplaceWhitespace(application, "", true);
         break;
       case MAC:

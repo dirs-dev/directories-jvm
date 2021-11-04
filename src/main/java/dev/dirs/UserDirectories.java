@@ -303,6 +303,7 @@ public final class UserDirectories {
       case LIN:
       case BSD:
       case SOLARIS:
+      case AIX:
         String[] userDirs = getXDGUserDirs("MUSIC", "DESKTOP", "DOCUMENTS", "DOWNLOAD", "PICTURES", "PUBLICSHARE", "TEMPLATES", "VIDEOS");
         homeDir       = System.getProperty("user.home");
         audioDir      = userDirs[0];
