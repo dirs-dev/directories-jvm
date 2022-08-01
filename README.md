@@ -1,7 +1,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/dev.dirs/directories.svg?style=for-the-badge)](https://search.maven.org/#search|gav|1|g%3A%22dev.dirs%22%20AND%20a%3A%22directories%22)
 [![API documentation](http://javadoc.io/badge/dev.dirs/directories.svg?style=for-the-badge)](http://javadoc.io/doc/dev.dirs/directories)
 ![actively developed](https://img.shields.io/badge/maintenance-actively_developed-brightgreen.svg?style=for-the-badge)
-[![GitHub Actions status](https://github.com/dirs-dev/directories-jvm/workflows/Linux%20build/badge.svg?style=for-the-badge)](https://github.com/dirs-dev/directories-jvm/actions/workflows/test.yml)
+[![GitHub Actions status](https://img.shields.io/github/workflow/status/dirs-dev/directories-jvm/Linux%20build?style=for-the-badge)](https://github.com/dirs-dev/directories-jvm/actions/workflows/test.yml)
 [![AppVeyor status](https://img.shields.io/appveyor/ci/soc/directories-jvm/main.svg?label=Windows%20build&style=for-the-badge)](https://ci.appveyor.com/project/soc/directories-jvm/branch/main)
 [![License: MPL-2.0](https://img.shields.io/github/license/dirs-dev/directories-jvm.svg?style=for-the-badge)](LICENSE)
 
