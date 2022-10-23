@@ -306,7 +306,7 @@ public final class ProjectDirectories {
         path = windowsApplicationPath(qualifier, organization, application);
         break;
       default:
-        throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
+        throw new UnsupportedOperatingSystemException("Project directories are not supported on " + operatingSystemName);
     }
     return fromPath(path);
   }
