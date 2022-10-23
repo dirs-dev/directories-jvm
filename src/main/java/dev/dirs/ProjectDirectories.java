@@ -296,6 +296,7 @@ public final class ProjectDirectories {
       case LIN:
       case BSD:
       case SOLARIS:
+      case IBMI:
       case AIX:
         path = trimLowercaseReplaceWhitespace(application, "", true);
         break;
