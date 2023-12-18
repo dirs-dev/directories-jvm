@@ -4,6 +4,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.File;
+import java.lang.foreign.Arena;
+import java.lang.foreign.FunctionDescriptor;
+import java.lang.foreign.Linker;
+import java.lang.foreign.MemoryLayout;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.SequenceLayout;
+import java.lang.foreign.StructLayout;
+import java.lang.foreign.SymbolLookup;
+import java.lang.foreign.ValueLayout;
+import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.Locale;
@@ -149,24 +159,31 @@ final class Util {
   }
 
   static String[] getWinDirs(String... guids) {
-    int guidsLength = guids.length;
-    StringBuilder buf = new StringBuilder(guidsLength * 68);
-    for (int i = 0; i < guidsLength; i++) {
-      buf.append("[Dir]::GetKnownFolderPath(\"");
-      buf.append(guids[i]);
-      buf.append("\")\n");
-    }
-
-    String encodedCommand = SCRIPT_START_BASE64 + toUTF16LEBase64(buf + "}");
-    String path = System.getenv("Path");
-    String[] dirs = path == null ? new String[0] : path.split(File.pathSeparator);
-    if (dirs.length == 0) {
-      return windowsFallback(guidsLength, encodedCommand);
-    }
-    try {
-      return runWinCommands(guidsLength, dirs, encodedCommand);
-    } catch (IOException e) {
-      return windowsFallback(guidsLength, encodedCommand);
+    System.loadLibrary("shell32");
+    SymbolLookup loaderSyms = SymbolLookup.loaderLookup();
+    MemorySegment address = loaderSyms.find("SHGetKnownFolderPath").orElseThrow();
+    Linker linker = Linker.nativeLinker();
+    StructLayout guidLayout = MemoryLayout.structLayout(
+        ValueLayout.JAVA_INT.withName("Data1"),
+        ValueLayout.JAVA_SHORT.withName("Data2"),
+        ValueLayout.JAVA_SHORT.withName("Data3"),
+        ValueLayout.JAVA_LONG.withName("Data4"));
+    SequenceLayout chars = MemoryLayout.sequenceLayout(ValueLayout.JAVA_SHORT);
+    FunctionDescriptor descriptor = FunctionDescriptor.of(
+        ValueLayout.JAVA_INT,                              // HRESULT
+        ValueLayout.ADDRESS.withTargetLayout(guidLayout),  // GUID of KnownFolderId
+        ValueLayout.JAVA_INT,                              // flags of KnownFolderFlags
+        ValueLayout.ADDRESS,                               // access token
+        ValueLayout.ADDRESS.withTargetLayout(chars));      // reference to wide string buffer
+    MethodHandle handle = linker.downcallHandle(address, descriptor);
+    try (Arena arena = Arena.ofConfined()) {
+      MemorySegment buf = arena.allocate(1024);
+      MemorySegment guid = arena.allocate(guidLayout);
+      // guid.set(ValueLayout.JAVA_INT, );
+      long len          = (int) handle.invokeExact(guid, 0x00004000, null, buf);
+      throw null;
+    } catch (Throwable e) {
+      throw new RuntimeException(e);
     }
   }
 
