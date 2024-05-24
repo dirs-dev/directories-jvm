@@ -1,4 +1,2 @@
-target/
-.classpath
-.project
-.settings
+.scala-build/
+.bsp/

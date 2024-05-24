@@ -1,0 +1,17 @@
+//> using test.dependencies "junit:junit:4.13"
+//> using test.dependencies "com.novocode:junit-interface:0.11"
+//> using javacOpt -Xdoclint:none
+
+//> using publish.organization "io.get-coursier.util"
+//> using publish.name "directories-jvm"
+//> using publish.ci.computeVersion "git:tag"
+//> using publish.ci.repository "central"
+//> using publish.ci.user "env:PUBLISH_USER"
+//> using publish.ci.password "env:PUBLISH_PASSWORD"
+//> using publish.ci.secretKey "env:PUBLISH_SECRET_KEY"
+//> using publish.ci.secretKeyPassword "env:PUBLISH_SECRET_KEY_PASSWORD"
+//> using publish.ci.publicKey "env:PUBLISH_PUBLIC_KEY"
+//> using publish.license "MPL-2.0"
+//> using publish.url "https://github.com/coursier/directories-jvm"
+//> using publish.versionControl "github:coursier/directories-jvm"
+//> using publish.developer "Alex Archambault||https://github.com/alexarchambault"

@@ -1,0 +1,44 @@
+name: CI
+on:
+  push:
+    branches:
+    - main
+    tags:
+    - "v*"
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: coursier/cache-action@v6.4
+    - uses: VirtusLab/scala-cli-setup@v1.0
+      with:
+        power: true
+    - name: Compile
+      run: scala-cli compile . # Just in case, ensuring the project compiles fine as a pure Java project (--scala option required to run tests, see below)
+    - name: Test
+      run: scala-cli test . --scala 3.3.3 # Specifying a Scala version as a workaround for VirtusLab/scala-cli#2940
+
+  publish:
+    needs: test
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: coursier/cache-action@v6.4
+    - uses: VirtusLab/scala-cli-setup@v1.0
+      with:
+        power: true
+    - name: Publish
+      run: scala-cli publish . --doc=false # disabling javadoc because of VirtusLab/scala-cli#2939
+      env:
+        PUBLISH_USER: ${{ secrets.PUBLISH_USER }}
+        PUBLISH_PASSWORD: ${{ secrets.PUBLISH_PASSWORD }}
+        PUBLISH_SECRET_KEY: ${{ secrets.PUBLISH_SECRET_KEY }}
+        PUBLISH_SECRET_KEY_PASSWORD: ${{ secrets.PUBLISH_SECRET_KEY_PASSWORD }}
