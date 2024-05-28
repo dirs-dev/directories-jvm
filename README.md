@@ -1,9 +1,8 @@
-[![Maven Central](https://img.shields.io/maven-central/v/dev.dirs/directories.svg)](https://search.maven.org/#search|gav|1|g%3A%22dev.dirs%22%20AND%20a%3A%22directories%22)
-[![API documentation](http://javadoc.io/badge/dev.dirs/directories.svg)](http://javadoc.io/doc/dev.dirs/directories)
-![actively developed](https://img.shields.io/badge/maintenance-actively_developed-brightgreen.svg)
-[![TravisCI status](https://img.shields.io/travis/dirs-dev/directories-jvm/main.svg?label=Linux%20build)](https://travis-ci.org/dirs-dev/directories-jvm)
-[![AppVeyor status](https://img.shields.io/appveyor/ci/soc/directories-jvm/main.svg?label=Windows%20build)](https://ci.appveyor.com/project/soc/directories-jvm/branch/main)
-[![License: MPL-2.0](https://img.shields.io/github/license/dirs-dev/directories-jvm.svg)](LICENSE)
+[![Maven Central](https://img.shields.io/maven-central/v/dev.dirs/directories.svg?style=for-the-badge)](https://search.maven.org/#search|gav|1|g%3A%22dev.dirs%22%20AND%20a%3A%22directories%22)
+[![API documentation](http://javadoc.io/badge/dev.dirs/directories.svg?style=for-the-badge)](http://javadoc.io/doc/dev.dirs/directories)
+![actively developed](https://img.shields.io/badge/maintenance-actively_developed-brightgreen.svg?style=for-the-badge)
+[![GitHub Actions status](https://img.shields.io/github/actions/workflow/status/dirs-dev/directories-jvm/test.yml?branch=main&style=for-the-badge)](https://github.com/dirs-dev/directories-jvm/actions/workflows/test.yml)
+[![License: MPL-2.0](https://img.shields.io/github/license/dirs-dev/directories-jvm.svg?style=for-the-badge)](LICENSE)
 
 # Directories
 
@@ -38,17 +37,17 @@ Add the library as a dependency to your project:
 <dependency>
   <groupId>dev.dirs</groupId>
   <artifactId>directories</artifactId>
-  <version>20</version>
+  <version>26</version>
 </dependency>
 ```
 ##### Gradle
 ```groovy
-compile 'dev.dirs:directories:20'
+compile 'dev.dirs:directories:26'
 ```
 
 ##### SBT
 ```scala
-"dev.dirs" % "directories" % "20"
+"dev.dirs" % "directories" % "26"
 ```
 
 The library itself is built against Java 6 to allow for the widest possible usage scenarios.
@@ -186,7 +185,15 @@ The version number of this library consists of a whole number, which is incremen
 
 ## Changelog
 
-### 24 – current stable `dev.dirs:directories` release
+### 26 – current stable `dev.dirs:directories` release
+
+- Adds support for IBM Series i (OS/400). Thanks @ThePrez!
+
+### 25
+- Release with newer JavaDoc version.
+- Update SBT version to 1.5.0.
+
+### 24
 
 - Try both "normal" and "downgraded" version of Powershell.
   Hopefully fixes #47. Thanks @phongngtuan!

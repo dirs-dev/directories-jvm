@@ -251,6 +251,8 @@ public final class BaseDirectories {
       case LIN:
       case BSD:
       case SOLARIS:
+      case IBMI:
+      case AIX:
         homeDir       = System.getProperty("user.home");
         cacheDir      = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir, "/.cache");
         configDir     = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir, "/.config");

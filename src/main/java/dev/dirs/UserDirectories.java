@@ -303,6 +303,7 @@ public final class UserDirectories {
       case LIN:
       case BSD:
       case SOLARIS:
+      case AIX:
         String[] userDirs = getXDGUserDirs("MUSIC", "DESKTOP", "DOCUMENTS", "DOWNLOAD", "PICTURES", "PUBLICSHARE", "TEMPLATES", "VIDEOS");
         homeDir       = System.getProperty("user.home");
         audioDir      = userDirs[0];
@@ -322,6 +323,18 @@ public final class UserDirectories {
         documentDir   = homeDir + "/Documents";
         downloadDir   = homeDir + "/Downloads";
         fontDir       = homeDir + "/Library/Fonts";
+        pictureDir    = homeDir + "/Pictures";
+        publicDir     = homeDir + "/Public";
+        templateDir   = null;
+        videoDir      = homeDir + "/Movies";
+        break;
+      case IBMI:
+        homeDir       = System.getProperty("user.home");
+        audioDir      = homeDir + "/Music";
+        desktopDir    = homeDir + "/Desktop";
+        documentDir   = homeDir + "/Documents";
+        downloadDir   = homeDir + "/Downloads";
+        fontDir       = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"), "/fonts",  homeDir, "/.local/share/fonts");
         pictureDir    = homeDir + "/Pictures";
         publicDir     = homeDir + "/Public";
         templateDir   = null;
