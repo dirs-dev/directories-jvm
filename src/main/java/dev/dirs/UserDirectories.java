@@ -19,7 +19,7 @@ public final class UserDirectories {
 
   /** Returns the path to the user's home directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -46,7 +46,7 @@ public final class UserDirectories {
 
   /** Returns the path to the user's audio directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -73,7 +73,7 @@ public final class UserDirectories {
 
   /** Returns the path to the user's desktop directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -100,7 +100,7 @@ public final class UserDirectories {
 
   /** Returns the path to the user's document directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -127,7 +127,7 @@ public final class UserDirectories {
 
   /** Returns the path to the user's download directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -154,7 +154,7 @@ public final class UserDirectories {
 
   /** Returns the path to the user's font directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -181,7 +181,7 @@ public final class UserDirectories {
 
   /** Returns the path to the user's picture directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -208,7 +208,7 @@ public final class UserDirectories {
 
   /** Returns the path to the user's public directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -235,7 +235,7 @@ public final class UserDirectories {
 
   /** Returns the path to the user's template directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -262,7 +262,7 @@ public final class UserDirectories {
 
   /** Returns the path to the user's video directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>

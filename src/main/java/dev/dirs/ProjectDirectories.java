@@ -48,7 +48,7 @@ public final class ProjectDirectories {
   /** Returns the path to the project's cache directory,
     * in which {@code <project_path>} is the value of {@link ProjectDirectories#projectPath}.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -76,7 +76,7 @@ public final class ProjectDirectories {
   /** Returns the path to the project's configuration directory,
     * in which {@code <project_path>} is the value of {@link ProjectDirectories#projectPath}.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -104,7 +104,7 @@ public final class ProjectDirectories {
   /** Returns the path to the project's data directory,
     * in which {@code <project_path>} is the value of {@link ProjectDirectories#projectPath}.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -132,7 +132,7 @@ public final class ProjectDirectories {
   /** Returns the path to the project's local data directory,
     * in which {@code <project_path>} is the value of {@link ProjectDirectories#projectPath}.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -160,7 +160,7 @@ public final class ProjectDirectories {
   /** Returns the path to the project's preference directory,
    * in which {@code <project_path>} is the value of {@link ProjectDirectories#projectPath}.
    * <br><br>
-   * <table border="1" cellpadding="1" cellspacing="0">
+   * <table summary="" border="1" cellpadding="1" cellspacing="0">
    * <tr>
    * <th align="left">Platform</th>
    * <th align="left">Value</th>
@@ -187,7 +187,7 @@ public final class ProjectDirectories {
 
   /** Returns the path to the project's runtime directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>

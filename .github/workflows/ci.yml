@@ -22,6 +22,8 @@ jobs:
       run: scala-cli compile . # Just in case, ensuring the project compiles fine as a pure Java project (--scala option required to run tests, see below)
     - name: Test
       run: scala-cli test . --scala 3.3.3 # Specifying a Scala version as a workaround for VirtusLab/scala-cli#2940
+    - name: Publish locally
+      run: rm -f project.ci.java && scala-cli publish local . # This ensures that javadoc generation succeeds in particular
 
   publish:
     needs: test
@@ -36,7 +38,7 @@ jobs:
       with:
         power: true
     - name: Publish
-      run: scala-cli publish . --doc=false # disabling javadoc because of VirtusLab/scala-cli#2939
+      run: scala-cli publish .
       env:
         PUBLISH_USER: ${{ secrets.PUBLISH_USER }}
         PUBLISH_PASSWORD: ${{ secrets.PUBLISH_PASSWORD }}

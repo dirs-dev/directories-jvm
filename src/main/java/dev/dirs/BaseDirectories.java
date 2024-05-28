@@ -21,7 +21,7 @@ public final class BaseDirectories {
 
   /** Returns the path to the user's home directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -48,7 +48,7 @@ public final class BaseDirectories {
 
   /** Returns the path to the user's cache directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -75,7 +75,7 @@ public final class BaseDirectories {
 
   /** Returns the path to the user's configuration directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -102,7 +102,7 @@ public final class BaseDirectories {
 
   /** Returns the path to the user's data directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -129,7 +129,7 @@ public final class BaseDirectories {
 
   /** Returns the path to the user's local data directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -156,7 +156,7 @@ public final class BaseDirectories {
 
   /** Returns the path to the user's executable directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
@@ -183,7 +183,7 @@ public final class BaseDirectories {
 
   /** Returns the path to the user's preference directory.
    * <br><br>
-   * <table border="1" cellpadding="1" cellspacing="0">
+   * <table summary="" border="1" cellpadding="1" cellspacing="0">
    * <tr>
    * <th align="left">Platform</th>
    * <th align="left">Value</th>
@@ -210,7 +210,7 @@ public final class BaseDirectories {
 
   /** Returns the path to the user's runtime directory.
     * <br><br>
-    * <table border="1" cellpadding="1" cellspacing="0">
+    * <table summary="" border="1" cellpadding="1" cellspacing="0">
     * <tr>
     * <th align="left">Platform</th>
     * <th align="left">Value</th>
