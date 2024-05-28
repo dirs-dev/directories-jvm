@@ -26,7 +26,6 @@ jobs:
       run: rm -f project.ci.java && scala-cli publish local . # This ensures that javadoc generation succeeds in particular
 
   publish:
-    needs: test
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
