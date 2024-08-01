@@ -22,12 +22,6 @@ lazy val root = (project in file("."))
       else Some("releases" at nexus + "service/local/staging/deploy/maven2")
     },
     */
-    Compile / packageBin / packageOptions += {
-      import java.util.jar.{Attributes, Manifest}
-      val manifest = new Manifest
-      manifest.getMainAttributes.put(new Attributes.Name("Automatic-Module-Name"), "dev.dirs")
-      Package.JarManifest(manifest)
-    },
     pomIncludeRepository := { _ => false },
     pomExtra             :=
       <scm>
