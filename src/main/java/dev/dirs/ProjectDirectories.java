@@ -258,9 +258,8 @@ public final class ProjectDirectories {
         preferenceDir = homeDir + "/Library/Preferences/"         + path;
         break;
       case Constants.WIN:
-        String[] winDirs = Windows.getWinDirs("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D", "F1B32785-6FBA-4FCF-9D55-7B8E7F157091");
-        String appDataRoaming = winDirs[0] + '\\' + path;
-        String appDataLocal   = winDirs[1] + '\\' + path;
+        String appDataRoaming = Windows.getRoamingAppDataDir() + '\\' + path;
+        String appDataLocal   = Windows.getLocalAppDataDir() + '\\' + path;
         dataDir       = appDataRoaming + "\\data";
         dataLocalDir  = appDataLocal   + "\\data";
         configDir     = appDataRoaming + "\\config";

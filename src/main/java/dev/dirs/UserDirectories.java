@@ -343,26 +343,16 @@ public final class UserDirectories {
         videoDir      = homeDir + "/Movies";
         break;
       case Constants.WIN:
-        String[] winDirs = Windows.getWinDirs(
-            "5E6C858F-0E22-4760-9AFE-EA3317B67173",
-            "4BD8D571-6D19-48D3-BE97-422220080E43",
-            "B4BFCC3A-DB2C-424C-B029-7FE99A87C641",
-            "FDD39AD0-238F-46AF-ADB4-6C85480369C7",
-            "374DE290-123F-4565-9164-39C4925E467B",
-            "33E28130-4E1E-4676-835A-98395C3BC3BB",
-            "DFDF76A2-C82A-4D63-906A-5644AC457385",
-            "A63293E8-664E-48DB-A079-DF759E0509F7",
-            "18989B1D-99B5-455B-841C-AB7C74E4DDFC");
-        homeDir       = winDirs[0];
-        audioDir      = winDirs[1];
+        homeDir       = Windows.getProfileDir();
+        audioDir      = Windows.getMusicDir();
         fontDir       = null;
-        desktopDir    = winDirs[2];
-        documentDir   = winDirs[3];
-        downloadDir   = winDirs[4];
-        pictureDir    = winDirs[5];
-        publicDir     = winDirs[6];
-        templateDir   = winDirs[7];
-        videoDir      = winDirs[8];
+        desktopDir    = Windows.getDesktopDir();
+        documentDir   = Windows.getDocumentsDir();
+        downloadDir   = Windows.getDownloadsDir();
+        pictureDir    = Windows.getPicturesDir();
+        publicDir     = Windows.getPublicDir();
+        templateDir   = Windows.getTemplatesDir();
+        videoDir      = Windows.getVideosDir();
         break;
       default:
         throw new UnsupportedOperatingSystemException("User directories are not supported on " + Constants.operatingSystemName);
