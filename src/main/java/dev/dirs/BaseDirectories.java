@@ -1,6 +1,8 @@
 package dev.dirs;
 
-import static dev.dirs.Util.*;
+import dev.dirs.impl.Linux;
+import dev.dirs.impl.Util;
+import dev.dirs.impl.Windows;
 
 /** {@code BaseDirectories} provides paths of user-invisible standard directories, following the conventions of the operating system the library is running on.
   * <p>
@@ -247,22 +249,22 @@ public final class BaseDirectories {
   }
 
   private BaseDirectories() {
-    switch (operatingSystem) {
-      case LIN:
-      case BSD:
-      case SOLARIS:
-      case IBMI:
-      case AIX:
+    switch (Constants.operatingSystem) {
+      case Constants.LIN:
+      case Constants.BSD:
+      case Constants.SOLARIS:
+      case Constants.IBMI:
+      case Constants.AIX:
         homeDir       = System.getProperty("user.home");
-        cacheDir      = defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir, "/.cache");
-        configDir     = defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir, "/.config");
-        dataDir       = defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir, "/.local/share");
+        cacheDir      = Util.defaultIfNullOrEmpty(System.getenv("XDG_CACHE_HOME"),  homeDir, "/.cache");
+        configDir     = Util.defaultIfNullOrEmpty(System.getenv("XDG_CONFIG_HOME"), homeDir, "/.config");
+        dataDir       = Util.defaultIfNullOrEmpty(System.getenv("XDG_DATA_HOME"),   homeDir, "/.local/share");
         dataLocalDir  = dataDir;
-        executableDir = linuxExecutableDir(homeDir, dataDir);
+        executableDir = Linux.executableDir(homeDir, dataDir);
         preferenceDir = configDir;
-        runtimeDir    = linuxRuntimeDir(null);
+        runtimeDir    = Linux.runtimeDir(null);
         break;
-      case MAC:
+      case Constants.MAC:
         homeDir       = System.getProperty("user.home");
         cacheDir      = homeDir + "/Library/Caches/";
         configDir     = homeDir + "/Library/Application Support/";
@@ -272,8 +274,8 @@ public final class BaseDirectories {
         preferenceDir = homeDir + "/Library/Preferences/";
         runtimeDir    = null;
         break;
-      case WIN:
-        String[] winDirs = getWinDirs("5E6C858F-0E22-4760-9AFE-EA3317B67173", "3EB685DB-65F9-4CF6-A03A-E3EF65729F3D", "F1B32785-6FBA-4FCF-9D55-7B8E7F157091");
+      case Constants.WIN:
+        String[] winDirs = Windows.getWinDirs("5E6C858F-0E22-4760-9AFE-EA3317B67173", "3EB685DB-65F9-4CF6-A03A-E3EF65729F3D", "F1B32785-6FBA-4FCF-9D55-7B8E7F157091");
         homeDir       = winDirs[0];
         dataDir       = winDirs[1];
         dataLocalDir  = winDirs[2];
@@ -284,13 +286,13 @@ public final class BaseDirectories {
         runtimeDir    = null;
         break;
       default:
-        throw new UnsupportedOperatingSystemException("Base directories are not supported on " + operatingSystemName);
+        throw new UnsupportedOperatingSystemException("Base directories are not supported on " + Constants.operatingSystemName);
     }
   }
 
   @Override
   public String toString() {
-    return "BaseDirectories (" + operatingSystemName + "):\n" +
+    return "BaseDirectories (" + Constants.operatingSystemName + "):\n" +
         "  homeDir       = '" + homeDir        + "'\n" +
         "  cacheDir      = '" + cacheDir       + "'\n" +
         "  configDir     = '" + configDir      + "'\n" +
