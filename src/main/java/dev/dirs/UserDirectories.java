@@ -1,6 +1,8 @@
 package dev.dirs;
 
-import static dev.dirs.Util.*;
+import dev.dirs.impl.Linux;
+import dev.dirs.impl.Util;
+import dev.dirs.impl.Windows;
 
 /** {@code UserDirectories} provides paths of user-facing standard directories, following the conventions of the operating system the library is running on.
   *
@@ -299,24 +301,24 @@ public final class UserDirectories {
    }
 
   private UserDirectories() {
-    switch (operatingSystem) {
-      case LIN:
-      case BSD:
-      case SOLARIS:
-      case AIX:
-        String[] userDirs = getXDGUserDirs("MUSIC", "DESKTOP", "DOCUMENTS", "DOWNLOAD", "PICTURES", "PUBLICSHARE", "TEMPLATES", "VIDEOS");
+    switch (Constants.operatingSystem) {
+      case Constants.LIN:
+      case Constants.BSD:
+      case Constants.SOLARIS:
+      case Constants.AIX:
+        String[] userDirs = Linux.getXDGUserDirs("MUSIC", "DESKTOP", "DOCUMENTS", "DOWNLOAD", "PICTURES", "PUBLICSHARE", "TEMPLATES", "VIDEOS");
         homeDir       = System.getProperty("user.home");
         audioDir      = userDirs[0];
         desktopDir    = userDirs[1];
         documentDir   = userDirs[2];
         downloadDir   = userDirs[3];
-        fontDir       = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"), "/fonts",  homeDir, "/.local/share/fonts");
+        fontDir       = Util.defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"), "/fonts",  homeDir, "/.local/share/fonts");
         pictureDir    = userDirs[4];
         publicDir     = userDirs[5];
         templateDir   = userDirs[6];
         videoDir      = userDirs[7];
         break;
-      case MAC:
+      case Constants.MAC:
         homeDir       = System.getProperty("user.home");
         audioDir      = homeDir + "/Music";
         desktopDir    = homeDir + "/Desktop";
@@ -328,20 +330,20 @@ public final class UserDirectories {
         templateDir   = null;
         videoDir      = homeDir + "/Movies";
         break;
-      case IBMI:
+      case Constants.IBMI:
         homeDir       = System.getProperty("user.home");
         audioDir      = homeDir + "/Music";
         desktopDir    = homeDir + "/Desktop";
         documentDir   = homeDir + "/Documents";
         downloadDir   = homeDir + "/Downloads";
-        fontDir       = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"), "/fonts",  homeDir, "/.local/share/fonts");
+        fontDir       = Util.defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"), "/fonts",  homeDir, "/.local/share/fonts");
         pictureDir    = homeDir + "/Pictures";
         publicDir     = homeDir + "/Public";
         templateDir   = null;
         videoDir      = homeDir + "/Movies";
         break;
-      case WIN:
-        String[] winDirs = getWinDirs(
+      case Constants.WIN:
+        String[] winDirs = Windows.getWinDirs(
             "5E6C858F-0E22-4760-9AFE-EA3317B67173",
             "4BD8D571-6D19-48D3-BE97-422220080E43",
             "B4BFCC3A-DB2C-424C-B029-7FE99A87C641",
@@ -363,13 +365,13 @@ public final class UserDirectories {
         videoDir      = winDirs[8];
         break;
       default:
-        throw new UnsupportedOperatingSystemException("User directories are not supported on " + operatingSystemName);
+        throw new UnsupportedOperatingSystemException("User directories are not supported on " + Constants.operatingSystemName);
     }
   }
 
   @Override
   public String toString() {
-    return "UserDirectories (" + operatingSystemName + "):\n" +
+    return "UserDirectories (" + Constants.operatingSystemName + "):\n" +
         "  homeDir     = '" + homeDir     + "'\n" +
         "  audioDir    = '" + audioDir    + "'\n" +
         "  fontDir     = '" + fontDir     + "'\n" +
