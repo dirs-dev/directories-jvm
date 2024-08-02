@@ -1,6 +1,11 @@
 package dev.dirs;
 
-import static dev.dirs.Util.*;
+import dev.dirs.impl.Linux;
+import dev.dirs.impl.MacOs;
+import dev.dirs.impl.Util;
+import dev.dirs.impl.Windows;
+
+import java.util.Objects;
 
 /** {@code ProjectDirectories} computes the location of cache, config or data directories for a specific application,
   * which are derived from the standard directories and the name of the project/organization.
@@ -28,7 +33,7 @@ public final class ProjectDirectories {
       final String preferenceDir,
       final String runtimeDir) {
 
-    requireNonNull(projectPath);
+    Objects.requireNonNull(projectPath);
 
     this.projectPath   = projectPath;
     this.cacheDir      = cacheDir;
@@ -230,21 +235,21 @@ public final class ProjectDirectories {
     String dataLocalDir;
     String preferenceDir;
     String runtimeDir = null;
-    switch (operatingSystem) {
-      case LIN:
-      case BSD:
-      case SOLARIS:
-      case IBMI:
-      case AIX:
+    switch (Constants.operatingSystem) {
+      case Constants.LIN:
+      case Constants.BSD:
+      case Constants.SOLARIS:
+      case Constants.IBMI:
+      case Constants.AIX:
         homeDir       = System.getProperty("user.home");
-        cacheDir      = defaultIfNullOrEmptyExtended(System.getenv("XDG_CACHE_HOME"),  path, homeDir + "/.cache/",       path);
-        configDir     = defaultIfNullOrEmptyExtended(System.getenv("XDG_CONFIG_HOME"), path, homeDir + "/.config/",      path);
-        dataDir       = defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"),   path, homeDir + "/.local/share/", path);
+        cacheDir      = Util.defaultIfNullOrEmptyExtended(System.getenv("XDG_CACHE_HOME"),  path, homeDir + "/.cache/",       path);
+        configDir     = Util.defaultIfNullOrEmptyExtended(System.getenv("XDG_CONFIG_HOME"), path, homeDir + "/.config/",      path);
+        dataDir       = Util.defaultIfNullOrEmptyExtended(System.getenv("XDG_DATA_HOME"),   path, homeDir + "/.local/share/", path);
         dataLocalDir  = dataDir;
         preferenceDir = configDir;
-        runtimeDir    = linuxRuntimeDir(path);
+        runtimeDir    = Linux.runtimeDir(path);
         break;
-      case MAC:
+      case Constants.MAC:
         homeDir       = System.getProperty("user.home");
         cacheDir      = homeDir + "/Library/Caches/"              + path;
         configDir     = homeDir + "/Library/Application Support/" + path;
@@ -252,8 +257,8 @@ public final class ProjectDirectories {
         dataLocalDir  = dataDir;
         preferenceDir = homeDir + "/Library/Preferences/"         + path;
         break;
-      case WIN:
-        String[] winDirs = getWinDirs("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D", "F1B32785-6FBA-4FCF-9D55-7B8E7F157091");
+      case Constants.WIN:
+        String[] winDirs = Windows.getWinDirs("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D", "F1B32785-6FBA-4FCF-9D55-7B8E7F157091");
         String appDataRoaming = winDirs[0] + '\\' + path;
         String appDataLocal   = winDirs[1] + '\\' + path;
         dataDir       = appDataRoaming + "\\data";
@@ -263,7 +268,7 @@ public final class ProjectDirectories {
         preferenceDir = configDir;
         break;
       default:
-        throw new UnsupportedOperatingSystemException("Project directories are not supported on " + operatingSystemName);
+        throw new UnsupportedOperatingSystemException("Project directories are not supported on " + Constants.operatingSystemName);
     }
     return new ProjectDirectories(path, cacheDir, configDir, dataDir, dataLocalDir, preferenceDir, runtimeDir);
   }
@@ -289,32 +294,32 @@ public final class ProjectDirectories {
     * {@code qualifier}, {@code organization} and {@code application} arguments.
     */
   public static ProjectDirectories from(String qualifier, String organization, String application) {
-    if (isNullOrEmpty(organization) && isNullOrEmpty(application))
+    if (Util.isNullOrEmpty(organization) && Util.isNullOrEmpty(application))
       throw new UnsupportedOperationException("organization and application arguments cannot both be null/empty");
     String path;
-    switch (operatingSystem) {
-      case LIN:
-      case BSD:
-      case SOLARIS:
-      case IBMI:
-      case AIX:
-        path = trimLowercaseReplaceWhitespace(application, "", true);
+    switch (Constants.operatingSystem) {
+      case Constants.LIN:
+      case Constants.BSD:
+      case Constants.SOLARIS:
+      case Constants.IBMI:
+      case Constants.AIX:
+        path = Util.trimLowercaseReplaceWhitespace(application, "", true);
         break;
-      case MAC:
-        path = macOSApplicationPath(qualifier, organization, application);
+      case Constants.MAC:
+        path = MacOs.applicationPath(qualifier, organization, application);
         break;
-      case WIN:
-        path = windowsApplicationPath(qualifier, organization, application);
+      case Constants.WIN:
+        path = Windows.applicationPath(qualifier, organization, application);
         break;
       default:
-        throw new UnsupportedOperatingSystemException("Project directories are not supported on " + operatingSystemName);
+        throw new UnsupportedOperatingSystemException("Project directories are not supported on " + Constants.operatingSystemName);
     }
     return fromPath(path);
   }
 
   @Override
   public String toString() {
-    return "ProjectDirectories (" + operatingSystemName + "):\n" +
+    return "ProjectDirectories (" + Constants.operatingSystemName + "):\n" +
         "  projectPath   = '" + projectPath + "'\n" +
         "  cacheDir      = '" + cacheDir + "'\n" +
         "  configDir     = '" + configDir + "'\n" +

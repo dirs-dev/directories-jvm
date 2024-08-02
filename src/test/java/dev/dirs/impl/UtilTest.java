@@ -1,10 +1,11 @@
-package dev.dirs;
+package dev.dirs.impl;
+
+import dev.dirs.Constants;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-
-import org.junit.Test;
 
 public final class UtilTest {
 
@@ -61,7 +62,7 @@ public final class UtilTest {
     final String inputQual = "";
     final String inputOrga = "Foo Bar";
     final String inputProj = "";
-    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    final String actual = MacOs.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("Foo-Bar", actual);
   }
 
@@ -70,7 +71,7 @@ public final class UtilTest {
     final String inputQual = "";
     final String inputOrga = "";
     final String inputProj = "Baz Qux";
-    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    final String actual = MacOs.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("Baz-Qux", actual);
   }
 
@@ -79,7 +80,7 @@ public final class UtilTest {
     final String inputQual = "";
     final String inputOrga = "Foo Bar";
     final String inputProj = "Baz Qux";
-    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    final String actual = MacOs.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("Foo-Bar.Baz-Qux", actual);
   }
 
@@ -88,7 +89,7 @@ public final class UtilTest {
     final String inputQual = "uk.co";
     final String inputOrga = "Foo Bar";
     final String inputProj = "";
-    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    final String actual = MacOs.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("uk.co.Foo-Bar", actual);
   }
 
@@ -97,7 +98,7 @@ public final class UtilTest {
     final String inputQual = "uk.co";
     final String inputOrga = "";
     final String inputProj = "Baz Qux";
-    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    final String actual = MacOs.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("uk.co.Baz-Qux", actual);
   }
 
@@ -106,7 +107,7 @@ public final class UtilTest {
     final String inputQual = "uk.co";
     final String inputOrga = "Foo Bar";
     final String inputProj = "Baz Qux";
-    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    final String actual = MacOs.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("uk.co.Foo-Bar.Baz-Qux", actual);
   }
 
@@ -115,7 +116,7 @@ public final class UtilTest {
     final String inputQual = " uk.co ";
     final String inputOrga = " Foo  Bar ";
     final String inputProj = "  Baz Qux  ";
-    final String actual = Util.macOSApplicationPath(inputQual, inputOrga, inputProj);
+    final String actual = MacOs.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("uk.co.Foo-Bar.Baz-Qux", actual);
   }
 
@@ -124,7 +125,7 @@ public final class UtilTest {
     final String inputQual = "";
     final String inputOrga = "Foo Bar";
     final String inputProj = "";
-    final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
+    final String actual = Windows.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("Foo Bar", actual);
   }
 
@@ -133,7 +134,7 @@ public final class UtilTest {
     final String inputQual = "";
     final String inputOrga = "";
     final String inputProj = "Baz Qux";
-    final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
+    final String actual = Windows.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("Baz Qux", actual);
   }
 
@@ -142,7 +143,7 @@ public final class UtilTest {
     final String inputQual = "";
     final String inputOrga = "Foo Bar";
     final String inputProj = "Baz Qux";
-    final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
+    final String actual = Windows.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("Foo Bar\\Baz Qux", actual);
   }
 
@@ -151,7 +152,7 @@ public final class UtilTest {
     final String inputQual = "uk.co";
     final String inputOrga = "Foo Bar";
     final String inputProj = "";
-    final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
+    final String actual = Windows.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("Foo Bar", actual);
   }
 
@@ -160,7 +161,7 @@ public final class UtilTest {
     final String inputQual = "uk.co";
     final String inputOrga = "";
     final String inputProj = "Baz Qux";
-    final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
+    final String actual = Windows.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("Baz Qux", actual);
   }
 
@@ -169,21 +170,21 @@ public final class UtilTest {
     final String inputQual = "uk.co";
     final String inputOrga = "Foo Bar";
     final String inputProj = "Baz Qux";
-    final String actual = Util.windowsApplicationPath(inputQual, inputOrga, inputProj);
+    final String actual = Windows.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("Foo Bar\\Baz Qux", actual);
   }
 
   @Test
   public void testPowershellBase64StringIsNotPadded() {
-    if (Util.operatingSystem == 'w') {
-      assertFalse(Util.SCRIPT_START_BASE64.endsWith("="));
+    if (Constants.operatingSystem == 'w') {
+      assertFalse(Windows.SCRIPT_START_BASE64.endsWith("="));
     }
   }
 
   @Test
   public void testPowershell() {
-    if (Util.operatingSystem == 'w') {
-      String[] winDirs = Util.getWinDirs("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D", "F1B32785-6FBA-4FCF-9D55-7B8E7F157091");
+    if (Constants.operatingSystem == 'w') {
+      String[] winDirs = Windows.getWinDirs("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D", "F1B32785-6FBA-4FCF-9D55-7B8E7F157091");
       for (String winDir : winDirs) {
         assertNotNull(winDir);
       }
