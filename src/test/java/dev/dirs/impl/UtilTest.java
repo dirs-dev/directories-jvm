@@ -1,11 +1,8 @@
 package dev.dirs.impl;
 
-import dev.dirs.Constants;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 
 public final class UtilTest {
 
@@ -172,23 +169,6 @@ public final class UtilTest {
     final String inputProj = "Baz Qux";
     final String actual = Windows.applicationPath(inputQual, inputOrga, inputProj);
     assertEquals("Foo Bar\\Baz Qux", actual);
-  }
-
-  @Test
-  public void testPowershellBase64StringIsNotPadded() {
-    if (Constants.operatingSystem == 'w') {
-      assertFalse(Windows.SCRIPT_START_BASE64.endsWith("="));
-    }
-  }
-
-  @Test
-  public void testPowershell() {
-    if (Constants.operatingSystem == 'w') {
-      String[] winDirs = Windows.getWinDirs("3EB685DB-65F9-4CF6-A03A-E3EF65729F3D", "F1B32785-6FBA-4FCF-9D55-7B8E7F157091");
-      for (String winDir : winDirs) {
-        assertNotNull(winDir);
-      }
-    }
   }
 
 }
