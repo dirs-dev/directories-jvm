@@ -14,6 +14,7 @@ lazy val root = (project in file("."))
     // javaHome             := Some(file("/home/soc/apps/zulu6.19.0.1-jdk6.0.103-linux_x64/")),
     libraryDependencies  += "junit"        % "junit"           % "4.13" % Test,
     libraryDependencies  += "com.novocode" % "junit-interface" % "0.11" % Test,
+    Test / fork := false,
     Test / testOptions   := Seq(Tests.Argument(TestFrameworks.JUnit, "-a")),
     /*
     publishTo            := {
